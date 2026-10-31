@@ -1,0 +1,192 @@
+id: https://w3id.org/holobiomicslab/asb-schema/trace/v0.1
+name: asb_trace_v0_1
+description: >-
+  LinkML schema for the ASB exploration trace v0.1.0 — the research journey behind a
+  paper's outcome: what was asked, tried, chosen and rejected. ASB's existing card and
+  capsule schemas are outcome-only; this records the branches, including the ones that
+  failed. Mirrors the ExplorationNode / ExplorationTree dataclasses in
+  agentic_science_builder.trace_extract.model.
+
+license: CC-BY-4.0
+version: "0.1.0"
+
+prefixes:
+  linkml:   https://w3id.org/linkml/
+  asb:      https://w3id.org/holobiomicslab/asb-schema/
+  prov:     http://www.w3.org/ns/prov#
+  pplan:    http://purl.org/net/p-plan#
+
+imports:
+  - linkml:types
+
+default_prefix: asb
+default_range: string
+
+# ---------------------------------------------------------------------------
+# Enumerations
+# ---------------------------------------------------------------------------
+
+enums:
+
+  NodeTypeEnum:
+    description: Kind of step in the research journey
+    permissible_values:
+      question:
+        description: An open question, typically the root of a branch
+      experiment:
+        description: An attempt that produced a result
+      decision:
+        description: A choice made between competing options
+      dead_end:
+        description: An approach tried and abandoned; always a leaf
+      pivot:
+        description: A change of direction from one approach to another
+
+  SupportLevelEnum:
+    description: >-
+      Whether the source stated this step outright or it was reconstructed. The
+      honesty axis: an inferred node must never be presented as directly observed.
+    permissible_values:
+      explicit:
+        description: Stated in the source; requires source_refs
+      inferred:
+        description: Reconstructed from surrounding narrative
+
+# ---------------------------------------------------------------------------
+# Classes
+# ---------------------------------------------------------------------------
+
+classes:
+
+  ExplorationNode:
+    description: >-
+      One step in the research journey. The value of `type` selects which further
+      slots are mandatory; those constraints are enforced by
+      agentic_science_builder.trace_extract.gate, not expressible in LinkML alone.
+    slots:
+      - id
+      - type
+      - title
+      - support_level
+      - source_refs
+      - children
+      - also_depends_on
+      - choice
+      - alternatives
+      - alternatives_unanchored
+      - hypothesis
+      - failure_mode
+      - lesson
+      - result
+      - evidence
+      - from
+      - to
+      - trigger
+
+  ExplorationTree:
+    description: A paper's exploration graph — root nodes plus everything nested beneath.
+    slots:
+      - schema_version
+      - source_doi
+      - nodes
+
+# ---------------------------------------------------------------------------
+# Slots
+# ---------------------------------------------------------------------------
+
+slots:
+
+  id:
+    description: N-prefixed, zero-padded node identifier, unique within the tree
+    identifier: true
+    pattern: "^N\\d{2,}$"
+    required: true
+
+  type:
+    description: Kind of step
+    range: NodeTypeEnum
+    required: true
+
+  title:
+    description: Short human-readable label for the step
+    required: true
+
+  support_level:
+    description: Whether the source stated this step or it was reconstructed
+    range: SupportLevelEnum
+    required: true
+
+  source_refs:
+    description: >-
+      Where in the source this step is stated, e.g. "§4.1", "Table 2", "Fig. 6 left".
+      Mandatory when support_level is explicit.
+    multivalued: true
+
+  children:
+    description: Nested steps that follow from this one
+    range: ExplorationNode
+    multivalued: true
+    inlined_as_list: true
+
+  also_depends_on:
+    description: Cross-edges to nodes outside this node's nesting, making the tree a DAG
+    multivalued: true
+
+  choice:
+    description: The option taken (decision nodes)
+    slot_uri: pplan:Plan
+
+  alternatives:
+    description: >-
+      Options considered and not taken (decision nodes). A decision with no
+      alternative is a restatement, not a decision.
+    multivalued: true
+
+  alternatives_unanchored:
+    description: >-
+      How many alternatives a guard removed from this decision (decision nodes); set
+      only when at least one was removed, so an empty alternatives list beside a
+      positive count is a recorded gap rather than a decision the source never
+      qualified. The removed text is deliberately not recorded.
+    range: integer
+
+  hypothesis:
+    description: What the abandoned approach assumed (dead_end nodes)
+
+  failure_mode:
+    description: How the abandoned approach failed (dead_end nodes)
+
+  lesson:
+    description: >-
+      What a later reader should take from the failure (dead_end nodes). This is the
+      field that stops a downstream agent re-walking the same branch.
+
+  result:
+    description: What the attempt produced (experiment nodes)
+
+  evidence:
+    description: Claim ids, figures or tables supporting the result (experiment nodes)
+    multivalued: true
+
+  from:
+    description: The approach departed from (pivot nodes)
+
+  to:
+    description: The approach moved to (pivot nodes)
+
+  trigger:
+    description: What prompted the change of direction (pivot nodes)
+
+  schema_version:
+    description: Version of this trace schema
+    required: true
+
+  source_doi:
+    description: DOI of the paper whose journey this trace records
+    slot_uri: prov:wasDerivedFrom
+
+  nodes:
+    description: Root nodes of the exploration graph
+    range: ExplorationNode
+    multivalued: true
+    inlined_as_list: true

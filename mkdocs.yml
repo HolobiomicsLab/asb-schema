@@ -1,0 +1,133 @@
+site_name: ASB Schema
+site_description: >-
+  ASB Schema is a family of LinkML schemas for scientific tasks extracted from
+  research papers: task cards, capsules, skill bundles, skill collections, the
+  collection registry and the exploration trace.
+site_url: https://holobiomicslab.github.io/asb-schema/
+site_author: Holobiomics Lab
+repo_url: https://github.com/HolobiomicsLab/asb-schema
+repo_name: HolobiomicsLab/asb-schema
+edit_uri: edit/main/docs/
+copyright: Holobiomics Lab, CNRS and Université Côte d'Azur. Code Apache-2.0.
+
+docs_dir: docs
+site_dir: site
+
+# Theme templates live in docs/overrides; they are not documentation pages.
+exclude_docs: |
+  overrides/
+
+# Report broken anchors and unrecognized links as warnings, so that
+# `mkdocs build --strict` fails on them.
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+
+theme:
+  name: material
+  custom_dir: docs/overrides
+  logo: assets/brand/asb-mark-dark.svg
+  favicon: assets/brand/favicon.svg
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: IBM Plex Sans
+    code: IBM Plex Mono
+  features:
+    - announce.dismiss
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.snippets:
+      check_paths: true
+
+plugins:
+  - search
+
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/HolobiomicsLab/asb-schema
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/asb-schema/
+
+extra_css:
+  - stylesheets/extra.css
+
+nav:
+  - Home: index.md
+  - The format:
+      - schema/index.md
+      - Task card: schema/task-card.md
+      - Capsule: schema/capsule.md
+      - Skill bundle: schema/skill-bundle.md
+      - Skill collection: schema/skill-collection.md
+      - Exploration trace: schema/exploration-trace.md
+      - Worked example: schema/worked-example.md
+  - Pipeline: pipeline/index.md
+  - Interoperability:
+      - interop/index.md
+      - Analyses and research objects: interop/analyses-and-research-objects.md
+      - Benchmarks and agents: interop/benchmarks-and-agents.md
+      - Vocabularies and claims: interop/vocabularies-and-claims.md
+  - Reference:
+      - Field reference: reference/index.md
+      - Conformance: reference/conformance.md
+      - Changelog: changelog.md
+  - Reuse:
+      - Getting started: getting-started.md
+      - Authoring a task card: reuse/authoring-a-card.md
+      - Converting and publishing: reuse/converting.md
+  - About:
+      - about/index.md
+      - Citation: citation.md
+      - Glossary: about/glossary.md

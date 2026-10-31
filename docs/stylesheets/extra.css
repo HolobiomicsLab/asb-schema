@@ -1,0 +1,649 @@
+/* ASB Schema site: colors of the CNRS graphical charter; secondary teal.
+   ---------------------------------------------------------------- */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+/* ── Light mode tokens ── */
+:root {
+  /* CNRS primaries */
+  --asb-blue:        #00284b;   /* --cnrs-blue */
+  --asb-blue-ink:    #001833;   /* --cnrs-blue-ink */
+  --asb-blue-soft:   #0d3a66;
+  --asb-yellow:      #ffeb6e;   /* --cnrs-yellow */
+  --asb-yellow-soft: #fff5a6;
+
+  /* Warm paper ground */
+  --asb-paper:       #fbf7ef;   /* --paper */
+  --asb-paper-2:     #f3ecdc;   /* --paper-2 */
+  --asb-ink:         #16242f;   /* --ink */
+  --asb-mute:        #5d6a78;   /* --mute */
+
+  /* Secondary teal. #04919a is kept for icons and fills;
+     text links use the darker teal ink, 5.46:1 on paper (WCAG AA). */
+  --asb-teal:        #04919a;
+  --asb-teal-ink:    #03707a;
+  --asb-link:        var(--asb-teal-ink);
+
+  /* Editorial tokens */
+  --asb-surface-0:      #fffdf8;              /* raised panel on paper */
+  --asb-surface-1:      var(--asb-paper-2);   /* tinted panel */
+  --asb-rule:           rgba(0, 40, 75, 0.14);
+  --asb-rule-strong:    rgba(0, 40, 75, 0.28);
+  --asb-shadow-ambient: 0 18px 40px -18px rgba(0, 40, 75, 0.16);
+  --asb-radius:         4px;
+  --asb-measure:        72ch;
+  --asb-tracking-caps:  0.12em;
+  --asb-font-serif:     'IBM Plex Serif', Georgia, serif;
+  --asb-font-sans:      'IBM Plex Sans', system-ui, sans-serif;
+  --asb-font-mono:      'IBM Plex Mono', ui-monospace, monospace;
+
+  /* Override MkDocs Material custom-scheme vars */
+  --md-primary-fg-color:          var(--asb-blue);
+  --md-primary-fg-color--light:   var(--asb-blue-soft);
+  --md-primary-fg-color--dark:    var(--asb-blue-ink);
+  --md-primary-bg-color:          var(--asb-paper);
+  --md-accent-fg-color:           var(--asb-teal-ink);
+  --md-accent-fg-color--transparent: rgba(3, 112, 122, 0.1);
+
+  /* Custom admonition icon: an arch on a deck (bridge callouts) */
+  --md-admonition-icon--bridge: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 17h20v2H2zm2-2v-3a8 8 0 0 1 16 0v3h-2.2v-3a5.8 5.8 0 0 0-11.6 0v3z"/></svg>');
+
+  /* Table stripes */
+  --asb-table-head-bg:       var(--asb-blue);
+  --asb-table-stripe:        var(--asb-paper-2);
+}
+
+/* ── Light (default) scheme: Material sets these variables on
+   `:root, [data-md-color-scheme=default]` and the mermaid ones on `:root > *`,
+   which both match <body>. The same selector, loaded later, wins on <body>. ── */
+:root,
+[data-md-color-scheme="default"] {
+  --md-default-bg-color:          var(--asb-paper);
+  --md-default-fg-color:          var(--asb-ink);
+  --md-default-fg-color--light:   var(--asb-mute);
+  --md-default-fg-color--lighter: #8b95a1;
+
+  --md-code-bg-color:             var(--asb-paper-2);
+  --md-code-fg-color:             var(--asb-blue);
+
+  --md-typeset-a-color:           var(--asb-link);
+
+  --md-mermaid-edge-color:        var(--asb-mute);
+  --md-mermaid-node-bg-color:     var(--asb-paper-2);
+  --md-mermaid-node-fg-color:     var(--asb-blue);
+  --md-mermaid-label-bg-color:    var(--asb-paper);
+  --md-mermaid-label-fg-color:    var(--asb-ink);
+}
+
+/* Mermaid font in both schemes */
+:root > *,
+[data-md-color-scheme] {
+  --md-mermaid-font-family:       var(--asb-font-sans);
+}
+
+/* ── Dark (slate) mode tokens ── */
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color:          var(--asb-blue-ink);
+  --md-default-fg-color:          var(--asb-paper);
+  --md-default-fg-color--light:   #aebccb;
+  --md-code-bg-color:             #00203c;
+  --md-code-fg-color:             var(--asb-paper);
+  --md-primary-fg-color:          var(--asb-yellow);
+  --md-accent-fg-color:           #2dd4bf;
+
+  --asb-link:           #2dd4bf;   /* 9.57:1 on blue ink */
+  --asb-surface-0:      #062a4d;
+  --asb-surface-1:      #00203c;
+  --asb-rule:           rgba(251, 247, 239, 0.14);
+  --asb-rule-strong:    rgba(251, 247, 239, 0.28);
+  --asb-shadow-ambient: none;
+  --md-typeset-a-color: var(--asb-link);
+
+  --md-mermaid-edge-color:        #aebccb;
+  --md-mermaid-node-bg-color:     #062a4d;
+  --md-mermaid-node-fg-color:     var(--asb-paper);
+  --md-mermaid-label-bg-color:    var(--asb-blue-ink);
+  --md-mermaid-label-fg-color:    var(--asb-paper);
+
+  --asb-table-head-bg:       #062a4d;
+  --asb-table-stripe:        #00203c;
+}
+
+/* ── Typography ── */
+body,
+.md-content,
+.md-typeset {
+  font-family: var(--asb-font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5 {
+  font-family: var(--asb-font-serif);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--asb-blue);
+}
+
+.md-typeset h1 {
+  font-size: clamp(1.7rem, 1.2rem + 1.6vw, 2.3rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+/* Section headings carry a hairline, as in encyclopedic layouts.
+   flow-root keeps the rule clear of a floated infobox. */
+.md-typeset h2 {
+  display: flow-root;
+  margin-top: 2em;
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid var(--asb-rule);
+}
+
+[data-md-color-scheme="slate"] .md-typeset h1,
+[data-md-color-scheme="slate"] .md-typeset h2,
+[data-md-color-scheme="slate"] .md-typeset h3,
+[data-md-color-scheme="slate"] .md-typeset h4 {
+  color: var(--asb-paper);
+}
+
+code,
+pre,
+.md-typeset code,
+.md-typeset pre {
+  font-family: var(--asb-font-mono);
+}
+
+/* Links: color plus a thin underline, so links do not rely on color alone */
+.md-typeset a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: var(--asb-rule-strong);
+}
+.md-typeset a:hover { text-decoration-color: currentColor; }
+.md-typeset .md-button,
+.md-typeset .headerlink,
+.md-typeset .footnote-ref,
+.md-typeset .footnote-backref,
+.md-typeset .grid.cards a { text-decoration: none; }
+
+/* ── Header & tabs ── */
+.md-header {
+  background: var(--asb-blue);
+  box-shadow: 0 1px 0 rgba(255, 235, 110, 0.3);
+}
+
+.md-tabs {
+  background: var(--asb-blue-soft);
+}
+
+/* ── Status notice (announce block, docs/overrides/main.html) ── */
+.md-banner {
+  background: var(--asb-yellow-soft);
+  color: var(--asb-blue);
+}
+.md-banner a { color: var(--asb-blue); text-decoration: underline; }
+.md-banner .asb-announce { font-size: 0.68rem; line-height: 1.5; }
+[data-md-color-scheme="slate"] .md-banner { background: #062a4d; color: var(--asb-paper); }
+[data-md-color-scheme="slate"] .md-banner a { color: var(--asb-yellow); }
+
+/* ── Nav active link ── */
+.md-nav__link--active,
+.md-nav__link:is(:focus, :hover) {
+  color: var(--asb-link) !important;
+}
+
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  color: var(--asb-yellow) !important;
+}
+
+/* ── Sidebar ── */
+.md-sidebar {
+  background: var(--asb-paper);
+}
+
+[data-md-color-scheme="slate"] .md-sidebar {
+  background: #00203c;
+}
+
+/* ── Admonitions by type ──
+   Notes: blue rule. Warnings and caveats: CNRS yellow rule. Tips and
+   bridge callouts: teal ink. Examples and quotes: muted rule. */
+.md-typeset .admonition,
+.md-typeset details {
+  border: 0 !important;
+  border-left: 4px solid var(--asb-adm, var(--asb-blue)) !important;
+  background: var(--asb-adm-bg, var(--asb-surface-1)) !important;
+  border-radius: var(--asb-radius);
+  box-shadow: none;
+}
+
+.md-typeset .admonition > .admonition-title,
+.md-typeset details > summary {
+  background: var(--asb-adm-title, rgba(0, 40, 75, 0.07)) !important;
+  color: var(--asb-blue) !important;
+  font-family: var(--asb-font-sans);
+  font-weight: 600;
+}
+
+.md-typeset .admonition > .admonition-title::before,
+.md-typeset details > summary::before {
+  background-color: var(--asb-adm-icon, var(--asb-blue)) !important;
+}
+
+.md-typeset :is(.warning, .caution, .attention, .danger, .error, .failure, .fail, .missing, .bug) {
+  --asb-adm: var(--asb-yellow);
+  --asb-adm-bg: var(--asb-yellow-soft);
+  --asb-adm-title: rgba(255, 235, 110, 0.45);
+  --asb-adm-icon: var(--asb-blue);
+}
+
+.md-typeset :is(.tip, .hint, .important, .success, .check, .done, .bridge) {
+  --asb-adm: var(--asb-teal-ink);
+  --asb-adm-bg: var(--asb-surface-0);
+  --asb-adm-title: rgba(3, 112, 122, 0.09);
+  --asb-adm-icon: var(--asb-teal-ink);
+}
+
+.md-typeset :is(.example, .quote, .cite) {
+  --asb-adm: var(--asb-mute);
+  --asb-adm-bg: var(--asb-surface-0);
+  --asb-adm-title: rgba(93, 106, 120, 0.1);
+  --asb-adm-icon: var(--asb-mute);
+}
+
+.md-typeset :is(.question, .help, .faq) {
+  --asb-adm: var(--asb-blue-soft);
+  --asb-adm-icon: var(--asb-blue-soft);
+}
+
+.md-typeset .bridge > .admonition-title::before,
+.md-typeset .bridge > summary::before {
+  -webkit-mask-image: var(--md-admonition-icon--bridge);
+  mask-image: var(--md-admonition-icon--bridge);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .admonition,
+[data-md-color-scheme="slate"] .md-typeset details {
+  --asb-adm: #aebccb;
+  --asb-adm-bg: #0a2742;
+  --asb-adm-title: rgba(251, 247, 239, 0.06);
+  --asb-adm-icon: #aebccb;
+}
+[data-md-color-scheme="slate"] .md-typeset .admonition > .admonition-title,
+[data-md-color-scheme="slate"] .md-typeset details > summary {
+  color: var(--asb-paper) !important;
+}
+[data-md-color-scheme="slate"] .md-typeset :is(.warning, .caution, .attention, .danger, .error, .failure, .fail, .missing, .bug) {
+  --asb-adm: var(--asb-yellow);
+  --asb-adm-bg: #1a2d3f;
+  --asb-adm-title: rgba(255, 235, 110, 0.12);
+  --asb-adm-icon: var(--asb-yellow);
+}
+[data-md-color-scheme="slate"] .md-typeset :is(.warning, .caution, .attention, .danger, .error, .failure, .fail, .missing, .bug) > :is(.admonition-title, summary) {
+  color: var(--asb-yellow) !important;
+}
+[data-md-color-scheme="slate"] .md-typeset :is(.tip, .hint, .important, .success, .check, .done, .bridge) {
+  --asb-adm: #2dd4bf;
+  --asb-adm-icon: #2dd4bf;
+}
+[data-md-color-scheme="slate"] .md-typeset :is(.example, .quote, .cite) {
+  --asb-adm: #aebccb;
+}
+[data-md-color-scheme="slate"] .md-typeset :is(.question, .help, .faq) {
+  --asb-adm: #9ec3e6;
+  --asb-adm-icon: #9ec3e6;
+}
+
+/* ── Tables ── */
+.md-typeset table:not([class]) th {
+  background: var(--asb-table-head-bg);
+  color: var(--asb-paper);
+  font-family: var(--asb-font-sans);
+  font-weight: 600;
+}
+
+.md-typeset table:not([class]) tr:nth-child(even) {
+  background: var(--asb-table-stripe);
+}
+
+/* ── Eyebrow label ── */
+.md-typeset .asb-eyebrow {
+  display: block;
+  margin: 0 0 0.6rem;
+  font-family: var(--asb-font-sans);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: var(--asb-tracking-caps);
+  text-transform: uppercase;
+  color: var(--asb-mute);
+}
+[data-md-color-scheme="slate"] .md-typeset .asb-eyebrow { color: #aebccb; }
+
+/* ── Hero (home page) ── */
+.md-typeset .asb-hero {
+  padding: clamp(1rem, 4vh, 2.5rem) 0 1.4rem;
+  margin-bottom: 1.6rem;
+  border-bottom: 1px solid var(--asb-rule);
+}
+.md-typeset .asb-hero h1 {
+  margin: 0 0 0.8rem;
+  font-size: clamp(2rem, 1.4rem + 2.2vw, 2.8rem);
+}
+.md-typeset .asb-hero__lede {
+  max-width: 62ch;
+  margin: 0 0 1.2rem;
+  font-size: 1.02rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--md-default-fg-color);
+}
+.md-typeset .asb-hero .md-button { margin: 0.2rem 0.4rem 0.2rem 0; }
+.md-typeset .md-button {
+  border-radius: var(--asb-radius);
+  font-weight: 500;
+}
+/* In the dark scheme the primary color is CNRS yellow: keep dark text on it */
+[data-md-color-scheme="slate"] .md-typeset .md-button--primary,
+[data-md-color-scheme="slate"] .md-typeset .md-button--primary:is(:focus, :hover) {
+  color: var(--asb-blue-ink);
+}
+[data-md-color-scheme="slate"] .md-typeset .md-button:not(.md-button--primary):is(:focus, :hover) {
+  color: var(--asb-blue-ink);
+}
+
+/* ── Infobox: an encyclopedic "at a glance" panel ──
+   Markup: <aside class="asb-infobox" markdown> with a title paragraph
+   ({ .asb-infobox__title }) and a definition list (def_list). */
+.md-typeset .asb-infobox {
+  margin: 0 0 1.5rem;
+  padding: 0.2rem 1rem 0.6rem;
+  background: var(--asb-surface-0);
+  border: 1px solid var(--asb-rule);
+  border-top: 3px solid var(--asb-blue);
+  border-radius: 0 0 var(--asb-radius) var(--asb-radius);
+  box-shadow: var(--asb-shadow-ambient);
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+.md-typeset .asb-infobox .asb-infobox__title {
+  margin: 0.6rem 0 0.4rem;
+  font-family: var(--asb-font-serif);
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  color: var(--asb-blue);
+}
+.md-typeset .asb-infobox p:has(> img) { margin: 0.2rem 0 0.6rem; text-align: center; }
+.md-typeset .asb-infobox dl {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, max-content) 1fr;
+  margin: 0;
+}
+.md-typeset .asb-infobox dt,
+.md-typeset .asb-infobox dd {
+  margin: 0;
+  padding: 0.4rem 0;
+  border-top: 1px solid var(--asb-rule);
+}
+.md-typeset .asb-infobox dt {
+  padding-right: 0.8rem;
+  font-weight: 600;
+  color: var(--asb-mute);
+}
+.md-typeset .asb-infobox dd p { margin: 0; }
+.md-typeset .asb-infobox code { font-size: 0.92em; overflow-wrap: anywhere; }
+[data-md-color-scheme="slate"] .md-typeset .asb-infobox { border-top-color: var(--asb-yellow); }
+[data-md-color-scheme="slate"] .md-typeset .asb-infobox .asb-infobox__title { color: var(--asb-paper); }
+[data-md-color-scheme="slate"] .md-typeset .asb-infobox dt { color: #aebccb; }
+@media screen and (min-width: 60em) {
+  .md-typeset .asb-infobox {
+    float: right;
+    width: min(19rem, 42%);
+    margin: 0.2rem 0 1.2rem 1.6rem;
+  }
+}
+
+/* ── Badges: status, version, relation and bridge status ── */
+.md-typeset .asb-badge {
+  display: inline-block;
+  padding: 0.05rem 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-family: var(--asb-font-sans);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.md-typeset .asb-badge--stable     { background: var(--asb-teal-ink); color: #ffffff; }        /* 5.83:1 */
+.md-typeset .asb-badge--draft      { background: var(--asb-yellow);   color: var(--asb-blue); } /* 12.36:1 */
+.md-typeset .asb-badge--deprecated { border-color: var(--asb-mute);   color: var(--asb-mute); }
+.md-typeset .asb-badge--reserved   { border-color: var(--asb-mute);   color: var(--asb-mute); border-style: dashed; }
+.md-typeset .asb-badge--normative  { background: var(--asb-blue);     color: var(--asb-paper); }
+.md-typeset .asb-badge--required   { border-color: var(--asb-blue);   color: var(--asb-blue); }
+.md-typeset .asb-badge--unverified { border-color: var(--asb-blue);   color: var(--asb-blue); border-style: dotted; background: var(--asb-yellow-soft); }
+.md-typeset .asb-badge--version {
+  background: var(--asb-surface-1);
+  color: var(--asb-blue);
+  font-family: var(--asb-font-mono);
+  letter-spacing: 0;
+  text-transform: none;
+}
+/* Relation of ASB Schema to another format: producer, upstream, peer, consumer */
+.md-typeset .asb-badge--relation   { background: var(--asb-blue);     color: var(--asb-paper); }
+/* Status of a bridge: existing, feasible, hard */
+.md-typeset .asb-badge--existing   { background: var(--asb-teal-ink); color: #ffffff; }
+.md-typeset .asb-badge--feasible   { background: var(--asb-yellow);   color: var(--asb-blue); }
+.md-typeset .asb-badge--hard       { border-color: var(--asb-ink);    color: var(--asb-ink); }
+
+[data-md-color-scheme="slate"] .md-typeset .asb-badge--stable,
+[data-md-color-scheme="slate"] .md-typeset .asb-badge--existing   { background: #2dd4bf; color: var(--asb-blue-ink); }
+[data-md-color-scheme="slate"] .md-typeset .asb-badge--normative,
+[data-md-color-scheme="slate"] .md-typeset .asb-badge--relation   { background: var(--asb-paper); color: var(--asb-blue-ink); }
+[data-md-color-scheme="slate"] .md-typeset .asb-badge--required,
+[data-md-color-scheme="slate"] .md-typeset .asb-badge--deprecated,
+[data-md-color-scheme="slate"] .md-typeset .asb-badge--reserved,
+[data-md-color-scheme="slate"] .md-typeset .asb-badge--hard       { border-color: #aebccb; color: #aebccb; }
+[data-md-color-scheme="slate"] .md-typeset .asb-badge--unverified { border-color: var(--asb-yellow); color: var(--asb-yellow); background: transparent; }
+[data-md-color-scheme="slate"] .md-typeset .asb-badge--version    { color: var(--asb-paper); }
+
+/* ── Specification strip under a schema page title ── */
+.md-typeset .asb-spec-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.7rem;
+  margin: -0.4rem 0 1.6rem;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--asb-rule);
+  border-bottom: 1px solid var(--asb-rule);
+  font-size: 0.72rem;
+}
+.md-typeset .asb-spec-meta code { background: transparent; padding: 0; overflow-wrap: anywhere; }
+
+/* ── Reference tables (opt-in wrapper: <div class="asb-ref" markdown>) ── */
+.md-typeset .asb-ref table:not([class]) { border: 0; box-shadow: none; font-size: 0.72rem; }
+.md-typeset .asb-ref table:not([class]) th {
+  background: transparent;
+  color: var(--asb-blue);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--asb-rule-strong);
+}
+.md-typeset .asb-ref table:not([class]) tr:nth-child(even) { background: transparent; }
+.md-typeset .asb-ref table:not([class]) td { border-top: 1px solid var(--asb-rule); vertical-align: top; }
+.md-typeset .asb-ref table:not([class]) td:first-child code {
+  background: transparent;
+  color: var(--asb-blue);
+  font-weight: 500;
+  white-space: nowrap;
+}
+[data-md-color-scheme="slate"] .md-typeset .asb-ref table:not([class]) th,
+[data-md-color-scheme="slate"] .md-typeset .asb-ref table:not([class]) td:first-child code { color: var(--asb-yellow); }
+
+/* ── Comparison matrices (opt-in wrapper: <div class="asb-matrix" markdown>) ──
+   Small type, uppercase heads, the first column stays visible while the
+   table scrolls sideways inside its own wrapper. */
+.md-typeset .asb-matrix table:not([class]) { font-size: 0.66rem; }
+.md-typeset .asb-matrix table:not([class]) th {
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.md-typeset .asb-matrix table:not([class]) td { vertical-align: top; min-width: 9rem; }
+.md-typeset .asb-matrix table:not([class]) :is(th, td):first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 7.5rem;
+  font-weight: 600;
+  background: var(--asb-surface-0);
+  box-shadow: 1px 0 0 var(--asb-rule-strong);
+}
+.md-typeset .asb-matrix table:not([class]) th:first-child { background: var(--asb-table-head-bg); }
+.md-typeset .asb-matrix table:not([class]) tr:nth-child(even) td:first-child { background: var(--asb-table-stripe); }
+@media screen and (max-width: 44.9375em) {
+  .md-typeset .asb-matrix table:not([class]) :is(th, td):first-child { min-width: 5.5rem; }
+  .md-typeset .asb-matrix table:not([class]) td { min-width: 7rem; }
+}
+
+/* ── Worked example frame ── */
+.md-typeset .asb-example {
+  margin: 1.5rem 0;
+  padding: 0.2rem 1rem 0.6rem;
+  background: var(--asb-surface-0);
+  border: 1px solid var(--asb-rule);
+  border-radius: var(--asb-radius);
+}
+.md-typeset .asb-example > .asb-eyebrow { margin-top: 0.8rem; }
+
+/* ── Figures and diagrams ── */
+/* Material sizes figure elements to their content; a diagram figure takes
+   the full column so that the SVG can use the available width. */
+.md-typeset figure.asb-figure,
+.md-typeset .asb-figure {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 2rem 0;
+  text-align: center;
+}
+.md-typeset .asb-figure img,
+.md-typeset .asb-figure svg { max-width: 100%; height: auto; }
+.md-typeset .asb-figure figcaption {
+  max-width: 62ch;
+  margin: 0.6rem auto 0;
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .mermaid { text-align: center; }
+
+/* Utility: start a section below a floated infobox */
+.md-typeset .asb-clear { clear: both; }
+
+/* ── Glossary (def_list inside <div class="asb-glossary" markdown>) ── */
+.md-typeset .asb-glossary dl { margin: 1rem 0; }
+.md-typeset .asb-glossary dt {
+  font-family: var(--asb-font-serif);
+  font-weight: 500;
+  font-size: 0.92rem;
+  color: var(--asb-blue);
+  margin-top: 1.1rem;
+}
+.md-typeset .asb-glossary dd {
+  margin: 0.25rem 0 0 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--asb-rule);
+}
+[data-md-color-scheme="slate"] .md-typeset .asb-glossary dt { color: var(--asb-paper); }
+
+/* ── Card grids (Material grid cards): hairline and ambient shadow ── */
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid > .card {
+  border: 1px solid var(--asb-rule);
+  border-radius: var(--asb-radius);
+  background: var(--asb-surface-0);
+  box-shadow: none;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.md-typeset .grid.cards > ul > li:hover,
+.md-typeset .grid > .card:hover {
+  border-color: var(--asb-rule-strong);
+  box-shadow: var(--asb-shadow-ambient);
+}
+.md-typeset .grid.cards > ul > li > hr { margin: 0.5rem 0; border-color: var(--asb-rule); }
+.md-typeset .grid.cards strong a { color: var(--asb-blue); }
+[data-md-color-scheme="slate"] .md-typeset .grid.cards strong a { color: var(--asb-paper); }
+
+/* ── Sources: footnotes and explicit source lists ── */
+.md-typeset .footnote,
+.md-typeset .asb-sources {
+  font-size: 0.68rem;
+  line-height: 1.55;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .footnote > hr { display: none; }
+.md-typeset .footnote ol,
+.md-typeset .asb-sources ol,
+.md-typeset .asb-sources ul { margin-top: 0.4rem; }
+.md-typeset .footnote li,
+.md-typeset .asb-sources li { margin-bottom: 0.3em; overflow-wrap: anywhere; }
+
+/* ── Clipboard icon ── */
+.md-clipboard {
+  color: var(--asb-teal);
+}
+
+.md-clipboard:hover {
+  color: var(--asb-blue);
+}
+
+[data-md-color-scheme="slate"] .md-clipboard:hover {
+  color: var(--asb-yellow);
+}
+
+/* ── Footer ── */
+.md-footer {
+  background: var(--asb-blue-ink);
+  color: var(--asb-paper);
+}
+
+.md-footer a {
+  color: var(--asb-yellow);
+}
+
+/* ── Selection ── */
+::selection {
+  background: var(--asb-yellow);
+  color: var(--asb-blue);
+}
+
+/* ── Scrollbar (WebKit) ── */
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb {
+  background: rgba(0, 40, 75, 0.2);
+  border-radius: 999px;
+}
+
+[data-md-color-scheme="slate"] *::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -1,0 +1,209 @@
+{
+    "$defs": {
+        "ExplorationNode": {
+            "additionalProperties": false,
+            "description": "One step in the research journey. The value of `type` selects which further slots are mandatory; those constraints are enforced by agentic_science_builder.trace_extract.gate, not expressible in LinkML alone.",
+            "properties": {
+                "also_depends_on": {
+                    "description": "Cross-edges to nodes outside this node's nesting, making the tree a DAG",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "alternatives": {
+                    "description": "Options considered and not taken (decision nodes). A decision with no alternative is a restatement, not a decision.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "alternatives_unanchored": {
+                    "description": "How many alternatives a guard removed from this decision (decision nodes); set only when at least one was removed, so an empty alternatives list beside a positive count is a recorded gap rather than a decision the source never qualified. The removed text is deliberately not recorded.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "children": {
+                    "description": "Nested steps that follow from this one",
+                    "items": {
+                        "$ref": "#/$defs/ExplorationNode"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "choice": {
+                    "description": "The option taken (decision nodes)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "evidence": {
+                    "description": "Claim ids, figures or tables supporting the result (experiment nodes)",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "failure_mode": {
+                    "description": "How the abandoned approach failed (dead_end nodes)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "from": {
+                    "description": "The approach departed from (pivot nodes)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "hypothesis": {
+                    "description": "What the abandoned approach assumed (dead_end nodes)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "N-prefixed, zero-padded node identifier, unique within the tree",
+                    "pattern": "^N\\d{2,}$",
+                    "type": "string"
+                },
+                "lesson": {
+                    "description": "What a later reader should take from the failure (dead_end nodes). This is the field that stops a downstream agent re-walking the same branch.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "result": {
+                    "description": "What the attempt produced (experiment nodes)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "source_refs": {
+                    "description": "Where in the source this step is stated, e.g. \"\u00a74.1\", \"Table 2\", \"Fig. 6 left\". Mandatory when support_level is explicit.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "support_level": {
+                    "$ref": "#/$defs/SupportLevelEnum",
+                    "description": "Whether the source stated this step or it was reconstructed"
+                },
+                "title": {
+                    "description": "Short human-readable label for the step",
+                    "type": "string"
+                },
+                "to": {
+                    "description": "The approach moved to (pivot nodes)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "trigger": {
+                    "description": "What prompted the change of direction (pivot nodes)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "type": {
+                    "$ref": "#/$defs/NodeTypeEnum",
+                    "description": "Kind of step"
+                }
+            },
+            "required": [
+                "id",
+                "type",
+                "title",
+                "support_level"
+            ],
+            "title": "ExplorationNode",
+            "type": "object"
+        },
+        "ExplorationTree": {
+            "additionalProperties": false,
+            "description": "A paper's exploration graph \u2014 root nodes plus everything nested beneath.",
+            "properties": {
+                "nodes": {
+                    "description": "Root nodes of the exploration graph",
+                    "items": {
+                        "$ref": "#/$defs/ExplorationNode"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "schema_version": {
+                    "description": "Version of this trace schema",
+                    "type": "string"
+                },
+                "source_doi": {
+                    "description": "DOI of the paper whose journey this trace records",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "schema_version"
+            ],
+            "title": "ExplorationTree",
+            "type": "object"
+        },
+        "NodeTypeEnum": {
+            "description": "Kind of step in the research journey",
+            "enum": [
+                "question",
+                "experiment",
+                "decision",
+                "dead_end",
+                "pivot"
+            ],
+            "title": "NodeTypeEnum",
+            "type": "string"
+        },
+        "SupportLevelEnum": {
+            "description": "Whether the source stated this step outright or it was reconstructed. The honesty axis: an inferred node must never be presented as directly observed.",
+            "enum": [
+                "explicit",
+                "inferred"
+            ],
+            "title": "SupportLevelEnum",
+            "type": "string"
+        }
+    },
+    "$id": "https://w3id.org/holobiomicslab/asb-schema/trace/v0.1",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": true,
+    "metamodel_version": "1.11.0",
+    "title": "asb_trace_v0_1",
+    "type": "object",
+    "version": "0.1.0"
+}
+

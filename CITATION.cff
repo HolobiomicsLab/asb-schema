@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using these metadata."
+type: software
+title: "ASB Schema: LinkML schemas for the ASB standard"
+abstract: >-
+  LinkML schemas for machine-readable scientific tasks extracted from
+  published research: task cards, capsules, skill bundles, skill collections
+  and the collection registry, with generated JSON Schema files and a JSON-LD
+  context.
+authors:
+  - family-names: Nothias
+    given-names: Louis-Félix
+    orcid: "https://orcid.org/0000-0001-6711-6719"
+    affiliation: "Holobiomics Lab, CNRS, Université Côte d'Azur"
+version: 0.4.0
+date-released: "2026-10-30"
+license: Apache-2.0
+repository-code: "https://github.com/HolobiomicsLab/asb-schema"
+url: "https://holobiomicslab.github.io/asb-schema/"
+keywords:
+  - LinkML
+  - JSON Schema
+  - JSON-LD
+  - RO-Crate
+  - scientific workflows
+  - research reproducibility

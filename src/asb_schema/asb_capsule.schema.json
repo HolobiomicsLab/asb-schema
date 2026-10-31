@@ -1,0 +1,1506 @@
+{
+    "$defs": {
+        "ASBTaskCard": {
+            "additionalProperties": false,
+            "description": "A bounded, reproducible scientific task extracted from a peer-reviewed paper. Links a task to its research question, finding, inputs, outputs, tools, required skills, workflow description, and evaluation strategy. Runtime mirror: agentic_science_builder.schemas.ASBTaskCard (schema v0.18.0).",
+            "properties": {
+                "article_type": {
+                    "description": "Article type classification (e.g. research-article, review, software-tool)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "artifact_refs": {
+                    "description": "Heuristic artifact binding (--enrich): prose input/output mapped to typed locators from external enrichment + package index",
+                    "items": {
+                        "$ref": "#/$defs/JsonObject"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "available_artifacts": {
+                    "description": "Artifacts accessible from the paper package (path, role, indexable, sha256)",
+                    "items": {
+                        "$ref": "#/$defs/AvailableArtifact"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "created_at": {
+                    "description": "ISO 8601 timestamp when this card was created",
+                    "type": "string"
+                },
+                "crossref_doi": {
+                    "description": "DOI of the source article (Crossref format)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "data_accessions": {
+                    "description": "Public repository accessions (MassIVE, PRIDE, MetaboLights, GEO, etc.) mined from article text",
+                    "items": {
+                        "$ref": "#/$defs/JsonObject"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "domain": {
+                    "description": "Scientific domain (e.g. metabolomics, genomics)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "domain_knowledge": {
+                    "description": "Domain-specific knowledge items required for the task",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "evaluation_strategy": {
+                    "$ref": "#/$defs/EvaluationStrategy",
+                    "description": "Structured evaluation plan with direct_checks and expert_review lists, aligned with p-plan:Plan"
+                },
+                "evidence_snippets": {
+                    "description": "Verbatim text snippets from the source paper supporting this card",
+                    "items": {
+                        "$ref": "#/$defs/EvidenceSnippet"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "expected_artifact_name": {
+                    "description": "SAB-aligned canonical output filename (equivalent to SAB output_fname)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "expected_outputs": {
+                    "description": "Human-readable expected output descriptions",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "finding": {
+                    "description": "The paper's answer or result for this task",
+                    "type": "string"
+                },
+                "github_name": {
+                    "description": "GitHub repository name (owner/repo) associated with the source article",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "input_from": {
+                    "description": "task_id of a prior sub-task whose output is this card's first input (chaining)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "inputs": {
+                    "description": "Human-readable input descriptions for the task",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "keywords": {
+                    "description": "Free-form keywords extracted by Agent 1 (methods, domains, instruments)",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "landmark_outputs": {
+                    "description": "SUPER-style partial-credit grading \u2014 2\u20136 intermediate output file patterns ordered by pipeline stage",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "linked_result_ids": {
+                    "description": "Result IDs from the claim/result ledger that this card primarily grades",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "methodology_summary": {
+                    "description": "Ordered list of plain-text procedure steps",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "missing_information": {
+                    "description": "Gaps, inaccessible artifacts, and unknowns noted by the extraction agent",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "parameters": {
+                    "description": "Agent 7 parameter resolver output \u2014 list of parameter dicts (populated only with --si-deep-dive)",
+                    "items": {
+                        "$ref": "#/$defs/JsonObject"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "primary_domain": {
+                    "description": "Primary scientific domain identified by the classifier",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "project_id": {
+                    "description": "Project assignment ID (populated only with --scenario-registry)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "provenance_source": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ProvenanceSourceEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Source category of the paper this card was extracted from"
+                },
+                "reproducibility_tier": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ReproducibilityTierEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Tier describing how reproducible this card's workflow step is"
+                },
+                "research_question": {
+                    "description": "The scientific question this task addresses",
+                    "type": "string"
+                },
+                "review_questions": {
+                    "description": "Open questions for a human reviewer of this card",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "run_command": {
+                    "description": "Shell command for asb verify (None means skip)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "run_cwd": {
+                    "description": "Working directory for run_command (relative to capsule dir)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "run_timeout_seconds": {
+                    "description": "Timeout in seconds for run_command (default 60.0)",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "scenario_id": {
+                    "description": "Scenario assignment ID (populated only with --scenario-registry)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "schema_version": {
+                    "description": "ASBTaskCard dataclass schema version (e.g. 0.17.0)",
+                    "type": "string"
+                },
+                "scitask_version": {
+                    "description": "SciTask Standard spec version (e.g. 0.1.0)",
+                    "type": "string"
+                },
+                "script_refs": {
+                    "description": "Step \u2192 source-file linkage produced by Agent 8 (--trace-scripts). Each entry: {step, file_path, chunk_name, chunk_type, start_line, end_line, score}",
+                    "items": {
+                        "$ref": "#/$defs/JsonObject"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "section_provenance": {
+                    "description": "Unique source_section values back-filled from linked claims' source_anchor",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "skills": {
+                    "description": "Reusable capabilities required to complete the task",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "source_package": {
+                    "description": "Path or identifier of the research article package this card was synthesized from",
+                    "type": "string"
+                },
+                "subdomains": {
+                    "description": "Secondary scientific sub-domains identified by the classifier",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "subtask_categories": {
+                    "description": "ScienceAgentBench-aligned subtask categories",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "synthesized_from": {
+                    "description": "Source from which this card was synthesized (e.g. article, github:owner/repo, web:https://..., mixed)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "task_description": {
+                    "description": "Full natural-language description of the task",
+                    "type": "string"
+                },
+                "task_id": {
+                    "description": "Unique identifier for this task (e.g. task_001 or doi-slug__task_001)",
+                    "type": "string"
+                },
+                "task_kind": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TaskKindEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "How this card relates to the source paper (reproduction of a reported result, derived analysis, reconstruction of a described mechanism, or an extension beyond the paper). Optional; absent means unclassified."
+                },
+                "task_objective": {
+                    "description": "One-sentence task objective (LLM mode; empty string when not populated)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "techniques": {
+                    "description": "Key experimental or computational techniques used",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "description": "Short human-readable task title",
+                    "type": "string"
+                },
+                "tools": {
+                    "description": "Software tools, databases, and APIs used in the task",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "uncertainty_notes": {
+                    "description": "Gaps and ambiguities in the card's fields",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "workflow_description": {
+                    "description": "Step-by-step methodology for executing the task",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "task_id",
+                "title",
+                "source_package",
+                "research_question",
+                "finding",
+                "task_description",
+                "inputs",
+                "expected_outputs",
+                "tools",
+                "skills",
+                "workflow_description",
+                "evaluation_strategy",
+                "created_at",
+                "schema_version",
+                "scitask_version"
+            ],
+            "title": "ASBTaskCard",
+            "type": "object"
+        },
+        "ArtifactConfidenceEnum": {
+            "description": "Detection confidence level for a typed artifact",
+            "enum": [
+                "high",
+                "medium",
+                "low",
+                "none"
+            ],
+            "title": "ArtifactConfidenceEnum",
+            "type": "string"
+        },
+        "ArtifactDetectionMethodEnum": {
+            "description": "Method used to detect artifact format",
+            "enum": [
+                "prose_regex",
+                "magic_bytes",
+                "package_filename",
+                "content_sniff",
+                "none"
+            ],
+            "title": "ArtifactDetectionMethodEnum",
+            "type": "string"
+        },
+        "ArtifactProvenanceEntry": {
+            "additionalProperties": false,
+            "description": "Provenance record for a single file in the capsule, recording how it was produced and where it was sourced from.",
+            "properties": {
+                "created_at": {
+                    "description": "ISO 8601 timestamp when this artifact was produced",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "jsonpath": {
+                    "description": "JSONPath into the emitting agent's output locating this artifact",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "path": {
+                    "description": "Relative path to the file within the capsule directory",
+                    "type": "string"
+                },
+                "source": {
+                    "$ref": "#/$defs/ArtifactSourceEnum",
+                    "description": "Source agent or process that produced this file"
+                }
+            },
+            "required": [
+                "path",
+                "source"
+            ],
+            "title": "ArtifactProvenanceEntry",
+            "type": "object"
+        },
+        "ArtifactSourceEnum": {
+            "description": "Source agent or process that produced a file in the capsule",
+            "enum": [
+                "agent2b",
+                "agent5",
+                "github_search",
+                "perspicacite_mcp",
+                "script_linker",
+                "capsule_writer",
+                "heuristic_enricher"
+            ],
+            "title": "ArtifactSourceEnum",
+            "type": "string"
+        },
+        "AvailableArtifact": {
+            "additionalProperties": false,
+            "description": "A file or data artifact accessible from the research paper package. Records its path, role in the workflow, whether it is indexable, and an optional content hash.",
+            "properties": {
+                "indexable": {
+                    "description": "Whether this artifact's content is indexed for retrieval",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "path": {
+                    "description": "Relative path to the artifact within the package",
+                    "type": "string"
+                },
+                "role": {
+                    "description": "Semantic role of the artifact (e.g. raw_data, figure, script)",
+                    "type": "string"
+                },
+                "sha256": {
+                    "description": "SHA-256 hex digest of the artifact content",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "path",
+                "role"
+            ],
+            "title": "AvailableArtifact",
+            "type": "object"
+        },
+        "ComputeTierEnum": {
+            "description": "Compute requirement tier for task execution",
+            "enum": [
+                "trivial",
+                "light",
+                "medium",
+                "heavy",
+                "hpc"
+            ],
+            "title": "ComputeTierEnum",
+            "type": "string"
+        },
+        "EvaluationStrategy": {
+            "additionalProperties": false,
+            "description": "Structured evaluation plan for a SciTask Card, aligned with the p-plan:Plan concept. Specifies direct automated checks and expert-review criteria.",
+            "properties": {
+                "direct_checks": {
+                    "description": "List of automated, deterministic checks that can be run without human review (e.g., file existence, column count, value ranges).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "expert_review": {
+                    "description": "List of criteria requiring human or expert judgment (e.g., scientific validity, reproducibility within tolerance).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "EvaluationStrategy",
+            "type": "object"
+        },
+        "EvidenceSnippet": {
+            "additionalProperties": false,
+            "description": "A verbatim text snippet extracted from the source paper that supports a claim or field in the SciTask Card.",
+            "properties": {
+                "reason": {
+                    "description": "Why this snippet was selected as evidence",
+                    "type": "string"
+                },
+                "snippet_id": {
+                    "description": "Unique identifier for this snippet (e.g. snip_001)",
+                    "type": "string"
+                },
+                "source_path": {
+                    "description": "Relative path to the source file from which this snippet was extracted",
+                    "type": "string"
+                },
+                "text": {
+                    "description": "Verbatim text of the evidence snippet",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "snippet_id",
+                "source_path",
+                "reason",
+                "text"
+            ],
+            "title": "EvidenceSnippet",
+            "type": "object"
+        },
+        "ExecutableSpec": {
+            "additionalProperties": false,
+            "description": "A runnable command bound to a SciTask Card.",
+            "properties": {
+                "cmd": {
+                    "description": "Command as a list of arguments (no shell string)",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "timeout_s": {
+                    "description": "Timeout in seconds (default 300)",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "working_dir": {
+                    "description": "Working directory for the command",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "cmd"
+            ],
+            "title": "ExecutableSpec",
+            "type": "object"
+        },
+        "ExecutionEnvironment": {
+            "additionalProperties": false,
+            "description": "Software/hardware/scheduler/agentic context that ran or is required to run a card or workflow.",
+            "properties": {
+                "asb_version": {
+                    "description": "AgenticScienceBuilder version used",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "cloud_region": {
+                    "description": "Cloud region or availability zone",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "container_image": {
+                    "description": "Docker or Singularity container image URI",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "hardware_profile": {
+                    "description": "Hardware profile description (e.g. CPU, GPU, RAM)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "llm_models": {
+                    "description": "LLM model IDs used during card synthesis",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "lockfile_path": {
+                    "description": "Path to the lockfile (e.g. requirements.txt, uv.lock)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "operating_system": {
+                    "description": "Operating system name and version",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "python_version": {
+                    "description": "Python version string",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "scheduler": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SchedulerEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "HPC or cluster scheduler"
+                }
+            },
+            "title": "ExecutionEnvironment",
+            "type": "object"
+        },
+        "ExecutionProfile": {
+            "additionalProperties": false,
+            "description": "Execution and tool requirements for a scientific task.",
+            "properties": {
+                "commercial_software": {
+                    "description": "List of commercial or proprietary software tools required",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "compute_tier": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ComputeTierEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Compute requirement tier for task execution"
+                },
+                "open_source_alternatives": {
+                    "description": "Open-source alternatives to commercial tools",
+                    "items": {
+                        "$ref": "#/$defs/ToolAlternative"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "ExecutionProfile",
+            "type": "object"
+        },
+        "JsonObject": {
+            "additionalProperties": true,
+            "description": "Arbitrary JSON object; members may be any JSON values.",
+            "title": "JsonObject",
+            "type": "object"
+        },
+        "ProvenanceLinks": {
+            "additionalProperties": false,
+            "description": "PROV-O-inspired links for a SciTask Card.",
+            "properties": {
+                "used": {
+                    "description": "IRIs or IDs of entities used (inputs, prior task outputs)",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "was_influenced_by": {
+                    "description": "IRIs or IDs of entities that influenced this card",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "ProvenanceLinks",
+            "type": "object"
+        },
+        "ProvenanceSourceEnum": {
+            "description": "Source from which a SciTask Card was synthesized",
+            "enum": [
+                "published",
+                "preprint",
+                "draft_paper",
+                "local_project"
+            ],
+            "title": "ProvenanceSourceEnum",
+            "type": "string"
+        },
+        "ReproducibilityTierEnum": {
+            "description": "Tier describing how reproducible a card's workflow step is",
+            "enum": [
+                "certified",
+                "type-checked",
+                "bypassed",
+                "manual-only",
+                "experimental"
+            ],
+            "title": "ReproducibilityTierEnum",
+            "type": "string"
+        },
+        "ResumptionContract": {
+            "additionalProperties": false,
+            "description": "Recipe for resuming a workflow at a step whose runner cannot re-execute (bypassed compute, commercial/GUI software, wet-lab step).",
+            "properties": {
+                "alt_cli_method": {
+                    "description": "CLI alternative or manual SOP for manual-only steps",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "cached_outputs": {
+                    "description": "Hash-pinned artifact paths for bypassed steps",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "protocol": {
+                    "description": "Protocol description for experimental resumption",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "pseudo_outputs": {
+                    "description": "Wet-lab stand-in outputs for experimental steps",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "ResumptionContract",
+            "type": "object"
+        },
+        "SchedulerEnum": {
+            "description": "HPC / cluster scheduler",
+            "enum": [
+                "none",
+                "slurm",
+                "lsf",
+                "pbs",
+                "kubernetes"
+            ],
+            "title": "SchedulerEnum",
+            "type": "string"
+        },
+        "SciTaskCapsule": {
+            "additionalProperties": false,
+            "description": "An RO-Crate 1.1 + Workflow Run Profile 0.5 package that wraps a SciTask Card with supporting evidence, provenance, evaluation manifests, and embedded scripts. Conforms to schema:Dataset, rocrate:Dataset, and pplan:Plan.",
+            "properties": {
+                "artifact_provenance": {
+                    "description": "Provenance manifest for all files in the capsule",
+                    "items": {
+                        "$ref": "#/$defs/ArtifactProvenanceEntry"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "capsule_artifacts": {
+                    "description": "Artifacts accessible within this capsule",
+                    "items": {
+                        "$ref": "#/$defs/AvailableArtifact"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "capsule_card": {
+                    "$ref": "#/$defs/ASBTaskCard",
+                    "description": "The SciTask Card embedded in this capsule"
+                },
+                "capsule_created_at": {
+                    "description": "ISO 8601 timestamp when this capsule was created",
+                    "type": "string"
+                },
+                "capsule_dir": {
+                    "description": "Relative or absolute path to the capsule directory on disk",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "capsule_task_id": {
+                    "description": "Unique identifier for this capsule; typically doi-slug__task_NNN. Matches the task_id in the embedded ASBTaskCard.",
+                    "type": "string"
+                },
+                "profile_version": {
+                    "description": "Workflow Run Profile version used (e.g. 0.5)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "ro_crate_version": {
+                    "description": "RO-Crate specification version used (e.g. 1.1)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "capsule_task_id",
+                "capsule_card",
+                "capsule_created_at"
+            ],
+            "title": "SciTaskCapsule",
+            "type": "object"
+        },
+        "TaskKindEnum": {
+            "description": "What a SciTask Card represents relative to the source paper: a result the paper empirically reported, a derived re-analysis, a described-but-not- separately-validated mechanism, or a task beyond the paper's reported scope.",
+            "enum": [
+                "reproduction",
+                "analysis",
+                "component_reconstruction",
+                "extension"
+            ],
+            "title": "TaskKindEnum",
+            "type": "string"
+        },
+        "TaskPort": {
+            "additionalProperties": false,
+            "description": "A single typed data port (input or output) on a SciTask Card.",
+            "properties": {
+                "edam_format_uri": {
+                    "description": "EDAM format IRI for the data format of this port",
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "edam_operation_uri": {
+                    "description": "EDAM operation IRI for the operation that produces or consumes this port",
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "evidence_id": {
+                    "description": "ID of the EvidenceSnippet that supports this port's existence",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "label": {
+                    "description": "Human-readable label for this port",
+                    "type": "string"
+                },
+                "port_id": {
+                    "description": "Unique identifier for this port",
+                    "type": "string"
+                },
+                "source": {
+                    "description": "Source artifact name or path",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "source_dataset": {
+                    "description": "Repository or dataset name for the source",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "port_id",
+                "label"
+            ],
+            "title": "TaskPort",
+            "type": "object"
+        },
+        "ToolAlternative": {
+            "additionalProperties": false,
+            "description": "A closed-source / open-source tool pair with optional divergence notes.",
+            "properties": {
+                "closed": {
+                    "description": "Closed-source or proprietary tool name",
+                    "type": "string"
+                },
+                "expected_divergence": {
+                    "description": "Notes on expected behavioral or performance divergence",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "oss": {
+                    "description": "Open-source alternative tool name",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "closed",
+                "oss"
+            ],
+            "title": "ToolAlternative",
+            "type": "object"
+        },
+        "TypedArtifact": {
+            "additionalProperties": false,
+            "description": "A typed, format-identified artifact (input or output) of a SciTask Card. Pairs 1-to-1 with an entry in inputs[] or expected_outputs[].",
+            "properties": {
+                "acquisition_mode": {
+                    "description": "MS acquisition mode (DDA/DIA/targeted/full_scan/unknown)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "confidence": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ArtifactConfidenceEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Detection confidence level"
+                },
+                "description": {
+                    "description": "Original prose string from the card (verbatim)",
+                    "type": "string"
+                },
+                "detection_method": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ArtifactDetectionMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "How the format was detected"
+                },
+                "file_extension": {
+                    "description": "Representative file extension (e.g. .mzml)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "format_id": {
+                    "description": "Short format key (e.g. mzML) matching a FormatSpec.name",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "format_iri": {
+                    "description": "EDAM format IRI (e.g. http://edamontology.org/format_3244)",
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "instrument_class": {
+                    "description": "Advisory instrument class hint extracted from article text",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "ionization_polarity": {
+                    "description": "Ionization polarity (positive/negative/both/unknown)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "ontology_class": {
+                    "description": "PSI-MS or fallback OBO class string (e.g. MS:1000584)",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "description"
+            ],
+            "title": "TypedArtifact",
+            "type": "object"
+        }
+    },
+    "$id": "https://w3id.org/holobiomicslab/asb-schema/capsule/v0.2",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": true,
+    "description": "A bounded, reproducible scientific task extracted from a peer-reviewed paper. Links a task to its research question, finding, inputs, outputs, tools, required skills, workflow description, and evaluation strategy. Runtime mirror: agentic_science_builder.schemas.ASBTaskCard (schema v0.18.0).",
+    "metamodel_version": "1.11.0",
+    "properties": {
+        "article_type": {
+            "description": "Article type classification (e.g. research-article, review, software-tool)",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "artifact_refs": {
+            "description": "Heuristic artifact binding (--enrich): prose input/output mapped to typed locators from external enrichment + package index",
+            "items": {
+                "$ref": "#/$defs/JsonObject"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "available_artifacts": {
+            "description": "Artifacts accessible from the paper package (path, role, indexable, sha256)",
+            "items": {
+                "$ref": "#/$defs/AvailableArtifact"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "created_at": {
+            "description": "ISO 8601 timestamp when this card was created",
+            "type": "string"
+        },
+        "crossref_doi": {
+            "description": "DOI of the source article (Crossref format)",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "data_accessions": {
+            "description": "Public repository accessions (MassIVE, PRIDE, MetaboLights, GEO, etc.) mined from article text",
+            "items": {
+                "$ref": "#/$defs/JsonObject"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "domain": {
+            "description": "Scientific domain (e.g. metabolomics, genomics)",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "domain_knowledge": {
+            "description": "Domain-specific knowledge items required for the task",
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "evaluation_strategy": {
+            "$ref": "#/$defs/EvaluationStrategy",
+            "description": "Structured evaluation plan with direct_checks and expert_review lists, aligned with p-plan:Plan"
+        },
+        "evidence_snippets": {
+            "description": "Verbatim text snippets from the source paper supporting this card",
+            "items": {
+                "$ref": "#/$defs/EvidenceSnippet"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "expected_artifact_name": {
+            "description": "SAB-aligned canonical output filename (equivalent to SAB output_fname)",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "expected_outputs": {
+            "description": "Human-readable expected output descriptions",
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "finding": {
+            "description": "The paper's answer or result for this task",
+            "type": "string"
+        },
+        "github_name": {
+            "description": "GitHub repository name (owner/repo) associated with the source article",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "input_from": {
+            "description": "task_id of a prior sub-task whose output is this card's first input (chaining)",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "inputs": {
+            "description": "Human-readable input descriptions for the task",
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "keywords": {
+            "description": "Free-form keywords extracted by Agent 1 (methods, domains, instruments)",
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "landmark_outputs": {
+            "description": "SUPER-style partial-credit grading \u2014 2\u20136 intermediate output file patterns ordered by pipeline stage",
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "linked_result_ids": {
+            "description": "Result IDs from the claim/result ledger that this card primarily grades",
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "methodology_summary": {
+            "description": "Ordered list of plain-text procedure steps",
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "missing_information": {
+            "description": "Gaps, inaccessible artifacts, and unknowns noted by the extraction agent",
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "parameters": {
+            "description": "Agent 7 parameter resolver output \u2014 list of parameter dicts (populated only with --si-deep-dive)",
+            "items": {
+                "$ref": "#/$defs/JsonObject"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "primary_domain": {
+            "description": "Primary scientific domain identified by the classifier",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "project_id": {
+            "description": "Project assignment ID (populated only with --scenario-registry)",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "provenance_source": {
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/ProvenanceSourceEnum"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "description": "Source category of the paper this card was extracted from"
+        },
+        "reproducibility_tier": {
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/ReproducibilityTierEnum"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "description": "Tier describing how reproducible this card's workflow step is"
+        },
+        "research_question": {
+            "description": "The scientific question this task addresses",
+            "type": "string"
+        },
+        "review_questions": {
+            "description": "Open questions for a human reviewer of this card",
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "run_command": {
+            "description": "Shell command for asb verify (None means skip)",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "run_cwd": {
+            "description": "Working directory for run_command (relative to capsule dir)",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "run_timeout_seconds": {
+            "description": "Timeout in seconds for run_command (default 60.0)",
+            "type": [
+                "number",
+                "null"
+            ]
+        },
+        "scenario_id": {
+            "description": "Scenario assignment ID (populated only with --scenario-registry)",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "schema_version": {
+            "description": "ASBTaskCard dataclass schema version (e.g. 0.17.0)",
+            "type": "string"
+        },
+        "scitask_version": {
+            "description": "SciTask Standard spec version (e.g. 0.1.0)",
+            "type": "string"
+        },
+        "script_refs": {
+            "description": "Step \u2192 source-file linkage produced by Agent 8 (--trace-scripts). Each entry: {step, file_path, chunk_name, chunk_type, start_line, end_line, score}",
+            "items": {
+                "$ref": "#/$defs/JsonObject"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "section_provenance": {
+            "description": "Unique source_section values back-filled from linked claims' source_anchor",
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "skills": {
+            "description": "Reusable capabilities required to complete the task",
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "source_package": {
+            "description": "Path or identifier of the research article package this card was synthesized from",
+            "type": "string"
+        },
+        "subdomains": {
+            "description": "Secondary scientific sub-domains identified by the classifier",
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "subtask_categories": {
+            "description": "ScienceAgentBench-aligned subtask categories",
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "synthesized_from": {
+            "description": "Source from which this card was synthesized (e.g. article, github:owner/repo, web:https://..., mixed)",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "task_description": {
+            "description": "Full natural-language description of the task",
+            "type": "string"
+        },
+        "task_id": {
+            "description": "Unique identifier for this task (e.g. task_001 or doi-slug__task_001)",
+            "type": "string"
+        },
+        "task_kind": {
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/TaskKindEnum"
+                },
+                {
+                    "type": "null"
+                }
+            ],
+            "description": "How this card relates to the source paper (reproduction of a reported result, derived analysis, reconstruction of a described mechanism, or an extension beyond the paper). Optional; absent means unclassified."
+        },
+        "task_objective": {
+            "description": "One-sentence task objective (LLM mode; empty string when not populated)",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "techniques": {
+            "description": "Key experimental or computational techniques used",
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "title": {
+            "description": "Short human-readable task title",
+            "type": "string"
+        },
+        "tools": {
+            "description": "Software tools, databases, and APIs used in the task",
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "uncertainty_notes": {
+            "description": "Gaps and ambiguities in the card's fields",
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "workflow_description": {
+            "description": "Step-by-step methodology for executing the task",
+            "type": "string"
+        }
+    },
+    "required": [
+        "task_id",
+        "title",
+        "source_package",
+        "research_question",
+        "finding",
+        "task_description",
+        "inputs",
+        "expected_outputs",
+        "tools",
+        "skills",
+        "workflow_description",
+        "evaluation_strategy",
+        "created_at",
+        "schema_version",
+        "scitask_version"
+    ],
+    "title": "asb_capsule_v0_2",
+    "type": "object",
+    "version": "0.1.0"
+}
+

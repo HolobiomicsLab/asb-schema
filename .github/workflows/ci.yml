@@ -1,0 +1,72 @@
+# Tests, generated-artefact check, package check and documentation build.
+# Runs on every pull request and on every push to main.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: python -m pip install -e ".[dev]"
+      - name: Test
+        run: python -m pytest -q
+
+  generated:
+    # The JSON Schema files, context.jsonld and the field reference page
+    # docs/reference/index.md must equal the generator output.
+    # Only the generation_date line of context.jsonld may differ.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: python -m pip install -e .
+      - name: Regenerate
+        run: bash generate.sh
+      - name: Compare with the committed files
+        run: |
+          git diff --exit-code -I '"generation_date"' -- src/asb_schema docs/reference/index.md \
+            || { echo "::error::Generated artefacts are out of date. Run 'bash generate.sh' and commit."; exit 1; }
+
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build and check metadata
+        run: |
+          python -m pip install build twine
+          python -m build
+          python -m twine check --strict dist/*
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build the documentation site
+        run: |
+          python -m pip install -e ".[docs]"
+          mkdocs build --strict

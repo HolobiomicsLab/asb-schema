@@ -1,0 +1,111 @@
+id: https://w3id.org/holobiomicslab/asb-schema/skill-collection-registry/v0.2
+name: asb_skill_collection_registry_v0_2
+description: >-
+  LinkML schema for the asb-skill-collections catalogue root. Lists all
+  published SkillCollection releases and reserves an `external_repos` slot
+  for future federation (IDEAS-I / spec §9.2). The serialized form is
+  `catalogue.jsonld` at the root of the `asb-skill-collections` repo.
+
+license: CC-BY-4.0
+version: "0.2.0"
+
+prefixes:
+  linkml:   https://w3id.org/linkml/
+  asb:      https://w3id.org/holobiomicslab/asb-schema/
+  asbskill: https://w3id.org/holobiomicslab/asb-skill/
+  schema:   http://schema.org/
+  dcterms:  http://purl.org/dc/terms/
+  prov:     http://www.w3.org/ns/prov#
+
+imports:
+  - linkml:types
+  - asb_skill_collection
+
+default_prefix: asb
+default_range: string
+
+classes:
+
+  SkillCollectionRegistry:
+    description: >-
+      Catalogue root for the `asb-skill-collections` repo. Lists every
+      released SkillCollection, plus a reserved (v1-off) federation slot.
+    tree_root: true
+    slots:
+      - registry_iri
+      - registry_title
+      - registry_description
+      - registry_maintainers
+      - collections
+      - external_repos
+      - generated_at
+
+slots:
+
+  registry_iri:
+    description: Stable IRI of this registry (e.g. w3id.org/holobiomicslab/asb-skill/)
+    range: uriorcurie
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - schema:url
+
+  registry_title:
+    description: Human-readable registry title
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - schema:name
+
+  registry_description:
+    description: Human-readable description of the registry
+    range: string
+    annotations:
+      importance: should_have
+    exact_mappings:
+      - schema:description
+
+  registry_maintainers:
+    description: People listed in MAINTAINERS.md who curate this registry
+    range: Person
+    multivalued: true
+    annotations:
+      importance: should_have
+    close_mappings:
+      - schema:contributor
+
+  collections:
+    description: >-
+      IRIs of all SkillCollection releases catalogued by this registry.
+      Each entry pins a specific version (e.g.
+      w3id.org/holobiomicslab/asb-skill/collection/metabolomics/v1).
+    range: uriorcurie
+    multivalued: true
+    required: true
+    annotations:
+      importance: must_have
+    close_mappings:
+      - dcterms:hasPart
+
+  external_repos:
+    description: >-
+      RESERVED (off in v1). Future federation slot — IRIs of third-party
+      `*-skill-collections` repos whose collections get aggregated into this
+      catalogue. Per spec §9.2 and §15, this is a design slot only.
+    range: uriorcurie
+    multivalued: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - dcterms:isPartOf
+
+  generated_at:
+    description: When this catalogue snapshot was generated (ISO 8601)
+    range: datetime
+    annotations:
+      importance: should_have
+    exact_mappings:
+      - prov:generatedAtTime

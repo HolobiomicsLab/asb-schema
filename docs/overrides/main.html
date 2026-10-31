@@ -1,0 +1,11 @@
+{#- Site-wide status notice. The text is a dated fact; update it with each release. -#}
+{% extends "base.html" %}
+
+{% block announce %}
+  <div class="asb-announce">
+    <span class="asb-badge asb-badge--draft">pre-1.0</span>
+    ASB Schema 0.4.0 is a pre-1.0 release: a minor release may change a schema
+    so that data valid under the previous release fails.
+    <a href="{{ 'about/' | url }}#status">Status of this document</a>
+  </div>
+{% endblock %}

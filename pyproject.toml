@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "asb-schema"
+version = "0.4.0"
+description = "LinkML schemas for the ASB standard: task cards, capsules, skill bundles and skill collections"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [
+  {name = "AgenticScienceBuilder contributors"}
+]
+dependencies = [
+    "linkml>=1.7,<1.12",  # 1.12 changes JSON Schema generation (nested additionalProperties); the published schemas come from the locked 1.11.x
+    "linkml-runtime>=1.7,<1.12",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+docs = ["mkdocs-material==9.7.6"]
+
+[project.urls]
+Homepage = "https://holobiomicslab.github.io/asb-schema/"
+Repository = "https://github.com/HolobiomicsLab/asb-schema"
+Changelog = "https://github.com/HolobiomicsLab/asb-schema/blob/main/CHANGELOG.md"
+Issues = "https://github.com/HolobiomicsLab/asb-schema/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+asb_schema = ["*.yaml", "*.schema.json", "*.owl.ttl", "*.jsonld"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

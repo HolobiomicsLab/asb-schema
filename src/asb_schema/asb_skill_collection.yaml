@@ -1,0 +1,349 @@
+id: https://w3id.org/holobiomicslab/asb-schema/skill-collection/v0.3
+name: asb_skill_collection_v0_3
+description: >-
+  LinkML schema for ASB SkillCollection — a curated thematic release containing
+  N ASBSkills and M ASBTools, pinned by content-hash IRIs. Each SkillCollection
+  release corresponds to one Zenodo concept DOI; releases mint version DOIs
+  beneath that concept. See ../../docs/superpowers/specs/2026-05-24-asb-skills-release-design.md §3.
+  v0.3 declares the ten keys every released collection.yaml already carries
+  (JSON-LD framing, lead curators, counts, catalogue topics, attribution roles,
+  Zenodo DOI), so a real manifest validates against the class instead of failing
+  on additional properties. All ten are optional; the required set is unchanged.
+
+license: CC-BY-4.0
+version: "0.3.0"
+
+prefixes:
+  linkml:   https://w3id.org/linkml/
+  asb:      https://w3id.org/holobiomicslab/asb-schema/
+  asbskill: https://w3id.org/holobiomicslab/asb-skill/
+  schema:   http://schema.org/
+  dcterms:  http://purl.org/dc/terms/
+  prov:     http://www.w3.org/ns/prov#
+  EDAM:     http://edamontology.org/
+  rocrate:  https://w3id.org/ro/crate#
+
+imports:
+  - linkml:types
+  - asb_skill_bundle
+
+default_prefix: asb
+default_range: string
+
+classes:
+
+  Any:
+    description: >-
+      Unconstrained value. Used only for the inline JSON-LD `@context`, whose
+      shape (IRI string, object or list) belongs to JSON-LD, not to this schema.
+    class_uri: linkml:Any
+
+  Person:
+    description: A person — contributor at the collection level (IDEAS-B / spec §16.3).
+    attributes:
+      name:
+        description: Full display name
+        range: string
+        required: true
+        annotations:
+          importance: must_have
+        exact_mappings:
+          - schema:name
+      orcid:
+        description: ORCID iD as a URI (https://orcid.org/0000-0000-0000-0000)
+        range: uri
+        annotations:
+          importance: should_have
+        exact_mappings:
+          - schema:identifier
+      affiliation:
+        description: Institutional affiliation (free-form; e.g. "Holobiomics Lab, CNRS")
+        range: string
+        annotations:
+          importance: should_have
+        close_mappings:
+          - schema:affiliation
+
+  SkillCollection:
+    description: >-
+      A curated thematic release of N ASBSkills and M ASBTools, pinned by
+      content-hash. Distinct from per-capsule SkillBundle; this is the
+      release unit (IDEAS-B / spec §3).
+    tree_root: true
+    slots:
+      - iri
+      - slug
+      - version
+      - title
+      - description
+      - license
+      - contributors
+      - doi
+      - released_at
+      - skills
+      - tools
+      - edam_topics
+      - source_collections
+      - catalogue_membership
+      - ro_crate_path
+      - jsonld_context
+      - jsonld_type
+      - jsonld_id
+      - lead_curators
+      - skills_count
+      - tools_count
+      - workflows_count
+      - domain_topics
+      - roles
+      - zenodo_doi
+
+  Curator:
+    description: >-
+      A lead curator as released manifests record one: display name, a bare ORCID
+      iD and a GitHub handle. Distinct from Person, whose `orcid` is a URI; the
+      manifest writer derives `contributors` from this list with the URI form.
+    attributes:
+      name:
+        description: Full display name
+        range: string
+        required: true
+        exact_mappings:
+          - schema:name
+      orcid:
+        description: Bare ORCID iD (0000-0000-0000-0000), not a URI
+        range: string
+        pattern: "^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]$"
+      github:
+        description: GitHub user name
+        range: string
+
+  CollectionRoles:
+    description: >-
+      Attribution roles for the collection as a whole, mirroring the per-skill
+      `attribution` block: what generated it, who promotes it, who paid for it,
+      who curated it, and the author list deposited on Zenodo.
+    attributes:
+      generator:
+        description: What produced the content (a pipeline, not a human author)
+        range: string
+      promoter:
+        description: Person who proposes the collection for use
+        range: string
+      sponsor:
+        description: Who paid the generation cost
+        range: string
+      curators:
+        description: People who modified or validated the content (may be empty)
+        range: string
+        multivalued: true
+      zenodo_authors:
+        description: Creators as listed on the Zenodo deposit, in order
+        range: string
+        multivalued: true
+
+slots:
+
+  iri:
+    description: >-
+      Stable IRI for this collection release (e.g.
+      w3id.org/holobiomicslab/asb-skill/collection/metabolomics/v1).
+    range: uriorcurie
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - schema:url
+
+  slug:
+    description: Short slug for the collection (e.g. "metabolomics")
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - schema:identifier
+
+  version:
+    description: Release version number (integer; matches the vN in the IRI)
+    range: integer
+    required: true
+    annotations:
+      importance: must_have
+    close_mappings:
+      - schema:version
+
+  title:
+    description: Human-readable collection title
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - schema:name
+
+  description:
+    description: Human-readable description of the collection's scope and thematic coherence
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - schema:description
+
+  license:
+    description: SPDX license identifier (e.g. "CC-BY-4.0")
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - schema:license
+
+  contributors:
+    description: People who curated this collection (per-collection ORCIDs; spec §16.3)
+    range: Person
+    multivalued: true
+    annotations:
+      importance: should_have
+    close_mappings:
+      - schema:contributor
+
+  doi:
+    description: Zenodo DOI of this collection release (uriorcurie)
+    range: uriorcurie
+    annotations:
+      importance: should_have
+    exact_mappings:
+      - schema:identifier
+
+  released_at:
+    description: Release timestamp (ISO 8601)
+    range: datetime
+    annotations:
+      importance: should_have
+    exact_mappings:
+      - schema:datePublished
+
+  skills:
+    description: >-
+      Content-hash-pinned references to ASBSkill entries included in this release.
+      Each entry is an IRI of the form
+      w3id.org/holobiomicslab/asb-skill/<slug>@sha256:<hash>
+    range: uriorcurie
+    multivalued: true
+    annotations:
+      importance: must_have
+    close_mappings:
+      - dcterms:hasPart
+
+  tools:
+    description: >-
+      Content-hash-pinned references to ASBTool entries used by this collection.
+      Each entry is an IRI of the form
+      w3id.org/holobiomicslab/asb-tool/<slug>@sha256:<hash>
+    range: uriorcurie
+    multivalued: true
+    annotations:
+      importance: should_have
+    close_mappings:
+      - dcterms:hasPart
+
+  edam_topics:
+    description: Collection-level EDAM topic IRIs (anchors the whole release)
+    range: uri
+    multivalued: true
+    annotations:
+      importance: should_have
+    exact_mappings:
+      - EDAM:topic_0003
+
+  source_collections:
+    description: >-
+      Recursive — IRIs of prior collections this release is derived from
+      (e.g. merged or split). Empty for fresh collections.
+    range: uriorcurie
+    multivalued: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - prov:wasDerivedFrom
+
+  catalogue_membership:
+    description: >-
+      Higher-level catalogue IRIs that include this collection
+      (typically the SkillCollectionRegistry root).
+    range: uriorcurie
+    multivalued: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - dcterms:isPartOf
+
+  ro_crate_path:
+    description: Path to this collection's ro-crate-metadata.json (relative to release root)
+    range: string
+    annotations:
+      importance: should_have
+    exact_mappings:
+      - prov:atLocation
+
+  jsonld_context:
+    description: >-
+      Inline JSON-LD context of the manifest. Serialised as `@context`; opaque
+      to this schema.
+    alias: "@context"
+    range: Any
+
+  jsonld_type:
+    description: JSON-LD type of the manifest node (e.g. asb:SkillCollection). Serialised as `@type`.
+    alias: "@type"
+    range: string
+
+  jsonld_id:
+    description: JSON-LD node identifier; equal to `iri` in released manifests. Serialised as `@id`.
+    alias: "@id"
+    range: uriorcurie
+
+  lead_curators:
+    description: Lead curators of the release (see Curator).
+    range: Curator
+    multivalued: true
+    inlined_as_list: true
+
+  skills_count:
+    description: Number of skills the release declares; read by the catalogue generator.
+    range: integer
+    minimum_value: 0
+
+  tools_count:
+    description: Number of tools the release declares; read by the catalogue generator.
+    range: integer
+    minimum_value: 0
+
+  workflows_count:
+    description: >-
+      Number of workflow directories the release ships, when declared; a release
+      gate checks it against the tree.
+    range: integer
+    minimum_value: 0
+
+  domain_topics:
+    description: >-
+      EDAM topic IRIs under the name the catalogue generator reads. Released
+      manifests carry the same list as `edam_topics`.
+    range: uri
+    multivalued: true
+    close_mappings:
+      - schema:about
+
+  roles:
+    description: Collection-level attribution roles (see CollectionRoles).
+    range: CollectionRoles
+    inlined: true
+
+  zenodo_doi:
+    description: >-
+      Bare Zenodo DOI of the deposit (10.5281/zenodo.N), as recorded by the
+      Zenodo release step. Released manifests carry the same value as `doi`.
+    range: string
+    pattern: "^10\\.5281/zenodo\\.[0-9]+$"

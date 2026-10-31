@@ -1,0 +1,183 @@
+id: https://w3id.org/holobiomicslab/asb-schema/capsule/v0.2
+name: asb_capsule_v0_2
+description: >-
+  LinkML schema for SciTask Capsule v0.1 — an RO-Crate 1.1 + Workflow Run Profile 0.5
+  directory wrapping a SciTask Card with evidence, provenance, evaluation material,
+  and embedded script chunks.
+
+license: CC-BY-4.0
+version: "0.1.0"
+
+prefixes:
+  linkml:   https://w3id.org/linkml/
+  asb:      https://w3id.org/holobiomicslab/asb-schema/
+  asbskill: https://w3id.org/holobiomicslab/asb-skill/
+  schema:   http://schema.org/
+  dcterms:  http://purl.org/dc/terms/
+  pplan:    http://purl.org/net/p-plan#
+  prov:     http://www.w3.org/ns/prov#
+  EDAM:     http://edamontology.org/
+  rocrate:  https://w3id.org/ro/crate#
+
+imports:
+  - linkml:types
+  - asb_card
+
+default_prefix: asb
+default_range: string
+
+# ---------------------------------------------------------------------------
+# Enumerations
+# ---------------------------------------------------------------------------
+
+enums:
+
+  ArtifactSourceEnum:
+    description: >-
+      Source agent or process that produced a file in the capsule
+    permissible_values:
+      agent2b:
+        description: Card synthesizer (LLM-based Agent 2b)
+      agent5:
+        description: Skill bundle synthesizer
+      github_search:
+        description: GitHub search enricher
+      perspicacite_mcp:
+        description: Perspicacite MCP enrichment
+      script_linker:
+        description: Script linker agent (Agent 8)
+      capsule_writer:
+        description: Capsule writer
+      heuristic_enricher:
+        description: Heuristic enricher (non-LLM)
+
+# ---------------------------------------------------------------------------
+# Classes
+# ---------------------------------------------------------------------------
+
+classes:
+
+  ArtifactProvenanceEntry:
+    description: >-
+      Provenance record for a single file in the capsule, recording how it was
+      produced and where it was sourced from.
+    attributes:
+      path:
+        description: Relative path to the file within the capsule directory
+        range: string
+        required: true
+        annotations:
+          importance: must_have
+        exact_mappings:
+          - prov:atLocation
+      source:
+        description: Source agent or process that produced this file
+        range: ArtifactSourceEnum
+        required: true
+        annotations:
+          importance: must_have
+        exact_mappings:
+          - prov:wasGeneratedBy
+      jsonpath:
+        description: JSONPath into the emitting agent's output locating this artifact
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - prov:atLocation
+      created_at:
+        description: ISO 8601 timestamp when this artifact was produced
+        range: string
+        annotations:
+          importance: should_have
+        exact_mappings:
+          - dcterms:created
+
+  SciTaskCapsule:
+    description: >-
+      An RO-Crate 1.1 + Workflow Run Profile 0.5 package that wraps a SciTask Card
+      with supporting evidence, provenance, evaluation manifests, and embedded scripts.
+      Conforms to schema:Dataset, rocrate:Dataset, and pplan:Plan.
+    tree_root: true
+    slots:
+      - capsule_task_id
+      - ro_crate_version
+      - profile_version
+      - capsule_card
+      - capsule_artifacts
+      - capsule_created_at
+      - artifact_provenance
+      - capsule_dir
+
+slots:
+
+  capsule_task_id:
+    description: >-
+      Unique identifier for this capsule; typically doi-slug__task_NNN.
+      Matches the task_id in the embedded ASBTaskCard.
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - dcterms:identifier
+
+  ro_crate_version:
+    description: RO-Crate specification version used (e.g. 1.1)
+    range: string
+    annotations:
+      importance: must_have
+    close_mappings:
+      - schema:version
+
+  profile_version:
+    description: Workflow Run Profile version used (e.g. 0.5)
+    range: string
+    annotations:
+      importance: should_have
+    close_mappings:
+      - schema:version
+
+  capsule_card:
+    description: The SciTask Card embedded in this capsule
+    range: ASBTaskCard
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - pplan:Plan
+
+  capsule_artifacts:
+    description: Artifacts accessible within this capsule
+    range: AvailableArtifact
+    multivalued: true
+    annotations:
+      importance: should_have
+    close_mappings:
+      - rocrate:Dataset
+
+  capsule_created_at:
+    description: ISO 8601 timestamp when this capsule was created
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - dcterms:created
+
+  artifact_provenance:
+    description: Provenance manifest for all files in the capsule
+    range: ArtifactProvenanceEntry
+    multivalued: true
+    annotations:
+      importance: should_have
+    exact_mappings:
+      - prov:wasGeneratedBy
+
+  capsule_dir:
+    description: Relative or absolute path to the capsule directory on disk
+    range: string
+    annotations:
+      importance: nice_to_have
+    exact_mappings:
+      - prov:atLocation

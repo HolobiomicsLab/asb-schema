@@ -1,0 +1,34 @@
+id: https://w3id.org/holobiomicslab/asb-schema/v0.2
+name: asb_standard
+description: >-
+  ASB Standard v0.2 — schema for scientific benchmark substrates and curated
+  skill / tool release collections. Imports sub-schemas for ASB Cards,
+  Capsules, Skill Bundles, Skill Collections, and the SkillCollectionRegistry.
+
+license: CC-BY-4.0
+version: "0.2.0"
+
+prefixes:
+  linkml:   https://w3id.org/linkml/
+  asb:      https://w3id.org/holobiomicslab/asb-schema/
+  asbskill: https://w3id.org/holobiomicslab/asb-skill/
+  schema:   http://schema.org/
+  dcterms:  http://purl.org/dc/terms/
+  pplan:    http://purl.org/net/p-plan#
+  prov:     http://www.w3.org/ns/prov#
+  EDAM:     http://edamontology.org/
+  rocrate:  https://w3id.org/ro/crate#
+
+imports:
+  - linkml:types
+  - asb_card
+  - asb_capsule
+  - asb_skill_bundle
+  - asb_skill_collection
+  - asb_skill_collection_registry
+# NOTE: LinkML resolves imports by appending .yaml; run gen-jsonschema per schema file.
+# Use generate.sh from the repo root to regenerate all artefacts:
+#   bash asb-schema/generate.sh
+
+default_prefix: asb
+default_range: string

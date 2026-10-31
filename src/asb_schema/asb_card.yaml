@@ -1,0 +1,1101 @@
+id: https://w3id.org/holobiomicslab/asb-schema/card/v0.2
+name: asb_card_v0_2
+description: >-
+  LinkML schema for SciTask Card v0.17.0 — a bounded, reproducible scientific task
+  extracted from a peer-reviewed paper. Covers all fields of the ASBTaskCard dataclass
+  and related nested types.
+
+license: CC-BY-4.0
+version: "0.2.0"
+
+prefixes:
+  linkml:   https://w3id.org/linkml/
+  asb:      https://w3id.org/holobiomicslab/asb-schema/
+  asbskill: https://w3id.org/holobiomicslab/asb-skill/
+  schema:   http://schema.org/
+  dcterms:  http://purl.org/dc/terms/
+  pplan:    http://purl.org/net/p-plan#
+  prov:     http://www.w3.org/ns/prov#
+  EDAM:     http://edamontology.org/
+  rocrate:  https://w3id.org/ro/crate#
+
+imports:
+  - linkml:types
+
+default_prefix: asb
+default_range: string
+
+# ---------------------------------------------------------------------------
+# Enumerations
+# ---------------------------------------------------------------------------
+
+enums:
+
+  ProvenanceSourceEnum:
+    description: Source from which a SciTask Card was synthesized
+    permissible_values:
+      published:
+        description: Peer-reviewed journal article
+      preprint:
+        description: Preprint (e.g. bioRxiv, arXiv)
+      draft_paper:
+        description: Unpublished manuscript or draft
+      local_project:
+        description: Local HPC or agentic project
+
+  TaskKindEnum:
+    description: >-
+      What a SciTask Card represents relative to the source paper: a result the
+      paper empirically reported, a derived re-analysis, a described-but-not-
+      separately-validated mechanism, or a task beyond the paper's reported scope.
+    permissible_values:
+      reproduction:
+        description: A result the paper empirically reported / evaluated
+      analysis:
+        description: A derived re-analysis of the paper's own data
+      component_reconstruction:
+        description: >-
+          A mechanism the paper describes but does not separately validate
+          (a stage of its pipeline, reconstructed as a checkable task)
+      extension:
+        description: >-
+          A task beyond the paper's reported scope (e.g. its sanctioned method
+          substitutions or future work)
+
+  ReproducibilityTierEnum:
+    description: Tier describing how reproducible a card's workflow step is
+    permissible_values:
+      certified:
+        description: Fully automated and verified
+      type-checked:
+        description: Outputs type-checked but not end-to-end verified
+      bypassed:
+        description: Compute step bypassed; cached outputs pinned
+      manual-only:
+        description: Requires manual or commercial software; no CLI alternative
+      experimental:
+        description: Wet-lab or experimental step; pseudo-outputs only
+
+  SchedulerEnum:
+    description: HPC / cluster scheduler
+    permissible_values:
+      none: {}
+      slurm: {}
+      lsf: {}
+      pbs: {}
+      kubernetes: {}
+
+  ComputeTierEnum:
+    description: Compute requirement tier for task execution
+    permissible_values:
+      trivial: {}
+      light: {}
+      medium: {}
+      heavy: {}
+      hpc: {}
+
+  ArtifactConfidenceEnum:
+    description: Detection confidence level for a typed artifact
+    permissible_values:
+      high:
+        description: Magic-byte verified on disk file
+      medium:
+        description: Prose regex only, no disk file
+      low:
+        description: Heuristic inference
+      none:
+        description: Detection failed — honest unknown
+
+  ArtifactDetectionMethodEnum:
+    description: Method used to detect artifact format
+    permissible_values:
+      prose_regex: {}
+      magic_bytes: {}
+      package_filename: {}
+      content_sniff: {}
+      none: {}
+
+# ---------------------------------------------------------------------------
+# Classes
+# ---------------------------------------------------------------------------
+
+classes:
+
+  AvailableArtifact:
+    description: >-
+      A file or data artifact accessible from the research paper package.
+      Records its path, role in the workflow, whether it is indexable,
+      and an optional content hash.
+    attributes:
+      path:
+        description: Relative path to the artifact within the package
+        range: string
+        required: true
+        annotations:
+          importance: must_have
+        exact_mappings:
+          - prov:atLocation
+      role:
+        description: Semantic role of the artifact (e.g. raw_data, figure, script)
+        range: string
+        required: true
+        annotations:
+          importance: must_have
+        exact_mappings:
+          - dcterms:type
+      indexable:
+        description: Whether this artifact's content is indexed for retrieval
+        range: boolean
+        annotations:
+          importance: should_have
+        close_mappings:
+          - schema:additionalType
+      sha256:
+        description: SHA-256 hex digest of the artifact content
+        range: string
+        annotations:
+          importance: nice_to_have
+        exact_mappings:
+          - schema:sha256
+
+  EvidenceSnippet:
+    description: >-
+      A verbatim text snippet extracted from the source paper that supports
+      a claim or field in the SciTask Card.
+    attributes:
+      snippet_id:
+        description: Unique identifier for this snippet (e.g. snip_001)
+        range: string
+        required: true
+        annotations:
+          importance: must_have
+        exact_mappings:
+          - dcterms:identifier
+      source_path:
+        description: Relative path to the source file from which this snippet was extracted
+        range: string
+        required: true
+        annotations:
+          importance: must_have
+        exact_mappings:
+          - prov:atLocation
+      reason:
+        description: Why this snippet was selected as evidence
+        range: string
+        required: true
+        annotations:
+          importance: must_have
+        close_mappings:
+          - dcterms:description
+      text:
+        description: Verbatim text of the evidence snippet
+        range: string
+        required: true
+        annotations:
+          importance: must_have
+        exact_mappings:
+          - schema:text
+
+  EvaluationStrategy:
+    description: >-
+      Structured evaluation plan for a SciTask Card, aligned with the
+      p-plan:Plan concept. Specifies direct automated checks and expert-review
+      criteria.
+    attributes:
+      direct_checks:
+        description: >-
+          List of automated, deterministic checks that can be run without human review
+          (e.g., file existence, column count, value ranges).
+        range: string
+        multivalued: true
+        annotations:
+          importance: must_have
+        close_mappings:
+          - pplan:Plan
+      expert_review:
+        description: >-
+          List of criteria requiring human or expert judgment
+          (e.g., scientific validity, reproducibility within tolerance).
+        range: string
+        multivalued: true
+        annotations:
+          importance: should_have
+        close_mappings:
+          - pplan:Plan
+
+  TaskPort:
+    description: A single typed data port (input or output) on a SciTask Card.
+    attributes:
+      port_id:
+        description: Unique identifier for this port
+        range: string
+        required: true
+        annotations:
+          importance: must_have
+        exact_mappings:
+          - dcterms:identifier
+      label:
+        description: Human-readable label for this port
+        range: string
+        required: true
+        annotations:
+          importance: must_have
+        exact_mappings:
+          - schema:name
+      evidence_id:
+        description: ID of the EvidenceSnippet that supports this port's existence
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - prov:wasDerivedFrom
+      source:
+        description: Source artifact name or path
+        range: string
+        annotations:
+          importance: nice_to_have
+        exact_mappings:
+          - prov:atLocation
+      source_dataset:
+        description: Repository or dataset name for the source
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:dataset
+      edam_operation_uri:
+        description: EDAM operation IRI for the operation that produces or consumes this port
+        range: uri
+        annotations:
+          importance: nice_to_have
+        exact_mappings:
+          - EDAM:operation_0004
+      edam_format_uri:
+        description: EDAM format IRI for the data format of this port
+        range: uri
+        annotations:
+          importance: nice_to_have
+        exact_mappings:
+          - EDAM:format_1915
+
+  ProvenanceLinks:
+    description: PROV-O-inspired links for a SciTask Card.
+    attributes:
+      used:
+        description: IRIs or IDs of entities used (inputs, prior task outputs)
+        range: string
+        multivalued: true
+        annotations:
+          importance: should_have
+        exact_mappings:
+          - prov:used
+      was_influenced_by:
+        description: IRIs or IDs of entities that influenced this card
+        range: string
+        multivalued: true
+        annotations:
+          importance: nice_to_have
+        exact_mappings:
+          - prov:wasInfluencedBy
+
+  ToolAlternative:
+    description: >-
+      A closed-source / open-source tool pair with optional divergence notes.
+    attributes:
+      closed:
+        description: Closed-source or proprietary tool name
+        range: string
+        required: true
+        annotations:
+          importance: must_have
+        close_mappings:
+          - EDAM:operation_0004
+      oss:
+        description: Open-source alternative tool name
+        range: string
+        required: true
+        annotations:
+          importance: must_have
+        close_mappings:
+          - EDAM:operation_0004
+      expected_divergence:
+        description: Notes on expected behavioral or performance divergence
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:description
+
+  ExecutionProfile:
+    description: >-
+      Execution and tool requirements for a scientific task.
+    attributes:
+      compute_tier:
+        description: Compute requirement tier for task execution
+        range: ComputeTierEnum
+        annotations:
+          importance: should_have
+        close_mappings:
+          - schema:requiresSubscription
+      commercial_software:
+        description: List of commercial or proprietary software tools required
+        range: string
+        multivalued: true
+        annotations:
+          importance: should_have
+        close_mappings:
+          - EDAM:operation_0004
+      open_source_alternatives:
+        description: Open-source alternatives to commercial tools
+        range: ToolAlternative
+        multivalued: true
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - EDAM:operation_0004
+
+  ResumptionContract:
+    description: >-
+      Recipe for resuming a workflow at a step whose runner cannot re-execute
+      (bypassed compute, commercial/GUI software, wet-lab step).
+    attributes:
+      cached_outputs:
+        description: Hash-pinned artifact paths for bypassed steps
+        range: string
+        multivalued: true
+        annotations:
+          importance: should_have
+        exact_mappings:
+          - prov:atLocation
+      alt_cli_method:
+        description: CLI alternative or manual SOP for manual-only steps
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:description
+      pseudo_outputs:
+        description: Wet-lab stand-in outputs for experimental steps
+        range: string
+        multivalued: true
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - prov:atLocation
+      protocol:
+        description: Protocol description for experimental resumption
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:description
+
+  ExecutableSpec:
+    description: >-
+      A runnable command bound to a SciTask Card.
+    attributes:
+      cmd:
+        description: Command as a list of arguments (no shell string)
+        range: string
+        multivalued: true
+        required: true
+        annotations:
+          importance: must_have
+        close_mappings:
+          - schema:description
+      working_dir:
+        description: Working directory for the command
+        range: string
+        annotations:
+          importance: should_have
+        exact_mappings:
+          - prov:atLocation
+      timeout_s:
+        description: Timeout in seconds (default 300)
+        range: integer
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:duration
+
+  ExecutionEnvironment:
+    description: >-
+      Software/hardware/scheduler/agentic context that ran or is required to
+      run a card or workflow.
+    attributes:
+      operating_system:
+        description: Operating system name and version
+        range: string
+        annotations:
+          importance: should_have
+        close_mappings:
+          - schema:operatingSystem
+      python_version:
+        description: Python version string
+        range: string
+        annotations:
+          importance: should_have
+        close_mappings:
+          - schema:softwareVersion
+      lockfile_path:
+        description: Path to the lockfile (e.g. requirements.txt, uv.lock)
+        range: string
+        annotations:
+          importance: nice_to_have
+        exact_mappings:
+          - prov:atLocation
+      container_image:
+        description: Docker or Singularity container image URI
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:softwareVersion
+      asb_version:
+        description: AgenticScienceBuilder version used
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:softwareVersion
+      hardware_profile:
+        description: Hardware profile description (e.g. CPU, GPU, RAM)
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:description
+      scheduler:
+        description: HPC or cluster scheduler
+        range: SchedulerEnum
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:description
+      llm_models:
+        description: LLM model IDs used during card synthesis
+        range: string
+        multivalued: true
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:softwareVersion
+      cloud_region:
+        description: Cloud region or availability zone
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:description
+
+  TypedArtifact:
+    description: >-
+      A typed, format-identified artifact (input or output) of a SciTask Card.
+      Pairs 1-to-1 with an entry in inputs[] or expected_outputs[].
+    attributes:
+      description:
+        description: Original prose string from the card (verbatim)
+        range: string
+        required: true
+        annotations:
+          importance: must_have
+        exact_mappings:
+          - schema:description
+      format_id:
+        description: Short format key (e.g. mzML) matching a FormatSpec.name
+        range: string
+        annotations:
+          importance: should_have
+        close_mappings:
+          - EDAM:format_1915
+      format_iri:
+        description: EDAM format IRI (e.g. http://edamontology.org/format_3244)
+        range: uri
+        annotations:
+          importance: should_have
+        exact_mappings:
+          - EDAM:format_1915
+      ontology_class:
+        description: PSI-MS or fallback OBO class string (e.g. MS:1000584)
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - EDAM:format_1915
+      file_extension:
+        description: Representative file extension (e.g. .mzml)
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:fileFormat
+      confidence:
+        description: Detection confidence level
+        range: ArtifactConfidenceEnum
+        annotations:
+          importance: must_have
+        close_mappings:
+          - schema:credentialCategory
+      detection_method:
+        description: How the format was detected
+        range: ArtifactDetectionMethodEnum
+        annotations:
+          importance: should_have
+        close_mappings:
+          - prov:wasGeneratedBy
+      instrument_class:
+        description: Advisory instrument class hint extracted from article text
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - EDAM:operation_0004
+      ionization_polarity:
+        description: Ionization polarity (positive/negative/both/unknown)
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:description
+      acquisition_mode:
+        description: MS acquisition mode (DDA/DIA/targeted/full_scan/unknown)
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:description
+
+  JsonObject:
+    description: Arbitrary JSON object; members may be any JSON values.
+    class_uri: linkml:Any
+    annotations:
+      json_schema_type: object
+
+  ASBTaskCard:
+    description: >-
+      A bounded, reproducible scientific task extracted from a peer-reviewed paper.
+      Links a task to its research question, finding, inputs, outputs, tools,
+      required skills, workflow description, and evaluation strategy.
+      Runtime mirror: agentic_science_builder.schemas.ASBTaskCard (schema v0.18.0).
+    tree_root: true
+    slots:
+      - task_id
+      - title
+      - task_kind
+      - source_package
+      - research_question
+      - finding
+      - task_description
+      - task_objective
+      - inputs
+      - expected_outputs
+      - tools
+      - skills
+      - workflow_description
+      - available_artifacts
+      - missing_information
+      - uncertainty_notes
+      - evidence_snippets
+      - evaluation_strategy
+      - review_questions
+      - created_at
+      - schema_version
+      - scitask_version
+      - domain
+      - subtask_categories
+      - domain_knowledge
+      - crossref_doi
+      - github_name
+      - parameters
+      - data_accessions
+      - input_from
+      - keywords
+      - article_type
+      - primary_domain
+      - subdomains
+      - techniques
+      - expected_artifact_name
+      - landmark_outputs
+      - artifact_refs
+      - methodology_summary
+      - synthesized_from
+      - linked_result_ids
+      - section_provenance
+      - script_refs
+      - scenario_id
+      - project_id
+      - provenance_source
+      - reproducibility_tier
+      - task_objective
+      - run_command
+      - run_cwd
+      - run_timeout_seconds
+
+# ---------------------------------------------------------------------------
+# Slots (top-level card fields)
+# ---------------------------------------------------------------------------
+
+slots:
+
+  task_id:
+    description: Unique identifier for this task (e.g. task_001 or doi-slug__task_001)
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - dcterms:identifier
+
+  title:
+    description: Short human-readable task title
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - schema:name
+
+  task_kind:
+    description: >-
+      How this card relates to the source paper (reproduction of a reported
+      result, derived analysis, reconstruction of a described mechanism, or an
+      extension beyond the paper). Optional; absent means unclassified.
+    range: TaskKindEnum
+    required: false
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - dcterms:type
+
+  source_package:
+    description: Path or identifier of the research article package this card was synthesized from
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - prov:wasDerivedFrom
+
+  research_question:
+    description: The scientific question this task addresses
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    close_mappings:
+      - schema:description
+
+  finding:
+    description: The paper's answer or result for this task
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    close_mappings:
+      - schema:description
+
+  task_description:
+    description: Full natural-language description of the task
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - schema:description
+
+  task_objective:
+    description: One-sentence task objective (LLM mode; empty string when not populated)
+    range: string
+    annotations:
+      importance: should_have
+    close_mappings:
+      - pplan:Plan
+
+  inputs:
+    description: Human-readable input descriptions for the task
+    range: string
+    multivalued: true
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - pplan:wasGeneratedBy
+
+  expected_outputs:
+    description: Human-readable expected output descriptions
+    range: string
+    multivalued: true
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - pplan:wasGeneratedBy
+
+  tools:
+    description: Software tools, databases, and APIs used in the task
+    range: string
+    multivalued: true
+    required: true
+    annotations:
+      importance: must_have
+    close_mappings:
+      - EDAM:operation_0004
+
+  skills:
+    description: Reusable capabilities required to complete the task
+    range: string
+    multivalued: true
+    required: true
+    annotations:
+      importance: must_have
+    close_mappings:
+      - EDAM:operation_0004
+
+  workflow_description:
+    description: Step-by-step methodology for executing the task
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    close_mappings:
+      - pplan:Plan
+
+  available_artifacts:
+    description: Artifacts accessible from the paper package (path, role, indexable, sha256)
+    range: AvailableArtifact
+    multivalued: true
+    annotations:
+      importance: should_have
+    close_mappings:
+      - prov:atLocation
+
+  missing_information:
+    description: Gaps, inaccessible artifacts, and unknowns noted by the extraction agent
+    range: string
+    multivalued: true
+    annotations:
+      importance: should_have
+    close_mappings:
+      - schema:description
+
+  uncertainty_notes:
+    description: Gaps and ambiguities in the card's fields
+    range: string
+    multivalued: true
+    annotations:
+      importance: should_have
+    close_mappings:
+      - schema:description
+
+  evidence_snippets:
+    description: Verbatim text snippets from the source paper supporting this card
+    range: EvidenceSnippet
+    multivalued: true
+    annotations:
+      importance: should_have
+    exact_mappings:
+      - prov:wasDerivedFrom
+
+  evaluation_strategy:
+    description: >-
+      Structured evaluation plan with direct_checks and expert_review lists,
+      aligned with p-plan:Plan
+    range: EvaluationStrategy
+    required: true
+    annotations:
+      importance: must_have
+    close_mappings:
+      - pplan:Plan
+
+  review_questions:
+    description: Open questions for a human reviewer of this card
+    range: string
+    multivalued: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - schema:description
+
+  created_at:
+    description: ISO 8601 timestamp when this card was created
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    exact_mappings:
+      - dcterms:created
+
+  schema_version:
+    description: ASBTaskCard dataclass schema version (e.g. 0.17.0)
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    close_mappings:
+      - schema:version
+
+  scitask_version:
+    description: SciTask Standard spec version (e.g. 0.1.0)
+    range: string
+    required: true
+    annotations:
+      importance: must_have
+    close_mappings:
+      - schema:version
+
+  domain:
+    description: Scientific domain (e.g. metabolomics, genomics)
+    range: string
+    annotations:
+      importance: should_have
+    close_mappings:
+      - schema:about
+
+  subtask_categories:
+    description: ScienceAgentBench-aligned subtask categories
+    range: string
+    multivalued: true
+    annotations:
+      importance: should_have
+    close_mappings:
+      - schema:about
+
+  domain_knowledge:
+    description: Domain-specific knowledge items required for the task
+    range: string
+    multivalued: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - schema:about
+
+  crossref_doi:
+    description: DOI of the source article (Crossref format)
+    range: string
+    annotations:
+      importance: should_have
+    exact_mappings:
+      - schema:identifier
+
+  github_name:
+    description: GitHub repository name (owner/repo) associated with the source article
+    range: string
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - schema:codeRepository
+
+  parameters:
+    description: >-
+      Agent 7 parameter resolver output — list of parameter dicts
+      (populated only with --si-deep-dive)
+    range: JsonObject
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - schema:variableMeasured
+
+  data_accessions:
+    description: >-
+      Public repository accessions (MassIVE, PRIDE, MetaboLights, GEO, etc.)
+      mined from article text
+    range: JsonObject
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    annotations:
+      importance: should_have
+    exact_mappings:
+      - EDAM:data_2091
+
+  input_from:
+    description: task_id of a prior sub-task whose output is this card's first input (chaining)
+    range: string
+    annotations:
+      importance: nice_to_have
+    exact_mappings:
+      - prov:wasDerivedFrom
+
+  keywords:
+    description: Free-form keywords extracted by Agent 1 (methods, domains, instruments)
+    range: string
+    multivalued: true
+    annotations:
+      importance: should_have
+    close_mappings:
+      - schema:keywords
+
+  article_type:
+    description: Article type classification (e.g. research-article, review, software-tool)
+    range: string
+    annotations:
+      importance: should_have
+    close_mappings:
+      - dcterms:type
+
+  primary_domain:
+    description: Primary scientific domain identified by the classifier
+    range: string
+    annotations:
+      importance: should_have
+    close_mappings:
+      - schema:about
+
+  subdomains:
+    description: Secondary scientific sub-domains identified by the classifier
+    range: string
+    multivalued: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - schema:about
+
+  techniques:
+    description: Key experimental or computational techniques used
+    range: string
+    multivalued: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - EDAM:operation_0004
+
+  expected_artifact_name:
+    description: SAB-aligned canonical output filename (equivalent to SAB output_fname)
+    range: string
+    annotations:
+      importance: should_have
+    exact_mappings:
+      - prov:atLocation
+
+  landmark_outputs:
+    description: >-
+      SUPER-style partial-credit grading — 2–6 intermediate output file patterns
+      ordered by pipeline stage
+    range: string
+    multivalued: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - prov:atLocation
+
+  artifact_refs:
+    description: >-
+      Heuristic artifact binding (--enrich): prose input/output mapped to typed locators
+      from external enrichment + package index
+    range: JsonObject
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - prov:wasDerivedFrom
+
+  methodology_summary:
+    description: Ordered list of plain-text procedure steps
+    range: string
+    multivalued: true
+    annotations:
+      importance: should_have
+    close_mappings:
+      - pplan:Plan
+
+  synthesized_from:
+    description: >-
+      Source from which this card was synthesized (e.g. article, github:owner/repo,
+      web:https://..., mixed)
+    range: string
+    annotations:
+      importance: should_have
+    close_mappings:
+      - prov:wasDerivedFrom
+
+  linked_result_ids:
+    description: Result IDs from the claim/result ledger that this card primarily grades
+    range: string
+    multivalued: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - prov:wasDerivedFrom
+
+  section_provenance:
+    description: Unique source_section values back-filled from linked claims' source_anchor
+    range: string
+    multivalued: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - prov:wasDerivedFrom
+
+  script_refs:
+    description: >-
+      Step → source-file linkage produced by Agent 8 (--trace-scripts).
+      Each entry: {step, file_path, chunk_name, chunk_type, start_line, end_line, score}
+    range: JsonObject
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - prov:atLocation
+
+  scenario_id:
+    description: Scenario assignment ID (populated only with --scenario-registry)
+    range: string
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - dcterms:isPartOf
+
+  project_id:
+    description: Project assignment ID (populated only with --scenario-registry)
+    range: string
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - dcterms:isPartOf
+
+  provenance_source:
+    description: Source category of the paper this card was extracted from
+    range: ProvenanceSourceEnum
+    annotations:
+      importance: should_have
+    close_mappings:
+      - prov:wasGeneratedBy
+
+  reproducibility_tier:
+    description: Tier describing how reproducible this card's workflow step is
+    range: ReproducibilityTierEnum
+    annotations:
+      importance: should_have
+    close_mappings:
+      - pplan:Plan
+
+  run_command:
+    description: Shell command for asb verify (None means skip)
+    range: string
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - schema:description
+
+  run_cwd:
+    description: Working directory for run_command (relative to capsule dir)
+    range: string
+    annotations:
+      importance: nice_to_have
+    exact_mappings:
+      - prov:atLocation
+
+  run_timeout_seconds:
+    description: Timeout in seconds for run_command (default 60.0)
+    range: float
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - schema:duration

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Regenerate all LinkML-derived artefacts for the ASB Standard.
+# Run from anywhere: bash generate.sh (paths resolve from this file).
+set -e
+asb_schema_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+export PYTHONPATH="${asb_schema_dir}/src${PYTHONPATH:+:${PYTHONPATH}}"
+cd "${asb_schema_dir}/src/asb_schema"
+for schema in asb_card asb_capsule asb_trace asb_skill_bundle asb_skill_collection asb_skill_collection_registry; do
+  python -m asb_schema.jsonschemagen ${schema}.yaml \
+    > ${schema}.schema.json
+done
+# JSON-LD @context for the skill-bundle terms (w3id.org/holobiomicslab/asb-skill/).
+python -m linkml.generators.jsonldcontextgen asb_skill_bundle.yaml > context.jsonld
+# Field reference page of the documentation site (docs/reference/index.md).
+python "${asb_schema_dir}/scripts/gen_reference.py"
+echo "Done. Artefacts written next to the LinkML sources."
