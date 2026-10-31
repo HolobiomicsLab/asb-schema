@@ -1,6 +1,6 @@
-"""IDEAS-D / spec §5: ASBSkill.description must obey description-discipline rules.
+"""ASBSkill.description follows the description rules.
 
-Rules (spec §5):
+Rules:
   - length: 50-300 chars
   - leads with "Use when ..."
   - no banned marketing tokens
@@ -45,7 +45,7 @@ def test_description_slot_required():
 
 def test_description_slot_lists_banned_tokens_in_annotations():
     """Banned-token check is not a native LinkML constraint, so we encode it
-    as an annotation that downstream lint scripts can read."""
+    as an annotation that lint scripts can read."""
     data = yaml.safe_load(BUNDLE_SCHEMA.read_text())
     slot = _slot_description(data)
     banned = (slot.get("annotations") or {}).get("banned_tokens")

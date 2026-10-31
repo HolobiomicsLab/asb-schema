@@ -1,4 +1,4 @@
-"""Smoke tests for the asb-schema LinkML sub-package (post-Wave1 rename)."""
+"""Smoke tests for the asb-schema LinkML files."""
 
 import yaml
 from pathlib import Path

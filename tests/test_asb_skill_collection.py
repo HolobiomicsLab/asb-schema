@@ -1,4 +1,4 @@
-"""IDEAS-B: SkillCollection LinkML class — release unit, tree_root."""
+"""SkillCollection: the release unit and tree root of asb_skill_collection.yaml."""
 
 import yaml
 from pathlib import Path

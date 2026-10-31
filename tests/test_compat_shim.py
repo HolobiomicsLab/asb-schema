@@ -1,8 +1,7 @@
-"""Plan 1a migration shim — asb_schema.compat.
+"""asb_schema.compat maps the legacy scitask_* and Sci* names to asb_* and ASB*.
 
-One-release deprecation cycle (spec §13). Downstream consumers (ASB-runtime,
-indicium-adapters, asb-domain-core) import the legacy names from this module
-while their callsites get updated to ASB* names.
+Each lookup emits a DeprecationWarning, so code written against the former
+names keeps working while it is updated.
 """
 
 import warnings

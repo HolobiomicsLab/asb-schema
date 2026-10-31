@@ -1,4 +1,4 @@
-"""IDEAS-H: JSON-LD @context generation targets the w3id ASB-Skill IRI."""
+"""The generated JSON-LD @context targets the w3id ASB-Skill IRI."""
 
 import json
 import subprocess

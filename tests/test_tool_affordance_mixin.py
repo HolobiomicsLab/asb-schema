@@ -1,8 +1,7 @@
-"""IDEAS-F: ToolAffordance is a mixin with reserved (unpopulated) slots.
+"""ToolAffordance is a mixin with reserved (unpopulated) slots.
 
-Per spec §15: 'No WoT ActionAffordance requirement in v1 — slot reserved in
-LinkML, populated when ecosystem standardizes.' This test guards the slot
-reservation; it does NOT assert that ASBTool uses the mixin (it doesn't, yet).
+No WoT ActionAffordance is required; the slots are reserved in LinkML for
+when that vocabulary is adopted. This test guards the slot reservation; it does NOT assert that ASBTool uses the mixin (it doesn't, yet).
 """
 
 import yaml

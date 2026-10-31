@@ -1,8 +1,4 @@
-"""Wave 1 schema-side URN prefix flip: urn:scitask: -> urn:asb:.
-
-Plan 1a only covers schema-side mappings. The runtime ro_crate.py rename is
-Plan 2a (different repo). This test guards against accidental backsliding.
-"""
+"""The LinkML files use the urn:asb: prefix and contain no urn:scitask: identifier."""
 
 import yaml
 from pathlib import Path

@@ -1,4 +1,4 @@
-"""IDEAS-E: MergeAuditRecord has the full audit slot set."""
+"""MergeAuditRecord has the full audit slot set."""
 
 import yaml
 from pathlib import Path
