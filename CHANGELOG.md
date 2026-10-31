@@ -47,8 +47,11 @@ follows [Semantic Versioning](https://semver.org/).
 - `tests/test_reference_conformance.py`, with one card of a heuristic build and
   three released cards as fixtures. (2026-10-31)
 - Standalone repository: README, `CITATION.cff`, documentation site, CI on
-  Python 3.10 to 3.13, publish workflow on tags `v<version>`, project URLs in
+  Python 3.10 to 3.14, publish workflow on tags `v<version>`, project URLs in
   the package metadata.
+- Package metadata: trove classifiers (Python 3.10 to 3.14), keywords, and the
+  author named in `CITATION.cff`; `tests/test_package_metadata.py` keeps them
+  in agreement. (2026-10-31)
 
 ### Fixed
 

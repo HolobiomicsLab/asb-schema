@@ -11,7 +11,26 @@ license = "Apache-2.0"
 license-files = ["LICENSE"]
 requires-python = ">=3.10"
 authors = [
-  {name = "AgenticScienceBuilder contributors"}
+  {name = "Louis-Félix Nothias"}
+]
+keywords = [
+    "LinkML",
+    "JSON Schema",
+    "JSON-LD",
+    "RO-Crate",
+    "scientific workflows",
+    "research reproducibility",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 dependencies = [
     "linkml>=1.7,<1.12",  # 1.12 changes JSON Schema generation (nested additionalProperties); the published schemas come from the locked 1.11.x
