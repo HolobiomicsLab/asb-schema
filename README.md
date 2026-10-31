@@ -32,7 +32,7 @@ scientific tasks extracted from research papers and for the skills and
 releases built from them. The package ships the LinkML sources, one generated
 JSON Schema per schema and a JSON-LD context. Formerly named SciTask.
 
-**ASB is the provenance and specification layer that feeds benchmark formats.**
+**ASB is the provenance and specification layer that feeds benchmark formats, not a competitor to them.**
 
 ```bash
 pip install asb-schema

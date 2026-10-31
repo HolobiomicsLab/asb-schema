@@ -22,7 +22,7 @@ hide:
 
 !!! abstract "Positioning"
 
-    **ASB is the provenance and specification layer that feeds benchmark formats.**
+    **ASB is the provenance and specification layer that feeds benchmark formats, not a competitor to them.**
 
     - An ASB task card records one bounded task extracted from a published paper: the research question, the paper's finding, verbatim evidence, inputs, outputs, tools, skills and an evaluation plan.
     - ASB Schema produces ASTRA documents and, for published research, is upstream of them: the paper's tasks, decisions and evidence become an ASTRA analysis.

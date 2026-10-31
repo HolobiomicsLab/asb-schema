@@ -1,6 +1,6 @@
 # Interoperability
 
-**ASB is the provenance and specification layer that feeds benchmark formats.**
+**ASB is the provenance and specification layer that feeds benchmark formats, not a competitor to them.**
 
 An ASB artifact starts from a paper and keeps the link to it: the research question, the reported finding, verbatim evidence, the inputs, outputs, tools and skills, an evaluation plan and the research path behind the result. Formats for analyses, research objects, benchmark tasks and agent skills can be written from that material. This section lists those bridges, what each one carries and its status.
 
