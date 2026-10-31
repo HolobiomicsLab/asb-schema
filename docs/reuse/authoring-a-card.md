@@ -76,7 +76,7 @@ A task that consumes another task's output names it in `input_from`:
 ]
 ```
 
-Data the card does not declare (an execution environment, an oracle, a canary, a license, authors) goes in a sidecar file next to `task_card.json`.
+The software stack that ran the card goes in the optional `execution_environment`. Data the card does not declare (an oracle, a canary, a license, authors) goes in a sidecar file next to `task_card.json`.
 
 ## 4. Keep the answer with the evaluator
 

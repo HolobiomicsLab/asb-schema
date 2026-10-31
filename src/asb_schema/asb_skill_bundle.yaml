@@ -1,8 +1,8 @@
 id: https://w3id.org/holobiomicslab/asb-schema/skill-bundle/v0.2
 name: asb_skill_bundle_v0_2
 description: >-
-  LinkML schema for SciTask Skill Bundle v0.1 — a versioned, curated description of
-  one reusable computational skill identified across multiple papers. Each bundle
+  LinkML schema for the ASB skill bundle, file version 0.2.0: a versioned, curated
+  description of one reusable computational skill identified across multiple papers. Each bundle
   contains a human-readable skill description and 12 structured sidecars.
 
 license: CC-BY-4.0
@@ -109,8 +109,8 @@ classes:
   MergeAuditRecord:
     description: >-
       Per-merge audit record documenting alias deduplication decisions.
-      Surfaces the data ``corpus_artifacts._semantic_dedup`` already records
-      so dedup decisions are queryable and citable (IDEAS-E / spec §11).
+      Surfaces the deduplication data recorded at release time, so dedup
+      decisions are queryable and citable.
     attributes:
       alias:
         description: Original skill label before deduplication
@@ -213,10 +213,9 @@ classes:
   ASBSkill:
     description: >-
       Collection-time aggregated skill record — the deduplicated, paper-grounded
-      scientific competency surfaced by ``corpus_artifacts.collect_skills`` at
-      release time. Distinct from ``SkillBundle`` which is the per-capsule
-      artifact. Mirrors the Python dataclass at agentic_science_builder.schemas.ASBSkill
-      (renamed from SciSkill in Plan 2a / ASB-runtime).
+      scientific competency collected at release time. Distinct from
+      ``SkillBundle`` which is the per-capsule artifact. Mirrors the ASBSkill
+      dataclass of the reference pipeline (formerly SciSkill).
     slots:
       - slug
       - skill_name
@@ -237,9 +236,8 @@ classes:
   ASBTool:
     description: >-
       Collection-time aggregated tool record — the deduplicated, paper-grounded
-      software-tool reference surfaced by ``corpus_artifacts.collect_tools``.
-      Mirrors the Python dataclass at agentic_science_builder.schemas.ASBTool
-      (renamed from SciTool in Plan 2a / ASB-runtime).
+      software-tool reference collected at release time. Mirrors the ASBTool
+      dataclass of the reference pipeline (formerly SciTool).
     slots:
       - slug
       - tool_name
@@ -258,7 +256,7 @@ classes:
 
   ToolAffordance:
     description: >-
-      W3C WoT ActionAffordance-aligned mixin (IDEAS-F / spec §15).
+      W3C WoT ActionAffordance-aligned mixin.
       RESERVED for v1 — slot definitions exist but no ASB class consumes
       them yet. When the ecosystem standardises on WoT for executable
       tools, ASBTool (or an ExecutableTool subclass) will inherit from
@@ -376,7 +374,7 @@ slots:
       - schema:version
 
   source_task_ids:
-    description: task_id values of the SciTask Cards from which this skill was extracted
+    description: task_id values of the ASB task cards from which this skill was extracted
     range: string
     multivalued: true
     annotations:
@@ -413,8 +411,8 @@ slots:
 
   description:
     description: >-
-      Retrieval-key description for an ASBSkill. Discipline-constrained
-      (IDEAS-D / spec §5): 50–300 chars, leads with "Use when …", no marketing
+      Retrieval-key description for an ASBSkill. Discipline-constrained:
+      50–300 chars, leads with "Use when …", no marketing
       tokens. The CI gate in asb-skill-collections additionally enforces the
       banned-token list at release time.
     range: string
@@ -530,7 +528,7 @@ slots:
 
   bio_tools_id:
     description: >-
-      bio.tools identifier for this tool (IDEAS-G). Reserved slot for the
+      bio.tools identifier for this tool. Reserved slot for the
       future bio.tools federation work; not populated in v1.
     range: string
     annotations:

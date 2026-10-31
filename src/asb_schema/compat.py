@@ -1,9 +1,10 @@
-"""Migration shim for the Wave 1 ``scitask_*`` -> ``asb_*`` rename.
+"""Legacy names of the ``scitask_*`` -> ``asb_*`` rename.
 
-Removed in the next minor release after consumers (asb-runtime,
-indicium-adapters, asb-domain-core) have updated their imports.
-See docs/superpowers/specs/2026-05-24-asb-skills-release-design.md §13.
+Maps the former schema basenames and class names to the current ones and
+emits a ``DeprecationWarning`` on every lookup, so code written against the
+former names keeps working while it is updated.
 """
+
 from __future__ import annotations
 
 import warnings
@@ -12,25 +13,24 @@ from typing import Final
 __all__ = ["legacy_schema_name", "legacy_class_name"]
 
 _SCHEMA_ALIASES: Final[dict[str, str]] = {
-    "scitask":                       "asb",
-    "scitask_card":                  "asb_card",
-    "scitask_capsule":               "asb_capsule",
-    "scitask_skill_bundle":          "asb_skill_bundle",
-    "scitask_skill_collection":      "asb_skill_collection",
+    "scitask": "asb",
+    "scitask_card": "asb_card",
+    "scitask_capsule": "asb_capsule",
+    "scitask_skill_bundle": "asb_skill_bundle",
+    "scitask_skill_collection": "asb_skill_collection",
     "scitask_skill_collection_registry": "asb_skill_collection_registry",
 }
 
 _CLASS_ALIASES: Final[dict[str, str]] = {
     "SciTaskCard": "ASBTaskCard",
-    "SciSkill":    "ASBSkill",
-    "SciTool":     "ASBTool",
+    "SciSkill": "ASBSkill",
+    "SciTool": "ASBTool",
 }
 
 
 def _warn(legacy: str, new: str) -> None:
     warnings.warn(
-        f"{legacy!r} is deprecated; use {new!r} instead. "
-        "The compat shim will be removed in the next minor release.",
+        f"{legacy!r} is deprecated; use {new!r} instead.",
         DeprecationWarning,
         stacklevel=3,
     )
@@ -52,8 +52,8 @@ def legacy_class_name(legacy: str) -> str:
     """Map a legacy ``Sci*`` class name to its ``ASB*`` replacement.
 
     Emits ``DeprecationWarning`` on every call. The shim returns the *new
-    name string*, not a class object — Plan 1a (asb-schema) ships only
-    LinkML; the Python dataclass rename lives in Plan 2a (ASB-runtime).
+    name string*, not a class object: the package ships LinkML schemas, not
+    Python classes.
     """
     if legacy not in _CLASS_ALIASES:
         raise KeyError(f"Unknown legacy class name: {legacy!r}")

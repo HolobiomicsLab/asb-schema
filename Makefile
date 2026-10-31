@@ -10,4 +10,5 @@ test:
 	python -m pytest tests/ -v
 
 lint:
-	python -m ruff check src/ tests/ 2>/dev/null || true
+	python -m ruff check .
+	python -m ruff format --check .

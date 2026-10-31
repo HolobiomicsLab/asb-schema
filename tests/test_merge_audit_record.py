@@ -1,4 +1,5 @@
-"""IDEAS-E: MergeAuditRecord has the full audit slot set."""
+"""MergeAuditRecord has the full audit slot set."""
+
 import yaml
 from pathlib import Path
 
@@ -10,9 +11,16 @@ def test_merge_audit_record_full_slot_set():
     cls = data["classes"]["MergeAuditRecord"]
     attrs = set((cls.get("attributes") or {}).keys())
     expected = {
-        "alias", "target_slug",
-        "jaccard_score", "embedding_cosine", "edam_match", "llm_judge_verdict",
-        "method", "decision", "decided_at", "decided_by",
+        "alias",
+        "target_slug",
+        "jaccard_score",
+        "embedding_cosine",
+        "edam_match",
+        "llm_judge_verdict",
+        "method",
+        "decision",
+        "decided_at",
+        "decided_by",
     }
     missing = expected - attrs
     assert not missing, f"MergeAuditRecord missing slots: {missing}"

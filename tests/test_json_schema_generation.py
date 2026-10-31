@@ -1,10 +1,26 @@
 """Representation fixes belong to schema generation, not patched output copies."""
 
 import json
+from importlib.metadata import version
 from pathlib import Path
 
 import jsonschema
 import pytest
+
+GENERATOR_PINS = Path(__file__).resolve().parents[1] / "constraints" / "generate.txt"
+
+
+def _generator_mismatch():
+    """Return why the installed generator differs from constraints/generate.txt, or None."""
+    if not GENERATOR_PINS.is_file():
+        return "constraints/generate.txt not found"
+    for line in GENERATOR_PINS.read_text().splitlines():
+        requirement = line.split("#", 1)[0].strip()
+        if requirement:
+            name, pinned = requirement.split("==")
+            if version(name) != pinned:
+                return f"{name} {version(name)} installed; the committed files come from {pinned}"
+    return None
 
 
 @pytest.mark.parametrize("domain", ("metabolomics", "proteomics", "genomics", "astronomy"))
@@ -48,8 +64,12 @@ classes:
 """
     schema = json.loads(ASBJsonSchemaGenerator(source, not_closed=True).serialize())
     validator = jsonschema.validators.validator_for(schema)(schema)
-    valid = {"optional_choice": None, "required_choice": "first", "choices": ["second"],
-             "records": [{"arbitrary": {"values": [1, None, True]}}]}
+    valid = {
+        "optional_choice": None,
+        "required_choice": "first",
+        "choices": ["second"],
+        "records": [{"arbitrary": {"values": [1, None, True]}}],
+    }
     validator.validate(valid)
     for field, bad_values in {
         "optional_choice": ("other", 3, True, [], {}),
@@ -61,9 +81,21 @@ classes:
             assert list(validator.iter_errors({**valid, field: bad})), (field, bad)
 
 
-@pytest.mark.parametrize("name", ("asb_card", "asb_capsule", "asb_trace", "asb_skill_bundle",
-                                  "asb_skill_collection", "asb_skill_collection_registry"))
+@pytest.mark.parametrize(
+    "name",
+    (
+        "asb_card",
+        "asb_capsule",
+        "asb_trace",
+        "asb_skill_bundle",
+        "asb_skill_collection",
+        "asb_skill_collection_registry",
+    ),
+)
 def test_checked_in_json_schema_equals_source_generation(name):
+    mismatch = _generator_mismatch()
+    if mismatch:
+        pytest.skip(mismatch)
     from asb_schema.jsonschemagen import ASBJsonSchemaGenerator
 
     root = Path(__file__).resolve().parents[1] / "src/asb_schema"

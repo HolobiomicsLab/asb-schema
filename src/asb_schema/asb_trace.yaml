@@ -4,8 +4,8 @@ description: >-
   LinkML schema for the ASB exploration trace v0.1.0 — the research journey behind a
   paper's outcome: what was asked, tried, chosen and rejected. ASB's existing card and
   capsule schemas are outcome-only; this records the branches, including the ones that
-  failed. Mirrors the ExplorationNode / ExplorationTree dataclasses in
-  agentic_science_builder.trace_extract.model.
+  failed. Mirrors the ExplorationNode / ExplorationTree dataclasses of the
+  reference pipeline.
 
 license: CC-BY-4.0
 version: "0.1.0"
@@ -61,8 +61,8 @@ classes:
   ExplorationNode:
     description: >-
       One step in the research journey. The value of `type` selects which further
-      slots are mandatory; those constraints are enforced by
-      agentic_science_builder.trace_extract.gate, not expressible in LinkML alone.
+      slots are mandatory; those constraints are enforced by the trace gate of
+      the reference pipeline, not expressible in LinkML alone.
     slots:
       - id
       - type

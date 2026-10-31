@@ -5,22 +5,43 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "asb-schema"
 version = "0.4.0"
-description = "LinkML schemas for the ASB standard: task cards, capsules, skill bundles and skill collections"
+description = "ASB Schema: LinkML schemas for task cards, capsules, skill bundles and skill collections"
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
 requires-python = ">=3.10"
 authors = [
-  {name = "AgenticScienceBuilder contributors"}
+  {name = "Louis-Félix Nothias"}
 ]
+keywords = [
+    "LinkML",
+    "JSON Schema",
+    "JSON-LD",
+    "RO-Crate",
+    "scientific workflows",
+    "research reproducibility",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+# The generated files are produced with the exact versions in
+# constraints/generate.txt; the runtime range is open.
 dependencies = [
-    "linkml>=1.7,<1.12",  # 1.12 changes JSON Schema generation (nested additionalProperties); the published schemas come from the locked 1.11.x
-    "linkml-runtime>=1.7,<1.12",
+    "linkml>=1.7",
+    "linkml-runtime>=1.7",
     "pyyaml>=6.0",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8"]
+dev = ["pytest>=8", "ruff==0.15.13"]
 docs = ["mkdocs-material==9.7.6"]
 
 [project.urls]
@@ -38,3 +59,6 @@ asb_schema = ["*.yaml", "*.schema.json", "*.owl.ttl", "*.jsonld"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 120

@@ -60,7 +60,8 @@ benchmarks and Agent Skills are described in the
 
 ## Validate
 
-Each artifact is validated against its own schema file:
+Each artifact is validated against its own schema file. linkml-validate
+validates closed: an undeclared key is an error.
 
 ```bash
 SCHEMA=$(python -c "from asb_schema import get_schema_path; print(get_schema_path('asb_card'))")
@@ -84,17 +85,18 @@ change a schema so that previously valid data fails. Each LinkML file carries
 its own `version` and a versioned `id` under
 `https://w3id.org/holobiomicslab/asb-schema/`. Generated files are
 regenerated with every LinkML change, and CI fails when they differ. A release
-is a tag `v<version>` equal to the version in `pyproject.toml`.
+is a tag `v<version>` on `main`, equal to the version in `pyproject.toml`,
+`asb_schema.__version__` and `CITATION.cff`.
 
 ## Development
 
 ```bash
 git clone https://github.com/HolobiomicsLab/asb-schema.git
 cd asb-schema
-python -m pip install -e ".[dev,docs]"
+python -m pip install -c constraints/generate.txt -e ".[dev,docs]"
 python -m pytest            # tests
 bash generate.sh            # regenerate JSON Schema, JSON-LD and the field reference
-mkdocs serve                # documentation site
+mkdocs serve -a 127.0.0.1:8001   # documentation site at http://127.0.0.1:8001/
 ```
 
 | Path | Content |
@@ -102,6 +104,7 @@ mkdocs serve                # documentation site
 | `src/asb_schema/*.yaml` | LinkML sources |
 | `src/asb_schema/*.schema.json`, `context.jsonld` | Generated files |
 | `scripts/gen_reference.py` | Generator of the field reference page |
+| `constraints/generate.txt` | Exact `linkml` versions that `generate.sh` and CI generate with |
 | `tests/` | Test suite |
 | `docs/` | Documentation site (MkDocs Material) |
 

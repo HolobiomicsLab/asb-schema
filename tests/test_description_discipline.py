@@ -1,15 +1,15 @@
-"""IDEAS-D / spec §5: ASBSkill.description must obey description-discipline rules.
+"""ASBSkill.description follows the description rules.
 
-Rules (spec §5):
+Rules:
   - length: 50-300 chars
   - leads with "Use when ..."
   - no banned marketing tokens
 """
+
 import json
+import re
 import subprocess
 import sys
-import tempfile
-import textwrap
 from pathlib import Path
 
 import yaml
@@ -45,7 +45,7 @@ def test_description_slot_required():
 
 def test_description_slot_lists_banned_tokens_in_annotations():
     """Banned-token check is not a native LinkML constraint, so we encode it
-    as an annotation that downstream lint scripts can read."""
+    as an annotation that lint scripts can read."""
     data = yaml.safe_load(BUNDLE_SCHEMA.read_text())
     slot = _slot_description(data)
     banned = (slot.get("annotations") or {}).get("banned_tokens")
@@ -65,7 +65,7 @@ def test_too_short_description_is_rejected_by_linkml(tmp_path):
     instance = {
         "slug": "x",
         "skill_name": "x",
-        "description": "Use when X.",   # 13 chars — too short
+        "description": "Use when X.",  # 13 chars — too short
         "edam_topics": [],
         "edam_operation": "http://edamontology.org/operation_3215",
         "bundle_version": "0.2.0",
@@ -74,13 +74,49 @@ def test_too_short_description_is_rejected_by_linkml(tmp_path):
     inst.write_text(json.dumps(instance))
     result = subprocess.run(
         [
-            sys.executable, "-m", "linkml.validators.jsonschemavalidator",
-            "-s", str(BUNDLE_SCHEMA),
-            "-C", "ASBSkill",
+            sys.executable,
+            "-m",
+            "linkml.validators.jsonschemavalidator",
+            "-s",
+            str(BUNDLE_SCHEMA),
+            "-C",
+            "ASBSkill",
             str(inst),
         ],
-        capture_output=True, text=True,
+        capture_output=True,
+        text=True,
     )
     assert result.returncode != 0, (
         f"LinkML should have rejected the short description; output:\n{result.stdout}\n{result.stderr}"
     )
+
+
+SHIPPED_TEXT = sorted([*SCHEMA_DIR.glob("*.yaml"), *SCHEMA_DIR.glob("*.schema.json"), *SCHEMA_DIR.glob("*.py")])
+INTERNAL_REFERENCES = (
+    r"SciTask (Card|Capsule|Skill Bundle|Standard)",
+    r"IDEAS-[A-Z]",
+    r"spec §",
+    r"\bPlan [0-9]",
+    r"superpowers",
+    r"asb-domain-core",
+    r"\bAgent ?[0-9]",
+    r"--(si-deep-dive|trace-scripts|scenario-registry|enrich)\b",
+    r"removed in the next",
+    r"agentic_science_builder\.",
+    r"corpus_artifacts",
+)
+
+
+@pytest.mark.parametrize("path", SHIPPED_TEXT, ids=lambda path: path.name)
+def test_shipped_text_has_no_internal_reference(path):
+    """Shipped descriptions name no internal plan, private path or former product name."""
+    text = path.read_text(encoding="utf-8")
+    found = [pattern for pattern in INTERNAL_REFERENCES if re.search(pattern, text)]
+    assert found == [], f"{path.name}: {found}"
+
+
+def test_package_description_names_asb_schema():
+    tomllib = pytest.importorskip("tomllib")  # standard library from Python 3.11
+    project = tomllib.loads((SCHEMA_DIR.parent.parent / "pyproject.toml").read_text())["project"]
+    assert project["description"].startswith("ASB Schema")
+    assert "standard" not in project["description"].lower()

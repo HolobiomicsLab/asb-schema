@@ -4,7 +4,7 @@ description: >-
   LinkML schema for ASB SkillCollection — a curated thematic release containing
   N ASBSkills and M ASBTools, pinned by content-hash IRIs. Each SkillCollection
   release corresponds to one Zenodo concept DOI; releases mint version DOIs
-  beneath that concept. See ../../docs/superpowers/specs/2026-05-24-asb-skills-release-design.md §3.
+  beneath that concept.
   v0.3 declares the ten keys every released collection.yaml already carries
   (JSON-LD framing, lead curators, counts, catalogue topics, attribution roles,
   Zenodo DOI), so a real manifest validates against the class instead of failing
@@ -39,7 +39,7 @@ classes:
     class_uri: linkml:Any
 
   Person:
-    description: A person — contributor at the collection level (IDEAS-B / spec §16.3).
+    description: A person, contributor at the collection level.
     attributes:
       name:
         description: Full display name
@@ -68,7 +68,7 @@ classes:
     description: >-
       A curated thematic release of N ASBSkills and M ASBTools, pinned by
       content-hash. Distinct from per-capsule SkillBundle; this is the
-      release unit (IDEAS-B / spec §3).
+      release unit.
     tree_root: true
     slots:
       - iri
@@ -200,7 +200,7 @@ slots:
       - schema:license
 
   contributors:
-    description: People who curated this collection (per-collection ORCIDs; spec §16.3)
+    description: People who curated this collection (per-collection ORCIDs)
     range: Person
     multivalued: true
     annotations:

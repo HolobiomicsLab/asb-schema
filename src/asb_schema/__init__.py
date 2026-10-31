@@ -1,4 +1,5 @@
-"""ASB Standard LinkML schema package (v0.4.0; replaces the legacy package in earlier releases)."""
+"""LinkML schemas of ASB Schema, with their generated JSON Schema files and JSON-LD context."""
+
 from importlib.resources import files
 
 __version__ = "0.4.0"

@@ -2,7 +2,7 @@
     "$defs": {
         "ASBSkill": {
             "additionalProperties": false,
-            "description": "Collection-time aggregated skill record \u2014 the deduplicated, paper-grounded scientific competency surfaced by ``corpus_artifacts.collect_skills`` at release time. Distinct from ``SkillBundle`` which is the per-capsule artifact. Mirrors the Python dataclass at agentic_science_builder.schemas.ASBSkill (renamed from SciSkill in Plan 2a / ASB-runtime).",
+            "description": "Collection-time aggregated skill record \u2014 the deduplicated, paper-grounded scientific competency collected at release time. Distinct from ``SkillBundle`` which is the per-capsule artifact. Mirrors the ASBSkill dataclass of the reference pipeline (formerly SciSkill).",
             "properties": {
                 "bundle_dir": {
                     "description": "Absolute path to the offline skill knowledge base bundle directory",
@@ -104,7 +104,7 @@
                     ]
                 },
                 "source_task_ids": {
-                    "description": "task_id values of the SciTask Cards from which this skill was extracted",
+                    "description": "task_id values of the ASB task cards from which this skill was extracted",
                     "items": {
                         "type": "string"
                     },
@@ -131,10 +131,10 @@
         },
         "ASBTool": {
             "additionalProperties": false,
-            "description": "Collection-time aggregated tool record \u2014 the deduplicated, paper-grounded software-tool reference surfaced by ``corpus_artifacts.collect_tools``. Mirrors the Python dataclass at agentic_science_builder.schemas.ASBTool (renamed from SciTool in Plan 2a / ASB-runtime).",
+            "description": "Collection-time aggregated tool record \u2014 the deduplicated, paper-grounded software-tool reference collected at release time. Mirrors the ASBTool dataclass of the reference pipeline (formerly SciTool).",
             "properties": {
                 "bio_tools_id": {
-                    "description": "bio.tools identifier for this tool (IDEAS-G). Reserved slot for the future bio.tools federation work; not populated in v1.",
+                    "description": "bio.tools identifier for this tool. Reserved slot for the future bio.tools federation work; not populated in v1.",
                     "type": [
                         "string",
                         "null"
@@ -223,7 +223,7 @@
                     ]
                 },
                 "source_task_ids": {
-                    "description": "task_id values of the SciTask Cards from which this skill was extracted",
+                    "description": "task_id values of the ASB task cards from which this skill was extracted",
                     "items": {
                         "type": "string"
                     },
@@ -344,7 +344,7 @@
         },
         "MergeAuditRecord": {
             "additionalProperties": false,
-            "description": "Per-merge audit record documenting alias deduplication decisions. Surfaces the data ``corpus_artifacts._semantic_dedup`` already records so dedup decisions are queryable and citable (IDEAS-E / spec \u00a711).",
+            "description": "Per-merge audit record documenting alias deduplication decisions. Surfaces the deduplication data recorded at release time, so dedup decisions are queryable and citable.",
             "properties": {
                 "alias": {
                     "description": "Original skill label before deduplication",
@@ -469,7 +469,7 @@
         },
         "Person": {
             "additionalProperties": false,
-            "description": "A person \u2014 contributor at the collection level (IDEAS-B / spec \u00a716.3).",
+            "description": "A person, contributor at the collection level.",
             "properties": {
                 "affiliation": {
                     "description": "Institutional affiliation (free-form; e.g. \"Holobiomics Lab, CNRS\")",
@@ -604,7 +604,7 @@
                     ]
                 },
                 "source_task_ids": {
-                    "description": "task_id values of the SciTask Cards from which this skill was extracted",
+                    "description": "task_id values of the ASB task cards from which this skill was extracted",
                     "items": {
                         "type": "string"
                     },
@@ -631,7 +631,7 @@
         },
         "SkillCollection": {
             "additionalProperties": false,
-            "description": "A curated thematic release of N ASBSkills and M ASBTools, pinned by content-hash. Distinct from per-capsule SkillBundle; this is the release unit (IDEAS-B / spec \u00a73).",
+            "description": "A curated thematic release of N ASBSkills and M ASBTools, pinned by content-hash. Distinct from per-capsule SkillBundle; this is the release unit.",
             "properties": {
                 "@context": {
                     "anyOf": [
@@ -669,7 +669,7 @@
                     ]
                 },
                 "contributors": {
-                    "description": "People who curated this collection (per-collection ORCIDs; spec \u00a716.3)",
+                    "description": "People who curated this collection (per-collection ORCIDs)",
                     "items": {
                         "$ref": "#/$defs/Person"
                     },
@@ -843,7 +843,7 @@
         },
         "ToolAffordance": {
             "additionalProperties": false,
-            "description": "W3C WoT ActionAffordance-aligned mixin (IDEAS-F / spec \u00a715). RESERVED for v1 \u2014 slot definitions exist but no ASB class consumes them yet. When the ecosystem standardises on WoT for executable tools, ASBTool (or an ExecutableTool subclass) will inherit from this mixin without breaking existing instances.",
+            "description": "W3C WoT ActionAffordance-aligned mixin. RESERVED for v1 \u2014 slot definitions exist but no ASB class consumes them yet. When the ecosystem standardises on WoT for executable tools, ASBTool (or an ExecutableTool subclass) will inherit from this mixin without breaking existing instances.",
             "properties": {
                 "effect": {
                     "description": "Free-form effect description for downstream agents",
@@ -1042,7 +1042,7 @@
             ]
         },
         "source_task_ids": {
-            "description": "task_id values of the SciTask Cards from which this skill was extracted",
+            "description": "task_id values of the ASB task cards from which this skill was extracted",
             "items": {
                 "type": "string"
             },

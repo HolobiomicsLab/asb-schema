@@ -1,4 +1,5 @@
-"""IDEAS-I: SkillCollectionRegistry — catalogue root."""
+"""SkillCollectionRegistry: the tree root of the collection catalogue."""
+
 import yaml
 from pathlib import Path
 
@@ -20,7 +21,9 @@ def test_registry_slots():
     data = yaml.safe_load(SCHEMA.read_text())
     slots = set(data["classes"]["SkillCollectionRegistry"].get("slots") or [])
     expected = {
-        "registry_iri", "registry_title", "registry_description",
+        "registry_iri",
+        "registry_title",
+        "registry_description",
         "registry_maintainers",
         "collections",
         "external_repos",
@@ -31,12 +34,10 @@ def test_registry_slots():
 
 
 def test_external_repos_off_by_default():
-    """IDEAS-I + spec §9.2 + §15: external_repos[] is reserved but not enabled in v1."""
+    """external_repos is a reserved, optional slot for third-party collection repositories."""
     data = yaml.safe_load(SCHEMA.read_text())
     slot = data["slots"]["external_repos"]
-    # We mark it nice_to_have to encode "reserved, off in v1"
+    # importance nice_to_have marks the slot as reserved.
     assert slot.get("annotations", {}).get("importance") == "nice_to_have"
     desc = (slot.get("description") or "").lower()
-    assert "reserved" in desc or "v1" in desc, (
-        "external_repos description must flag it as v1-reserved"
-    )
+    assert "reserved" in desc or "v1" in desc, "external_repos description must flag it as v1-reserved"

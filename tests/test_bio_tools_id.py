@@ -1,4 +1,5 @@
-"""IDEAS-G: bio_tools_id is a reserved slot on ASBTool (not populated in v1)."""
+"""bio_tools_id is a reserved slot on ASBTool."""
+
 import yaml
 from pathlib import Path
 

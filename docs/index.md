@@ -45,6 +45,6 @@ A reference pipeline maintained by the same laboratory writes cards, capsules, s
 
 ## Release
 
-This site documents release **0.4.0**. The latest release on the Python Package Index is 0.3.0[^pypi]. Release 0.4.0 gives four card slots (`parameters`, `data_accessions`, `artifact_refs`, `script_refs`) lists of JSON objects instead of lists of strings; see the [changelog](changelog.md) and the [status](about/index.md#status).
+This site documents release **0.4.0**. The latest release on the Python Package Index is 0.3.0[^pypi]. Release 0.4.0 gives four card slots (`parameters`, `data_accessions`, `artifact_refs`, `script_refs`) lists of JSON objects instead of lists of strings and declares fourteen further optional card slots, among them `execution_environment`; see the [changelog](changelog.md) and the [status](about/index.md#status).
 
 [^pypi]: Python Package Index, `asb-schema` release history. <https://pypi.org/project/asb-schema/>

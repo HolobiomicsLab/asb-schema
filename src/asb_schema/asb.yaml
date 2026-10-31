@@ -1,9 +1,10 @@
 id: https://w3id.org/holobiomicslab/asb-schema/v0.2
 name: asb_standard
 description: >-
-  ASB Standard v0.2 — schema for scientific benchmark substrates and curated
-  skill / tool release collections. Imports sub-schemas for ASB Cards,
-  Capsules, Skill Bundles, Skill Collections, and the SkillCollectionRegistry.
+  ASB Schema umbrella file, version 0.2.0: schema for scientific benchmark
+  substrates and curated skill / tool release collections. Imports sub-schemas
+  for ASB Cards, Capsules, Skill Bundles, Skill Collections, and the
+  SkillCollectionRegistry.
 
 license: CC-BY-4.0
 version: "0.2.0"

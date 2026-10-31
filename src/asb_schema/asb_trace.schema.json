@@ -2,7 +2,7 @@
     "$defs": {
         "ExplorationNode": {
             "additionalProperties": false,
-            "description": "One step in the research journey. The value of `type` selects which further slots are mandatory; those constraints are enforced by agentic_science_builder.trace_extract.gate, not expressible in LinkML alone.",
+            "description": "One step in the research journey. The value of `type` selects which further slots are mandatory; those constraints are enforced by the trace gate of the reference pipeline, not expressible in LinkML alone.",
             "properties": {
                 "also_depends_on": {
                     "description": "Cross-edges to nodes outside this node's nesting, making the tree a DAG",

@@ -1,12 +1,12 @@
-id: https://w3id.org/holobiomicslab/asb-schema/card/v0.2
-name: asb_card_v0_2
+id: https://w3id.org/holobiomicslab/asb-schema/card/v0.3
+name: asb_card_v0_3
 description: >-
-  LinkML schema for SciTask Card v0.17.0 — a bounded, reproducible scientific task
-  extracted from a peer-reviewed paper. Covers all fields of the ASBTaskCard dataclass
+  LinkML schema for the ASB task card, file version 0.3.0: a bounded, reproducible
+  scientific task extracted from a peer-reviewed paper. Covers all fields of the ASBTaskCard dataclass
   and related nested types.
 
 license: CC-BY-4.0
-version: "0.2.0"
+version: "0.3.0"
 
 prefixes:
   linkml:   https://w3id.org/linkml/
@@ -32,7 +32,7 @@ default_range: string
 enums:
 
   ProvenanceSourceEnum:
-    description: Source from which a SciTask Card was synthesized
+    description: Source from which an ASB task card was synthesized
     permissible_values:
       published:
         description: Peer-reviewed journal article
@@ -45,7 +45,7 @@ enums:
 
   TaskKindEnum:
     description: >-
-      What a SciTask Card represents relative to the source paper: a result the
+      What an ASB task card represents relative to the source paper: a result the
       paper empirically reported, a derived re-analysis, a described-but-not-
       separately-validated mechanism, or a task beyond the paper's reported scope.
     permissible_values:
@@ -161,7 +161,7 @@ classes:
   EvidenceSnippet:
     description: >-
       A verbatim text snippet extracted from the source paper that supports
-      a claim or field in the SciTask Card.
+      a claim or field in the ASB task card.
     attributes:
       snippet_id:
         description: Unique identifier for this snippet (e.g. snip_001)
@@ -198,7 +198,7 @@ classes:
 
   EvaluationStrategy:
     description: >-
-      Structured evaluation plan for a SciTask Card, aligned with the
+      Structured evaluation plan for an ASB task card, aligned with the
       p-plan:Plan concept. Specifies direct automated checks and expert-review
       criteria.
     attributes:
@@ -224,7 +224,7 @@ classes:
           - pplan:Plan
 
   TaskPort:
-    description: A single typed data port (input or output) on a SciTask Card.
+    description: A single typed data port (input or output) on an ASB task card.
     attributes:
       port_id:
         description: Unique identifier for this port
@@ -263,6 +263,16 @@ classes:
           importance: nice_to_have
         close_mappings:
           - schema:dataset
+      resolved_via:
+        description: >-
+          How the port was resolved to a concrete source, as a JSON object; null
+          when the port is unresolved
+        range: JsonObject
+        inlined: true
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - prov:wasDerivedFrom
       edam_operation_uri:
         description: EDAM operation IRI for the operation that produces or consumes this port
         range: uri
@@ -277,9 +287,18 @@ classes:
           importance: nice_to_have
         exact_mappings:
           - EDAM:format_1915
+      port_role:
+        description: >-
+          Role of the port; "environment" marks a port that declares the software
+          under study rather than data. Absent or null means not flagged.
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - dcterms:type
 
   ProvenanceLinks:
-    description: PROV-O-inspired links for a SciTask Card.
+    description: PROV-O-inspired links for an ASB task card.
     attributes:
       used:
         description: IRIs or IDs of entities used (inputs, prior task outputs)
@@ -392,7 +411,7 @@ classes:
 
   ExecutableSpec:
     description: >-
-      A runnable command bound to a SciTask Card.
+      A runnable command bound to an ASB task card.
     attributes:
       cmd:
         description: Command as a list of arguments (no shell string)
@@ -417,6 +436,30 @@ classes:
           importance: nice_to_have
         close_mappings:
           - schema:duration
+      env:
+        description: Environment variables set for the command, as a JSON object of names to values
+        range: JsonObject
+        inlined: true
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:description
+      inferred:
+        description: >-
+          True when the command could not be confirmed against the files of the
+          source package and is a best-effort inference
+        range: boolean
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:creativeWorkStatus
+      grounding_notes:
+        description: Why the command could not be confirmed, when inferred is true
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:description
 
   ExecutionEnvironment:
     description: >-
@@ -472,10 +515,28 @@ classes:
           importance: nice_to_have
         close_mappings:
           - schema:description
+      scheduler_resources:
+        description: >-
+          Resources requested from the scheduler (for example nodes, memory and
+          wall time), as a JSON object
+        range: JsonObject
+        inlined: true
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:description
       llm_models:
         description: LLM model IDs used during card synthesis
         range: string
         multivalued: true
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:softwareVersion
+      tools_versions:
+        description: Versions of the tools used, as a JSON object of tool names to versions
+        range: JsonObject
+        inlined: true
         annotations:
           importance: nice_to_have
         close_mappings:
@@ -490,7 +551,7 @@ classes:
 
   TypedArtifact:
     description: >-
-      A typed, format-identified artifact (input or output) of a SciTask Card.
+      A typed, format-identified artifact (input or output) of an ASB task card.
       Pairs 1-to-1 with an entry in inputs[] or expected_outputs[].
     attributes:
       description:
@@ -529,6 +590,13 @@ classes:
           importance: nice_to_have
         close_mappings:
           - schema:fileFormat
+      content_signature:
+        description: Short content hint from magic-byte matching (e.g. <?xml)
+        range: string
+        annotations:
+          importance: nice_to_have
+        close_mappings:
+          - schema:encodingFormat
       confidence:
         description: Detection confidence level
         range: ArtifactConfidenceEnum
@@ -576,7 +644,7 @@ classes:
       A bounded, reproducible scientific task extracted from a peer-reviewed paper.
       Links a task to its research question, finding, inputs, outputs, tools,
       required skills, workflow description, and evaluation strategy.
-      Runtime mirror: agentic_science_builder.schemas.ASBTaskCard (schema v0.18.0).
+      Runtime mirror: the ASBTaskCard dataclass of the reference pipeline (schema v0.18.0).
     tree_root: true
     slots:
       - task_id
@@ -626,10 +694,23 @@ classes:
       - project_id
       - provenance_source
       - reproducibility_tier
-      - task_objective
       - run_command
       - run_cwd
       - run_timeout_seconds
+      - related_repos
+      - execution_profile
+      - task_inputs
+      - task_outputs
+      - prov
+      - data_in
+      - data_out
+      - resumption_contract
+      - execution_environment
+      - executable
+      - spine_entity_ids
+      - spine_condition_ids
+      - abstraction_frame
+      - finding_evidence_span
 
 # ---------------------------------------------------------------------------
 # Slots (top-level card fields)
@@ -835,7 +916,9 @@ slots:
       - schema:version
 
   scitask_version:
-    description: SciTask Standard spec version (e.g. 0.1.0)
+    description: >-
+      Version of the task specification (the reference pipeline writes 0.1.1);
+      the slot keeps its name from before the rename to ASB
     range: string
     required: true
     annotations:
@@ -887,8 +970,8 @@ slots:
 
   parameters:
     description: >-
-      Agent 7 parameter resolver output — list of parameter dicts
-      (populated only with --si-deep-dive)
+      Resolved task parameters, one JSON object per parameter; empty when
+      parameter resolution did not run
     range: JsonObject
     multivalued: true
     inlined: true
@@ -920,7 +1003,7 @@ slots:
       - prov:wasDerivedFrom
 
   keywords:
-    description: Free-form keywords extracted by Agent 1 (methods, domains, instruments)
+    description: Free-form keywords extracted from the source (methods, domains, instruments)
     range: string
     multivalued: true
     annotations:
@@ -983,8 +1066,8 @@ slots:
 
   artifact_refs:
     description: >-
-      Heuristic artifact binding (--enrich): prose input/output mapped to typed locators
-      from external enrichment + package index
+      Bindings of prose inputs and outputs to typed locators (files, URLs) found
+      by enrichment or in the package index, one JSON object per binding
     range: JsonObject
     multivalued: true
     inlined: true
@@ -1033,8 +1116,8 @@ slots:
 
   script_refs:
     description: >-
-      Step → source-file linkage produced by Agent 8 (--trace-scripts).
-      Each entry: {step, file_path, chunk_name, chunk_type, start_line, end_line, score}
+      Links from workflow steps to source-file line ranges, one JSON object per
+      link: {step, file_path, chunk_name, chunk_type, start_line, end_line, score}
     range: JsonObject
     multivalued: true
     inlined: true
@@ -1045,7 +1128,7 @@ slots:
       - prov:atLocation
 
   scenario_id:
-    description: Scenario assignment ID (populated only with --scenario-registry)
+    description: Scenario assignment ID; null when the card has no scenario assignment
     range: string
     annotations:
       importance: nice_to_have
@@ -1053,7 +1136,7 @@ slots:
       - dcterms:isPartOf
 
   project_id:
-    description: Project assignment ID (populated only with --scenario-registry)
+    description: Project assignment ID; null when the card has no project assignment
     range: string
     annotations:
       importance: nice_to_have
@@ -1077,7 +1160,7 @@ slots:
       - pplan:Plan
 
   run_command:
-    description: Shell command for asb verify (None means skip)
+    description: Shell command that re-runs the task for verification; null means skip
     range: string
     annotations:
       importance: nice_to_have
@@ -1099,3 +1182,142 @@ slots:
       importance: nice_to_have
     close_mappings:
       - schema:duration
+
+  related_repos:
+    description: >-
+      Repositories linked to the source that are not the task's own repository
+      (dependencies, upstream engines, mirrors), as owner/repo strings
+    range: string
+    multivalued: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - schema:codeRepository
+
+  execution_profile:
+    description: >-
+      Declared execution requirements: compute tier, commercial software and
+      open-source alternatives
+    range: ExecutionProfile
+    annotations:
+      importance: should_have
+    close_mappings:
+      - schema:softwareRequirements
+
+  task_inputs:
+    description: Typed input ports of the task, for dataflow between cards
+    range: TaskPort
+    multivalued: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - prov:used
+
+  task_outputs:
+    description: Typed output ports of the task, for dataflow between cards
+    range: TaskPort
+    multivalued: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - prov:generated
+
+  prov:
+    description: Provenance links of the card (entities used and entities that influenced it)
+    range: ProvenanceLinks
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - prov:wasInfluencedBy
+
+  data_in:
+    description: >-
+      Format-typed descriptions of the inputs, one per entry of inputs and in
+      the same order
+    range: TypedArtifact
+    multivalued: true
+    annotations:
+      importance: should_have
+    close_mappings:
+      - prov:used
+
+  data_out:
+    description: >-
+      Format-typed descriptions of the expected outputs, one per entry of
+      expected_outputs and in the same order
+    range: TypedArtifact
+    multivalued: true
+    annotations:
+      importance: should_have
+    close_mappings:
+      - prov:generated
+
+  resumption_contract:
+    description: >-
+      How a workflow resumes at this step when the step cannot be re-executed;
+      null when not needed
+    range: ResumptionContract
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - pplan:Plan
+
+  execution_environment:
+    description: >-
+      Software, hardware and scheduler context that ran or is required to run
+      the card; null when not recorded
+    range: ExecutionEnvironment
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - schema:runtimePlatform
+
+  executable:
+    description: A runnable command for the task; null when no command is available
+    range: ExecutableSpec
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - schema:potentialAction
+
+  spine_entity_ids:
+    description: >-
+      Identifiers of the paper-level entities the card refers to; empty when no
+      entity spine was built
+    range: string
+    multivalued: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - prov:wasDerivedFrom
+
+  spine_condition_ids:
+    description: >-
+      Identifiers of the paper-level conditions the card refers to; empty when
+      no entity spine was built
+    range: string
+    multivalued: true
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - prov:wasDerivedFrom
+
+  abstraction_frame:
+    description: >-
+      Abstraction frame of the task in the paper-level entity spine; null when
+      no spine was built
+    range: string
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - schema:about
+
+  finding_evidence_span:
+    description: >-
+      Verbatim passage of the source that supports finding; null when none was
+      selected
+    range: string
+    annotations:
+      importance: nice_to_have
+    close_mappings:
+      - schema:text

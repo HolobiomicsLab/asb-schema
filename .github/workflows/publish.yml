@@ -8,9 +8,11 @@
 #   2. In the GitHub repository settings, create the environment "pypi"
 #      (required reviewers make every release a manual approval).
 #
-# Nothing is uploaded when the tag does not equal the version in pyproject.toml
-# and in asb_schema.__version__, when no licence is declared, when the tests
-# fail, or when twine check rejects the metadata.
+# Nothing is uploaded when the tagged commit is not on main, when the tag does
+# not equal the version in pyproject.toml, asb_schema.__version__ and
+# CITATION.cff, when CHANGELOG.md has no heading for the version, when no
+# licence is declared, when the tests fail, or when twine check rejects the
+# metadata.
 name: Publish
 
 on:
@@ -25,8 +27,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Tag is on main
+        run: |
+          git merge-base --is-ancestor "$GITHUB_SHA" origin/main \
+            || { echo "::error::tag ${GITHUB_REF_NAME} (${GITHUB_SHA}) is not on main"; exit 1; }
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - name: Tag equals the package version
@@ -39,6 +47,14 @@ jobs:
           module = re.search(r'^__version__ = "([^"]+)"', init, re.M).group(1)
           if not tag == declared == module:
               print(f"::error::tag v{tag}, pyproject {declared}, __version__ {module} must be equal")
+              sys.exit(1)
+          citation = re.search(r'^version:\s*"?([^"\s]+)"?\s*$', open("CITATION.cff").read(), re.M)
+          if citation is None or citation.group(1) != tag:
+              found = citation.group(1) if citation else "none"
+              print(f"::error::CITATION.cff version {found} must equal the tag v{tag}")
+              sys.exit(1)
+          if not re.search(rf"^## {re.escape(tag)}(\s|$)", open("CHANGELOG.md").read(), re.M):
+              print(f"::error::CHANGELOG.md has no '## {tag}' heading")
               sys.exit(1)
           PY
       - name: Licence is declared
@@ -59,7 +75,7 @@ jobs:
           python -m pip install build twine
           python -m build
           python -m twine check --strict dist/*
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: asb-schema-dist
           path: dist/
@@ -73,7 +89,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: asb-schema-dist
           path: dist/

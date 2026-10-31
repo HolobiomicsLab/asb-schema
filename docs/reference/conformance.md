@@ -30,6 +30,8 @@ linkml-validate --schema "$SCHEMA" --target-class ASBTaskCard task_card.json
 # No issues found
 ```
 
+With release 0.4.0, 405 of the 417 cards of the staged v1 collections of asb-skill-collections pass this command; the other 12 carry two legacy `evaluation_strategy` keys.
+
 | Stage | Tool | Checks | Undeclared keys |
 |---|---|---|---|
 | LinkML validation | `linkml-validate --target-class <Class>` | Required slots, ranges, patterns, enumerations | Rejected |
@@ -88,7 +90,7 @@ The context covers skill-bundle terms. Released collection manifests embed their
 | Prefix | IRI | Used for |
 |---|---|---|
 | `asb:` | `https://w3id.org/holobiomicslab/asb-schema/` | Schema `id`s, class and slot IRIs, `@vocab` of `context.jsonld` |
-| none | `https://w3id.org/holobiomicslab/asb-schema/card/v0.2` | `id` of `asb_card.yaml`; the other files follow the pattern `<kind>/vX.Y` |
+| none | `https://w3id.org/holobiomicslab/asb-schema/card/v0.3` | `id` of `asb_card.yaml`; the other files follow the pattern `<kind>/vX.Y` |
 | `asbskill:` | `https://w3id.org/holobiomicslab/asb-skill/` | Skills and collections; bound to `asb:` in released manifests |
 | none | `https://w3id.org/holobiomicslab/asb-skill/collection/<slug>/v<N>` | `iri` of a collection release; resolves to the release directory |
 | none | `https://w3id.org/holobiomicslab/asb-skill/registry` | `@id` of the collection registry; resolves to `catalogue.jsonld` |
@@ -114,7 +116,7 @@ Capsule crates name their nodes `urn:asb:<kind>:<key>` with the kinds `task`, `t
 | File | `id` segment | `version` |
 |---|---|---|
 | `asb.yaml` | v0.2 | 0.2.0 |
-| `asb_card.yaml` | `card/v0.2` | 0.2.0 |
+| `asb_card.yaml` | `card/v0.3` | 0.3.0 |
 | `asb_capsule.yaml` | `capsule/v0.2` | 0.1.0 |
 | `asb_skill_bundle.yaml` | `skill-bundle/v0.2` | 0.2.0 |
 | `asb_skill_collection.yaml` | `skill-collection/v0.3` | 0.3.0 |
@@ -126,7 +128,7 @@ Capsule crates name their nodes `urn:asb:<kind>:<key>` with the kinds `task`, `t
 - The package follows [Semantic Versioning](https://semver.org/). Before 1.0, a minor release may change a schema so that previously valid data fails; a patch release does not.
 - A change to a LinkML file bumps that file's `version`. A change that can reject previously valid data also moves the `vX.Y` segment of its `id`.
 - The generated JSON Schema files, `context.jsonld` and the [field reference](index.md) are regenerated in the same commit as the LinkML change; continuous integration fails when they differ from the generator output.
-- A release is a tag `v<version>` equal to the version in `pyproject.toml` and `asb_schema.__version__`; the publish workflow refuses any other tag.
+- A release is a tag `v<version>` on `main`, equal to the version in `pyproject.toml`, `asb_schema.__version__` and `CITATION.cff`, with a heading in `CHANGELOG.md`; the publish workflow refuses any other tag.
 - Each release has an entry in the [changelog](../changelog.md).
 
 ## Legacy identifiers

@@ -3,7 +3,7 @@ name: asb_skill_collection_registry_v0_2
 description: >-
   LinkML schema for the asb-skill-collections catalogue root. Lists all
   published SkillCollection releases and reserves an `external_repos` slot
-  for future federation (IDEAS-I / spec §9.2). The serialized form is
+  for future federation. The serialized form is
   `catalogue.jsonld` at the root of the `asb-skill-collections` repo.
 
 license: CC-BY-4.0
@@ -94,7 +94,7 @@ slots:
     description: >-
       RESERVED (off in v1). Future federation slot — IRIs of third-party
       `*-skill-collections` repos whose collections get aggregated into this
-      catalogue. Per spec §9.2 and §15, this is a design slot only.
+      catalogue. This is a design slot only.
     range: uriorcurie
     multivalued: true
     annotations:

@@ -6,7 +6,7 @@ Any program can write task cards: it fills the 15 required slots of `ASBTaskCard
 
 1. Fill the 15 required slots ([Authoring a task card](authoring-a-card.md#2-fill-the-required-slots)).
 2. Fill the optional slots the source supports, in particular `evidence_snippets`, `crossref_doi`, `task_kind` and `provenance_source`.
-3. Keep data the card does not declare (environment, oracle, license, authors) in a sidecar file next to `task_card.json`.
+3. Record the software stack in `execution_environment`; keep data the card does not declare (the environment a benchmark gives a solver, oracle, license, authors) in a sidecar file next to `task_card.json`.
 4. Use the `doi-slug__task_001` form of `task_id` when cards from several papers are pooled.
 5. Keep `finding`, the source's answer, out of what an agent under evaluation sees.
 6. Record gaps in `uncertainty_notes` and `missing_information`.
@@ -26,7 +26,7 @@ Several science benchmarks derive their tasks from published research and publis
 
 </div>
 
-In each case `evidence_snippets` come from re-reading the source paper, and `source_package`, `tools`, `skills` and `evaluation_strategy` are authored. Benchmark licenses and environments go to the sidecar file. Answers that a benchmark withholds stay withheld: a card holds `finding` beside `task_description`.
+In each case `evidence_snippets` come from re-reading the source paper, and `source_package`, `tools`, `skills` and `evaluation_strategy` are authored. Benchmark licenses and the environments a benchmark gives a solver go to the sidecar file; the software stack a card ran with goes in `execution_environment`. Answers that a benchmark withholds stay withheld: a card holds `finding` beside `task_description`.
 
 ```json
 {

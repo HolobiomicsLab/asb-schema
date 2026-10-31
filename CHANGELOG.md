@@ -9,6 +9,10 @@ follows [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- `asb_card.yaml` moves to version 0.3.0 and id
+  `https://w3id.org/holobiomicslab/asb-schema/card/v0.3`, as the versioning
+  policy requires for a change that can reject previously valid cards.
+  (2026-10-31)
 - `ASBTaskCard`: `parameters`, `data_accessions`, `artifact_refs` and
   `script_refs` take lists of JSON objects (new class `JsonObject`) instead of
   lists of strings. A card that stores strings in these fields validates
@@ -17,18 +21,58 @@ follows [Semantic Versioning](https://semver.org/).
   annotated `json_schema_type: object` becomes an open JSON object, and an
   optional enum slot also accepts `null`. Card and capsule JSON Schema files
   regenerated. (2026-09-13)
-- `linkml` and `linkml-runtime` are bounded below 1.12, which changes JSON
-  Schema generation. Registry JSON Schema regenerated. (2026-10-29)
+- Registry JSON Schema regenerated with `linkml` 1.11.1. (2026-10-29)
+- The runtime dependencies are `linkml>=1.7`, `linkml-runtime>=1.7` and
+  `pyyaml>=6.0`, without an upper bound. The exact generator versions
+  (`linkml` and `linkml-runtime` 1.11.1; 1.12 changes JSON Schema generation)
+  are pinned in `constraints/generate.txt`, which `generate.sh` checks and the
+  CI generated job installs; the generation test skips under other versions.
+  (2026-10-31)
+- The capsule descriptions state an RO-Crate 1.1 package, without the Workflow
+  Run Profile 0.5 claim; Workflow Run Crate alignment is tracked in the
+  reference pipeline. (2026-10-31)
+- Schema descriptions name the ASB task card instead of the SciTask Card, carry
+  the real file versions in their headers and cite no internal plan,
+  specification section or private repository; `asb_schema.compat` states no
+  removal date. Validation is unchanged. (2026-10-31)
 
 ### Added
 
 - `tests/test_json_schema_generation.py`. (2026-09-13)
+- `ASBTaskCard` declares the fourteen optional slots that the reference
+  pipeline writes into its cards: `related_repos`, `execution_profile`,
+  `task_inputs`, `task_outputs`, `prov`, `data_in`, `data_out`,
+  `resumption_contract`, `execution_environment`, `executable`,
+  `spine_entity_ids`, `spine_condition_ids`, `abstraction_frame` and
+  `finding_evidence_span`. `TaskPort` gains `port_role` and `resolved_via`,
+  `TypedArtifact` gains `content_signature`, `ExecutableSpec` gains `env`,
+  `inferred` and `grounding_notes`, and `ExecutionEnvironment` gains
+  `scheduler_resources` and `tools_versions`. Cards of the reference pipeline
+  now validate closed: 405 of the 417 released benchmark cards pass, and the
+  other 12 carry two legacy `evaluation_strategy` keys. (2026-10-31)
+- `tests/test_reference_conformance.py`, with one card of a heuristic build and
+  three released cards as fixtures. (2026-10-31)
+- `CONTRIBUTING.md` with the schema change process and a pull request
+  template; a ruff lint job in CI (`make lint` no longer ignores failures);
+  `MANIFEST.in`, so that the test suite runs from the source distribution.
+  (2026-10-31)
 - Standalone repository: README, `CITATION.cff`, documentation site, CI on
-  Python 3.10 to 3.13, publish workflow on tags `v<version>`, project URLs in
+  Python 3.10 to 3.14, publish workflow on tags `v<version>`, project URLs in
   the package metadata.
+- Package metadata: trove classifiers (Python 3.10 to 3.14), keywords, and the
+  author named in `CITATION.cff`; `tests/test_package_metadata.py` keeps them
+  in agreement. (2026-10-31)
+- The publish workflow refuses a tag whose commit is not on `main`, a
+  `CITATION.cff` version that differs from the tag and a changelog without a
+  heading for the version; `tests/test_publish_guard.py` runs its version
+  guard. The package docstring no longer carries a version. (2026-10-31)
 
 ### Fixed
 
+- The `ASBTaskCard` slot list named `task_objective` twice. (2026-10-31)
+- `generate.sh` writes each generated file to a temporary file and moves it
+  into place, so a failed run no longer truncates a committed file.
+  (2026-10-31)
 - `tests/test_rename_migration.py` no longer requires the checkout directory to
   be named `asb-schema`, and skips its `pyproject.toml` check on Python 3.10,
   which has no `tomllib`.

@@ -7,6 +7,7 @@ closed, as `linkml-validate` runs it, each of the four released manifests failed
 on additional properties, so no manifest could ever pass the collection repo's
 LinkML gate. The manifest below has the released key set with synthetic values.
 """
+
 import copy
 import json
 from pathlib import Path
@@ -45,12 +46,8 @@ MANIFEST = {
         "zenodo_authors": ["AgenticScienceBuilder Community", "A. Promoter"],
     },
     "zenodo_doi": "10.5281/zenodo.1234567",
-    "lead_curators": [
-        {"name": "A. Curator", "orcid": "0000-0002-1825-0097", "github": "acurator"}
-    ],
-    "contributors": [
-        {"name": "A. Curator", "orcid": "https://orcid.org/0000-0002-1825-0097"}
-    ],
+    "lead_curators": [{"name": "A. Curator", "orcid": "0000-0002-1825-0097", "github": "acurator"}],
+    "contributors": [{"name": "A. Curator", "orcid": "https://orcid.org/0000-0002-1825-0097"}],
     "skills_count": 2,
     "tools_count": 1,
     "workflows_count": 0,
@@ -63,8 +60,16 @@ MANIFEST = {
 }
 
 TEN_KEYS = {
-    "@context", "@type", "@id", "lead_curators", "skills_count", "tools_count",
-    "workflows_count", "domain_topics", "roles", "zenodo_doi",
+    "@context",
+    "@type",
+    "@id",
+    "lead_curators",
+    "skills_count",
+    "tools_count",
+    "workflows_count",
+    "domain_topics",
+    "roles",
+    "zenodo_doi",
 }
 
 
@@ -105,8 +110,14 @@ def test_each_of_the_ten_keys_is_optional(validator):
         (lambda m: m.__setitem__("zenodo_doi", "https://doi.org/10.5281/zenodo.1"), "does not match"),
     ],
     ids=[
-        "missing-required", "undeclared-key", "count-type", "negative-count",
-        "curator-without-name", "curator-orcid-as-uri", "undeclared-role", "zenodo-doi-as-url",
+        "missing-required",
+        "undeclared-key",
+        "count-type",
+        "negative-count",
+        "curator-without-name",
+        "curator-orcid-as-uri",
+        "undeclared-role",
+        "zenodo-doi-as-url",
     ],
 )
 def test_the_class_still_refuses(validator, mutate, fragment):
