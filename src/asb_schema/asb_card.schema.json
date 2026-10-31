@@ -1189,7 +1189,7 @@
             "type": "object"
         }
     },
-    "$id": "https://w3id.org/holobiomicslab/asb-schema/card/v0.2",
+    "$id": "https://w3id.org/holobiomicslab/asb-schema/card/v0.3",
     "$schema": "https://json-schema.org/draft/2019-09/schema",
     "additionalProperties": true,
     "description": "A bounded, reproducible scientific task extracted from a peer-reviewed paper. Links a task to its research question, finding, inputs, outputs, tools, required skills, workflow description, and evaluation strategy. Runtime mirror: agentic_science_builder.schemas.ASBTaskCard (schema v0.18.0).",
@@ -1735,8 +1735,8 @@
         "schema_version",
         "scitask_version"
     ],
-    "title": "asb_card_v0_2",
+    "title": "asb_card_v0_3",
     "type": "object",
-    "version": "0.2.0"
+    "version": "0.3.0"
 }
 

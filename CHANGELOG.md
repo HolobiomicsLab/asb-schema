@@ -9,6 +9,10 @@ follows [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- `asb_card.yaml` moves to version 0.3.0 and id
+  `https://w3id.org/holobiomicslab/asb-schema/card/v0.3`, as the versioning
+  policy requires for a change that can reject previously valid cards.
+  (2026-10-31)
 - `ASBTaskCard`: `parameters`, `data_accessions`, `artifact_refs` and
   `script_refs` take lists of JSON objects (new class `JsonObject`) instead of
   lists of strings. A card that stores strings in these fields validates

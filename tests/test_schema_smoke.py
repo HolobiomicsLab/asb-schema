@@ -70,7 +70,7 @@ def test_top_schema_imports_all_sub_schemas():
 
 def test_card_schema_is_valid_yaml():
     data = yaml.safe_load(CARD_SCHEMA.read_text())
-    assert data["name"] == "asb_card_v0_2"
+    assert data["name"] == "asb_card_v0_3"
     assert "classes" in data
     assert "slots" in data
 

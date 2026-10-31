@@ -29,7 +29,7 @@ GitHub reads this file and offers a "Cite this repository" link[^gh-cff].
 
 ## Citing a schema version
 
-A record that conforms to one schema file cites the package version and the `id` of the file. For a task card validated with release 0.4.0: package 0.4.0 and `https://w3id.org/holobiomicslab/asb-schema/card/v0.2` (`asb_card.yaml` 0.2.0). The package version fixes the content of every schema file; the `id` and `version` of each file are listed under [Versions](reference/conformance.md#versions).
+A record that conforms to one schema file cites the package version and the `id` of the file. For a task card validated with release 0.4.0: package 0.4.0 and `https://w3id.org/holobiomicslab/asb-schema/card/v0.3` (`asb_card.yaml` 0.3.0). The package version fixes the content of every schema file; the `id` and `version` of each file are listed under [Versions](reference/conformance.md#versions).
 
 ## Citing a collection
 

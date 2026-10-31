@@ -2,7 +2,7 @@
 
 A task card is a structured record of one bounded, reproducible scientific task extracted from a paper or project. It states the research question, the answer the source reports, the inputs and expected outputs, the tools and skills involved, the workflow and a plan for evaluating an attempt. Its class is `ASBTaskCard` in `src/asb_schema/asb_card.yaml`; a card is one JSON document, conventionally `task_card.json`.
 
-<div class="asb-spec-meta"> <span class="asb-badge asb-badge--version">asb_card.yaml 0.2.0</span> <code>https://w3id.org/holobiomicslab/asb-schema/card/v0.2</code> <span class="asb-badge asb-badge--normative">normative</span> <span class="asb-badge asb-badge--required">15 of 64 slots required</span> </div>
+<div class="asb-spec-meta"> <span class="asb-badge asb-badge--version">asb_card.yaml 0.3.0</span> <code>https://w3id.org/holobiomicslab/asb-schema/card/v0.3</code> <span class="asb-badge asb-badge--normative">normative</span> <span class="asb-badge asb-badge--required">15 of 64 slots required</span> </div>
 
 ## Example
 

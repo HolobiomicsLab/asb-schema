@@ -20,7 +20,7 @@ This page lists every class, slot and enumeration of the seven LinkML files of A
 | File | id | version | Root class | Classes | Slots | Attributes | Enums |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | [`asb.yaml`](#file-asb) | `https://w3id.org/holobiomicslab/asb-schema/v0.2` | 0.2.0 | none | 0 | 0 | 0 | 0 |
-| [`asb_card.yaml`](#file-asb_card) | `https://w3id.org/holobiomicslab/asb-schema/card/v0.2` | 0.2.0 | [`ASBTaskCard`](#class-ASBTaskCard) | 13 | 64 | 59 | 7 |
+| [`asb_card.yaml`](#file-asb_card) | `https://w3id.org/holobiomicslab/asb-schema/card/v0.3` | 0.3.0 | [`ASBTaskCard`](#class-ASBTaskCard) | 13 | 64 | 59 | 7 |
 | [`asb_capsule.yaml`](#file-asb_capsule) | `https://w3id.org/holobiomicslab/asb-schema/capsule/v0.2` | 0.1.0 | [`SciTaskCapsule`](#class-SciTaskCapsule) | 2 | 8 | 4 | 1 |
 | [`asb_skill_bundle.yaml`](#file-asb_skill_bundle) | `https://w3id.org/holobiomicslab/asb-schema/skill-bundle/v0.2` | 0.2.0 | [`SkillBundle`](#class-SkillBundle) | 7 | 33 | 19 | 1 |
 | [`asb_skill_collection.yaml`](#file-asb_skill_collection) | `https://w3id.org/holobiomicslab/asb-schema/skill-collection/v0.3` | 0.3.0 | [`SkillCollection`](#class-SkillCollection) | 5 | 25 | 11 | 0 |
@@ -39,11 +39,11 @@ Schema name `asb_standard`. Imports: `linkml:types`, [`asb_card.yaml`](#file-asb
 
 ## asb_card.yaml { #file-asb_card }
 
-<div class="asb-spec-meta"> <span class="asb-badge asb-badge--version">asb_card.yaml 0.2.0</span> <code>https://w3id.org/holobiomicslab/asb-schema/card/v0.2</code> <span>License: CC-BY-4.0</span> </div>
+<div class="asb-spec-meta"> <span class="asb-badge asb-badge--version">asb_card.yaml 0.3.0</span> <code>https://w3id.org/holobiomicslab/asb-schema/card/v0.3</code> <span>License: CC-BY-4.0</span> </div>
 
-LinkML schema for the ASB task card, file version 0.2.0: a bounded, reproducible scientific task extracted from a peer-reviewed paper. Covers all fields of the ASBTaskCard dataclass and related nested types.
+LinkML schema for the ASB task card, file version 0.3.0: a bounded, reproducible scientific task extracted from a peer-reviewed paper. Covers all fields of the ASBTaskCard dataclass and related nested types.
 
-Schema name `asb_card_v0_2`. Imports: `linkml:types`. Format page: [Task card](../schema/task-card.md).
+Schema name `asb_card_v0_3`. Imports: `linkml:types`. Format page: [Task card](../schema/task-card.md).
 
 ### AvailableArtifact { #class-AvailableArtifact }
 

@@ -90,7 +90,7 @@ The context covers skill-bundle terms. Released collection manifests embed their
 | Prefix | IRI | Used for |
 |---|---|---|
 | `asb:` | `https://w3id.org/holobiomicslab/asb-schema/` | Schema `id`s, class and slot IRIs, `@vocab` of `context.jsonld` |
-| none | `https://w3id.org/holobiomicslab/asb-schema/card/v0.2` | `id` of `asb_card.yaml`; the other files follow the pattern `<kind>/vX.Y` |
+| none | `https://w3id.org/holobiomicslab/asb-schema/card/v0.3` | `id` of `asb_card.yaml`; the other files follow the pattern `<kind>/vX.Y` |
 | `asbskill:` | `https://w3id.org/holobiomicslab/asb-skill/` | Skills and collections; bound to `asb:` in released manifests |
 | none | `https://w3id.org/holobiomicslab/asb-skill/collection/<slug>/v<N>` | `iri` of a collection release; resolves to the release directory |
 | none | `https://w3id.org/holobiomicslab/asb-skill/registry` | `@id` of the collection registry; resolves to `catalogue.jsonld` |
@@ -116,7 +116,7 @@ Capsule crates name their nodes `urn:asb:<kind>:<key>` with the kinds `task`, `t
 | File | `id` segment | `version` |
 |---|---|---|
 | `asb.yaml` | v0.2 | 0.2.0 |
-| `asb_card.yaml` | `card/v0.2` | 0.2.0 |
+| `asb_card.yaml` | `card/v0.3` | 0.3.0 |
 | `asb_capsule.yaml` | `capsule/v0.2` | 0.1.0 |
 | `asb_skill_bundle.yaml` | `skill-bundle/v0.2` | 0.2.0 |
 | `asb_skill_collection.yaml` | `skill-collection/v0.3` | 0.3.0 |

@@ -1,12 +1,12 @@
-id: https://w3id.org/holobiomicslab/asb-schema/card/v0.2
-name: asb_card_v0_2
+id: https://w3id.org/holobiomicslab/asb-schema/card/v0.3
+name: asb_card_v0_3
 description: >-
-  LinkML schema for the ASB task card, file version 0.2.0: a bounded, reproducible
+  LinkML schema for the ASB task card, file version 0.3.0: a bounded, reproducible
   scientific task extracted from a peer-reviewed paper. Covers all fields of the ASBTaskCard dataclass
   and related nested types.
 
 license: CC-BY-4.0
-version: "0.2.0"
+version: "0.3.0"
 
 prefixes:
   linkml:   https://w3id.org/linkml/
