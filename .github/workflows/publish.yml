@@ -34,7 +34,7 @@ jobs:
         run: |
           git merge-base --is-ancestor "$GITHUB_SHA" origin/main \
             || { echo "::error::tag ${GITHUB_REF_NAME} (${GITHUB_SHA}) is not on main"; exit 1; }
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - name: Tag equals the package version
