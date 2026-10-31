@@ -61,6 +61,10 @@ follows [Semantic Versioning](https://semver.org/).
 - Package metadata: trove classifiers (Python 3.10 to 3.14), keywords, and the
   author named in `CITATION.cff`; `tests/test_package_metadata.py` keeps them
   in agreement. (2026-10-31)
+- The publish workflow refuses a tag whose commit is not on `main`, a
+  `CITATION.cff` version that differs from the tag and a changelog without a
+  heading for the version; `tests/test_publish_guard.py` runs its version
+  guard. The package docstring no longer carries a version. (2026-10-31)
 
 ### Fixed
 
