@@ -1,4 +1,5 @@
 """ASB Standard LinkML schema package (v0.4.0; replaces the legacy package in earlier releases)."""
+
 from importlib.resources import files
 
 __version__ = "0.4.0"

@@ -5,12 +5,11 @@ Rules (spec §5):
   - leads with "Use when ..."
   - no banned marketing tokens
 """
+
 import json
 import re
 import subprocess
 import sys
-import tempfile
-import textwrap
 from pathlib import Path
 
 import yaml
@@ -66,7 +65,7 @@ def test_too_short_description_is_rejected_by_linkml(tmp_path):
     instance = {
         "slug": "x",
         "skill_name": "x",
-        "description": "Use when X.",   # 13 chars — too short
+        "description": "Use when X.",  # 13 chars — too short
         "edam_topics": [],
         "edam_operation": "http://edamontology.org/operation_3215",
         "bundle_version": "0.2.0",
@@ -75,21 +74,24 @@ def test_too_short_description_is_rejected_by_linkml(tmp_path):
     inst.write_text(json.dumps(instance))
     result = subprocess.run(
         [
-            sys.executable, "-m", "linkml.validators.jsonschemavalidator",
-            "-s", str(BUNDLE_SCHEMA),
-            "-C", "ASBSkill",
+            sys.executable,
+            "-m",
+            "linkml.validators.jsonschemavalidator",
+            "-s",
+            str(BUNDLE_SCHEMA),
+            "-C",
+            "ASBSkill",
             str(inst),
         ],
-        capture_output=True, text=True,
+        capture_output=True,
+        text=True,
     )
     assert result.returncode != 0, (
         f"LinkML should have rejected the short description; output:\n{result.stdout}\n{result.stderr}"
     )
 
 
-SHIPPED_TEXT = sorted(
-    [*SCHEMA_DIR.glob("*.yaml"), *SCHEMA_DIR.glob("*.schema.json"), *SCHEMA_DIR.glob("*.py")]
-)
+SHIPPED_TEXT = sorted([*SCHEMA_DIR.glob("*.yaml"), *SCHEMA_DIR.glob("*.schema.json"), *SCHEMA_DIR.glob("*.py")])
 INTERNAL_REFERENCES = (
     r"SciTask (Card|Capsule|Skill Bundle|Standard)",
     r"IDEAS-[A-Z]",

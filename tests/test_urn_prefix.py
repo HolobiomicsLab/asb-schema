@@ -3,6 +3,7 @@
 Plan 1a only covers schema-side mappings. The runtime ro_crate.py rename is
 Plan 2a (different repo). This test guards against accidental backsliding.
 """
+
 import yaml
 from pathlib import Path
 

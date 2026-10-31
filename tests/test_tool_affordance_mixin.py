@@ -4,6 +4,7 @@ Per spec §15: 'No WoT ActionAffordance requirement in v1 — slot reserved in
 LinkML, populated when ecosystem standardizes.' This test guards the slot
 reservation; it does NOT assert that ASBTool uses the mixin (it doesn't, yet).
 """
+
 import yaml
 from pathlib import Path
 

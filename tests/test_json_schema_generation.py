@@ -64,8 +64,12 @@ classes:
 """
     schema = json.loads(ASBJsonSchemaGenerator(source, not_closed=True).serialize())
     validator = jsonschema.validators.validator_for(schema)(schema)
-    valid = {"optional_choice": None, "required_choice": "first", "choices": ["second"],
-             "records": [{"arbitrary": {"values": [1, None, True]}}]}
+    valid = {
+        "optional_choice": None,
+        "required_choice": "first",
+        "choices": ["second"],
+        "records": [{"arbitrary": {"values": [1, None, True]}}],
+    }
     validator.validate(valid)
     for field, bad_values in {
         "optional_choice": ("other", 3, True, [], {}),
@@ -77,8 +81,17 @@ classes:
             assert list(validator.iter_errors({**valid, field: bad})), (field, bad)
 
 
-@pytest.mark.parametrize("name", ("asb_card", "asb_capsule", "asb_trace", "asb_skill_bundle",
-                                  "asb_skill_collection", "asb_skill_collection_registry"))
+@pytest.mark.parametrize(
+    "name",
+    (
+        "asb_card",
+        "asb_capsule",
+        "asb_trace",
+        "asb_skill_bundle",
+        "asb_skill_collection",
+        "asb_skill_collection_registry",
+    ),
+)
 def test_checked_in_json_schema_equals_source_generation(name):
     mismatch = _generator_mismatch()
     if mismatch:

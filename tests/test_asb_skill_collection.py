@@ -1,4 +1,5 @@
 """IDEAS-B: SkillCollection LinkML class — release unit, tree_root."""
+
 import yaml
 from pathlib import Path
 
@@ -21,11 +22,20 @@ def test_skill_collection_required_slot_list():
     data = yaml.safe_load(SCHEMA.read_text())
     slots = list(data["classes"]["SkillCollection"].get("slots") or [])
     expected = {
-        "iri", "slug", "version", "title", "description", "license",
-        "contributors", "doi", "released_at",
-        "skills", "tools",
+        "iri",
+        "slug",
+        "version",
+        "title",
+        "description",
+        "license",
+        "contributors",
+        "doi",
+        "released_at",
+        "skills",
+        "tools",
         "edam_topics",
-        "source_collections", "catalogue_membership",
+        "source_collections",
+        "catalogue_membership",
         "ro_crate_path",
     }
     missing = expected - set(slots)
@@ -43,9 +53,7 @@ def test_person_class_present_with_orcid():
     data = yaml.safe_load(SCHEMA.read_text())
     person = data["classes"]["Person"]
     attrs = set((person.get("attributes") or {}).keys())
-    assert {"name", "orcid", "affiliation"}.issubset(attrs), (
-        f"Person missing slots: {attrs}"
-    )
+    assert {"name", "orcid", "affiliation"}.issubset(attrs), f"Person missing slots: {attrs}"
 
 
 def test_skill_collection_imports_skill_bundle():

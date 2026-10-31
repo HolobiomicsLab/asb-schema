@@ -1,4 +1,5 @@
 """IDEAS-H: JSON-LD @context generation targets the w3id ASB-Skill IRI."""
+
 import json
 import subprocess
 import sys
@@ -15,7 +16,8 @@ def _ensure_context_built():
     """Regenerate context.jsonld from the LinkML source. Skip on tooling absence."""
     proc = subprocess.run(
         [sys.executable, "-m", "linkml.generators.jsonldcontextgen", str(BUNDLE_SCHEMA)],
-        capture_output=True, text=True,
+        capture_output=True,
+        text=True,
     )
     if proc.returncode != 0:
         pytest.skip(f"linkml jsonldcontextgen not runnable: {proc.stderr[:200]}")

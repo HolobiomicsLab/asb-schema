@@ -4,6 +4,7 @@ One-release deprecation cycle (spec §13). Downstream consumers (ASB-runtime,
 indicium-adapters, asb-domain-core) import the legacy names from this module
 while their callsites get updated to ASB* names.
 """
+
 import warnings
 
 import pytest
@@ -15,6 +16,7 @@ def test_compat_module_importable():
 
 def test_legacy_schema_name_alias_for_scitask_card():
     from asb_schema.compat import legacy_schema_name
+
     with warnings.catch_warnings(record=True) as w:
         warnings.simplefilter("always")
         out = legacy_schema_name("scitask_card")
@@ -26,19 +28,24 @@ def test_legacy_schema_name_alias_for_scitask_card():
 
 def test_legacy_schema_name_alias_for_skill_bundle():
     from asb_schema.compat import legacy_schema_name
+
     with warnings.catch_warnings(record=True):
         warnings.simplefilter("always")
         assert legacy_schema_name("scitask_skill_bundle") == "asb_skill_bundle"
         assert legacy_schema_name("scitask_capsule") == "asb_capsule"
 
 
-@pytest.mark.parametrize("legacy,new", [
-    ("SciTaskCard", "ASBTaskCard"),
-    ("SciSkill", "ASBSkill"),
-    ("SciTool", "ASBTool"),
-])
+@pytest.mark.parametrize(
+    "legacy,new",
+    [
+        ("SciTaskCard", "ASBTaskCard"),
+        ("SciSkill", "ASBSkill"),
+        ("SciTool", "ASBTool"),
+    ],
+)
 def test_legacy_class_name_alias(legacy, new):
     from asb_schema.compat import legacy_class_name
+
     with warnings.catch_warnings(record=True) as w:
         warnings.simplefilter("always")
         out = legacy_class_name(legacy)
@@ -49,6 +56,7 @@ def test_legacy_class_name_alias(legacy, new):
 def test_module_attribute_access_emits_warning():
     """Accessing `asb_schema.compat.SciTaskCard` returns the new name and warns."""
     import asb_schema.compat as compat
+
     with warnings.catch_warnings(record=True) as w:
         warnings.simplefilter("always")
         value = getattr(compat, "SciTaskCard")
@@ -58,5 +66,6 @@ def test_module_attribute_access_emits_warning():
 
 def test_unknown_legacy_class_raises_attribute_error():
     import asb_schema.compat as compat
+
     with pytest.raises(AttributeError):
         _ = compat.NotARealLegacyName

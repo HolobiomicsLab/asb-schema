@@ -1,0 +1,7 @@
+# Files of the source distribution beyond the package and pyproject.toml:
+# the regeneration script and its inputs, the citation file, and the test
+# fixtures, so that the test suite runs from an unpacked sdist.
+include CHANGELOG.md CITATION.cff generate.sh
+include constraints/generate.txt
+include scripts/gen_reference.py
+recursive-include tests *.py *.json

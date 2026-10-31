@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Regenerate all LinkML-derived artefacts for the ASB Standard.
+# Regenerate all LinkML-derived artefacts of ASB Schema.
 # Run from anywhere: bash generate.sh (paths resolve from this file).
 set -e
 asb_schema_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
@@ -22,12 +22,16 @@ if wrong:
              + "; run: python -m pip install -c constraints/generate.txt -e .")
 PY
 cd "${asb_schema_dir}/src/asb_schema"
+# Each file is written to a .tmp sibling and moved into place only when its
+# generator succeeds, so a failed run leaves the committed file intact.
+trap 'rm -f -- *.schema.json.tmp context.jsonld.tmp' EXIT
 for schema in asb_card asb_capsule asb_trace asb_skill_bundle asb_skill_collection asb_skill_collection_registry; do
-  python -m asb_schema.jsonschemagen ${schema}.yaml \
-    > ${schema}.schema.json
+  python -m asb_schema.jsonschemagen "${schema}.yaml" > "${schema}.schema.json.tmp"
+  mv -- "${schema}.schema.json.tmp" "${schema}.schema.json"
 done
 # JSON-LD @context for the skill-bundle terms (w3id.org/holobiomicslab/asb-skill/).
-python -m linkml.generators.jsonldcontextgen asb_skill_bundle.yaml > context.jsonld
+python -m linkml.generators.jsonldcontextgen asb_skill_bundle.yaml > context.jsonld.tmp
+mv -- context.jsonld.tmp context.jsonld
 # Field reference page of the documentation site (docs/reference/index.md).
 python "${asb_schema_dir}/scripts/gen_reference.py"
 echo "Done. Artefacts written next to the LinkML sources."

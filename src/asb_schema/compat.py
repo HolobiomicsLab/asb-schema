@@ -4,6 +4,7 @@ Maps the former schema basenames and class names to the current ones and
 emits a ``DeprecationWarning`` on every lookup, so code written against the
 former names keeps working while it is updated.
 """
+
 from __future__ import annotations
 
 import warnings
@@ -12,18 +13,18 @@ from typing import Final
 __all__ = ["legacy_schema_name", "legacy_class_name"]
 
 _SCHEMA_ALIASES: Final[dict[str, str]] = {
-    "scitask":                       "asb",
-    "scitask_card":                  "asb_card",
-    "scitask_capsule":               "asb_capsule",
-    "scitask_skill_bundle":          "asb_skill_bundle",
-    "scitask_skill_collection":      "asb_skill_collection",
+    "scitask": "asb",
+    "scitask_card": "asb_card",
+    "scitask_capsule": "asb_capsule",
+    "scitask_skill_bundle": "asb_skill_bundle",
+    "scitask_skill_collection": "asb_skill_collection",
     "scitask_skill_collection_registry": "asb_skill_collection_registry",
 }
 
 _CLASS_ALIASES: Final[dict[str, str]] = {
     "SciTaskCard": "ASBTaskCard",
-    "SciSkill":    "ASBSkill",
-    "SciTool":     "ASBTool",
+    "SciSkill": "ASBSkill",
+    "SciTool": "ASBTool",
 }
 
 

@@ -26,10 +26,15 @@ def test_keywords_match_citation(project):
 
 
 def test_python_classifiers_match_ci_matrix(project):
-    workflow = yaml.safe_load((REPO_ROOT / ".github" / "workflows" / "ci.yml").read_text())
+    ci = REPO_ROOT / ".github" / "workflows" / "ci.yml"
+    if not ci.is_file():
+        pytest.skip("CI workflow not present (source distribution)")
+    workflow = yaml.safe_load(ci.read_text())
     matrix = workflow["jobs"]["test"]["strategy"]["matrix"]["python-version"]
     prefix = "Programming Language :: Python :: 3."
-    declared = [c.removeprefix("Programming Language :: Python :: ") for c in project["classifiers"] if c.startswith(prefix)]
+    declared = [
+        c.removeprefix("Programming Language :: Python :: ") for c in project["classifiers"] if c.startswith(prefix)
+    ]
     assert declared == matrix
     assert "Programming Language :: Python :: 3" in project["classifiers"]
 

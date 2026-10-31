@@ -5,17 +5,18 @@ from pathlib import Path
 
 SCHEMA_DIR = Path(__file__).parent.parent / "src/asb_schema"
 
-CARD_SCHEMA    = SCHEMA_DIR / "asb_card.yaml"
+CARD_SCHEMA = SCHEMA_DIR / "asb_card.yaml"
 CAPSULE_SCHEMA = SCHEMA_DIR / "asb_capsule.yaml"
-BUNDLE_SCHEMA  = SCHEMA_DIR / "asb_skill_bundle.yaml"
-TOP_SCHEMA     = SCHEMA_DIR / "asb.yaml"
-COLLECTION_SCHEMA          = SCHEMA_DIR / "asb_skill_collection.yaml"
+BUNDLE_SCHEMA = SCHEMA_DIR / "asb_skill_bundle.yaml"
+TOP_SCHEMA = SCHEMA_DIR / "asb.yaml"
+COLLECTION_SCHEMA = SCHEMA_DIR / "asb_skill_collection.yaml"
 COLLECTION_REGISTRY_SCHEMA = SCHEMA_DIR / "asb_skill_collection_registry.yaml"
 
 
 # ---------------------------------------------------------------------------
 # Helper
 # ---------------------------------------------------------------------------
+
 
 def _all_mappings(defn: dict) -> bool:
     """Return True if the slot definition has at least one ontology mapping."""
@@ -42,6 +43,7 @@ def _slots_from_attrs(classes: dict) -> dict:
 # Top-level schema tests
 # ===========================================================================
 
+
 def test_top_schema_is_valid_yaml():
     data = yaml.safe_load(TOP_SCHEMA.read_text())
     assert data["name"] == "asb_standard"
@@ -51,14 +53,20 @@ def test_top_schema_is_valid_yaml():
 def test_top_schema_imports_all_sub_schemas():
     data = yaml.safe_load(TOP_SCHEMA.read_text())
     imports = data.get("imports", [])
-    for needle in ("asb_card", "asb_capsule", "asb_skill_bundle",
-                   "asb_skill_collection", "asb_skill_collection_registry"):
+    for needle in (
+        "asb_card",
+        "asb_capsule",
+        "asb_skill_bundle",
+        "asb_skill_collection",
+        "asb_skill_collection_registry",
+    ):
         assert needle in imports, f"Top schema must import {needle}"
 
 
 # ===========================================================================
 # asb_card.yaml
 # ===========================================================================
+
 
 def test_card_schema_is_valid_yaml():
     data = yaml.safe_load(CARD_SCHEMA.read_text())
@@ -163,6 +171,7 @@ def test_card_slot_count_at_least_20():
 # asb_capsule.yaml
 # ===========================================================================
 
+
 def test_capsule_schema_is_valid_yaml():
     data = yaml.safe_load(CAPSULE_SCHEMA.read_text())
     assert data["name"] == "asb_capsule_v0_2"
@@ -211,14 +220,13 @@ def test_capsule_every_attribute_has_ontology_mapping():
 def test_capsule_card_slot_range_is_asb_task_card():
     data = yaml.safe_load(CAPSULE_SCHEMA.read_text())
     slot = data.get("slots", {}).get("capsule_card", {})
-    assert slot.get("range") == "ASBTaskCard", (
-        f"capsule_card.range must be ASBTaskCard (was {slot.get('range')!r})"
-    )
+    assert slot.get("range") == "ASBTaskCard", f"capsule_card.range must be ASBTaskCard (was {slot.get('range')!r})"
 
 
 # ===========================================================================
 # asb_skill_bundle.yaml
 # ===========================================================================
+
 
 def test_bundle_schema_is_valid_yaml():
     data = yaml.safe_load(BUNDLE_SCHEMA.read_text())
@@ -297,11 +305,19 @@ def test_asb_skill_required_slots():
     data = yaml.safe_load(BUNDLE_SCHEMA.read_text())
     skill_slots = list((data["classes"]["ASBSkill"].get("slots") or []))
     expected = {
-        "slug", "skill_name", "description", "when_to_use",
-        "related_tools", "source_task_ids", "source_papers",
-        "merged_aliases", "merged_alias_records",
-        "edam_operation", "edam_topics",
-        "kb_path", "bundle_dir",
+        "slug",
+        "skill_name",
+        "description",
+        "when_to_use",
+        "related_tools",
+        "source_task_ids",
+        "source_papers",
+        "merged_aliases",
+        "merged_alias_records",
+        "edam_operation",
+        "edam_topics",
+        "kb_path",
+        "bundle_dir",
     }
     missing = expected - set(skill_slots)
     assert not missing, f"ASBSkill missing slots: {missing}"
@@ -311,10 +327,19 @@ def test_asb_tool_required_slots():
     data = yaml.safe_load(BUNDLE_SCHEMA.read_text())
     tool_slots = list((data["classes"]["ASBTool"].get("slots") or []))
     expected = {
-        "slug", "tool_name", "canonical_url", "related_skills",
-        "source_task_ids", "source_paper_doi", "source_paper_title",
-        "evidence_spans", "version_used", "install",
-        "resolution_attempts", "edam_operation", "edam_topics",
+        "slug",
+        "tool_name",
+        "canonical_url",
+        "related_skills",
+        "source_task_ids",
+        "source_paper_doi",
+        "source_paper_title",
+        "evidence_spans",
+        "version_used",
+        "install",
+        "resolution_attempts",
+        "edam_operation",
+        "edam_topics",
     }
     missing = expected - set(tool_slots)
     assert not missing, f"ASBTool missing slots: {missing}"

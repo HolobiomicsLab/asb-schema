@@ -26,8 +26,13 @@ class ASBJsonSchemaGenerator(JsonSchemaGenerator):
 
     def after_generate_class_slot(self, result, cls, sv):
         slot = result.source
-        if (self.include_null and not slot.required and not slot.multivalued
-                and slot.range in sv.all_enums() and "$ref" in result.schema_):
+        if (
+            self.include_null
+            and not slot.required
+            and not slot.multivalued
+            and slot.range in sv.all_enums()
+            and "$ref" in result.schema_
+        ):
             reference = result.schema_.pop("$ref")
             result.schema_["anyOf"] = [{"$ref": reference}, {"type": "null"}]
         return result

@@ -51,6 +51,10 @@ follows [Semantic Versioning](https://semver.org/).
   other 12 carry two legacy `evaluation_strategy` keys. (2026-10-31)
 - `tests/test_reference_conformance.py`, with one card of a heuristic build and
   three released cards as fixtures. (2026-10-31)
+- `CONTRIBUTING.md` with the schema change process and a pull request
+  template; a ruff lint job in CI (`make lint` no longer ignores failures);
+  `MANIFEST.in`, so that the test suite runs from the source distribution.
+  (2026-10-31)
 - Standalone repository: README, `CITATION.cff`, documentation site, CI on
   Python 3.10 to 3.14, publish workflow on tags `v<version>`, project URLs in
   the package metadata.
@@ -61,6 +65,9 @@ follows [Semantic Versioning](https://semver.org/).
 ### Fixed
 
 - The `ASBTaskCard` slot list named `task_objective` twice. (2026-10-31)
+- `generate.sh` writes each generated file to a temporary file and moves it
+  into place, so a failed run no longer truncates a committed file.
+  (2026-10-31)
 - `tests/test_rename_migration.py` no longer requires the checkout directory to
   be named `asb-schema`, and skips its `pyproject.toml` check on Python 3.10,
   which has no `tomllib`.

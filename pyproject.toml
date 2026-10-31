@@ -41,7 +41,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8"]
+dev = ["pytest>=8", "ruff==0.15.13"]
 docs = ["mkdocs-material==9.7.6"]
 
 [project.urls]
@@ -59,3 +59,6 @@ asb_schema = ["*.yaml", "*.schema.json", "*.owl.ttl", "*.jsonld"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 120
