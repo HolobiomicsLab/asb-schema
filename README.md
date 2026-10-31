@@ -60,8 +60,8 @@ benchmarks and Agent Skills are described in the
 
 ## Validate
 
-Each artifact is validated against its own schema file. Validation is
-closed: an undeclared key is an error.
+Each artifact is validated against its own schema file. linkml-validate
+validates closed: an undeclared key is an error.
 
 ```bash
 SCHEMA=$(python -c "from asb_schema import get_schema_path; print(get_schema_path('asb_card'))")

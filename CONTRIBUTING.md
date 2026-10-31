@@ -68,8 +68,6 @@ description:
 ```
 
 A maintainer reviews the pull request; CI passes before it is merged.
-Contributions are made under the licences stated in the
-[README](README.md#citation-and-licence).
 
 ## Releases
 
