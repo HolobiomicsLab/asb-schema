@@ -17,8 +17,13 @@ follows [Semantic Versioning](https://semver.org/).
   annotated `json_schema_type: object` becomes an open JSON object, and an
   optional enum slot also accepts `null`. Card and capsule JSON Schema files
   regenerated. (2026-09-13)
-- `linkml` and `linkml-runtime` are bounded below 1.12, which changes JSON
-  Schema generation. Registry JSON Schema regenerated. (2026-10-29)
+- Registry JSON Schema regenerated with `linkml` 1.11.1. (2026-10-29)
+- The runtime dependencies are `linkml>=1.7`, `linkml-runtime>=1.7` and
+  `pyyaml>=6.0`, without an upper bound. The exact generator versions
+  (`linkml` and `linkml-runtime` 1.11.1; 1.12 changes JSON Schema generation)
+  are pinned in `constraints/generate.txt`, which `generate.sh` checks and the
+  CI generated job installs; the generation test skips under other versions.
+  (2026-10-31)
 - The capsule descriptions state an RO-Crate 1.1 package, without the Workflow
   Run Profile 0.5 claim; Workflow Run Crate alignment is tracked in the
   reference pipeline. (2026-10-31)

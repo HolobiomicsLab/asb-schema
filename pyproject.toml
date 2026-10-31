@@ -32,9 +32,11 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
 ]
+# The generated files are produced with the exact versions in
+# constraints/generate.txt; the runtime range is open.
 dependencies = [
-    "linkml>=1.7,<1.12",  # 1.12 changes JSON Schema generation (nested additionalProperties); the published schemas come from the locked 1.11.x
-    "linkml-runtime>=1.7,<1.12",
+    "linkml>=1.7",
+    "linkml-runtime>=1.7",
     "pyyaml>=6.0",
 ]
 

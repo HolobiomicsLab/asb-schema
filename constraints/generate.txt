@@ -1,0 +1,6 @@
+# Exact generator versions for bash generate.sh and the CI "generated" job.
+# The committed JSON Schema files, context.jsonld and docs/reference/index.md
+# are the output of these versions; linkml 1.12 changes JSON Schema generation.
+# Install with: python -m pip install -c constraints/generate.txt -e .
+linkml==1.11.1
+linkml-runtime==1.11.1

@@ -96,7 +96,7 @@ is a tag `v<version>` equal to the version in `pyproject.toml`.
 ```bash
 git clone https://github.com/HolobiomicsLab/asb-schema.git
 cd asb-schema
-python -m pip install -e ".[dev,docs]"
+python -m pip install -c constraints/generate.txt -e ".[dev,docs]"
 python -m pytest            # tests
 bash generate.sh            # regenerate JSON Schema, JSON-LD and the field reference
 mkdocs serve                # documentation site
@@ -107,6 +107,7 @@ mkdocs serve                # documentation site
 | `src/asb_schema/*.yaml` | LinkML sources |
 | `src/asb_schema/*.schema.json`, `context.jsonld` | Generated files |
 | `scripts/gen_reference.py` | Generator of the field reference page |
+| `constraints/generate.txt` | Exact `linkml` versions that `generate.sh` and CI generate with |
 | `tests/` | Test suite |
 | `docs/` | Documentation site (MkDocs Material) |
 

@@ -4,6 +4,23 @@
 set -e
 asb_schema_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 export PYTHONPATH="${asb_schema_dir}/src${PYTHONPATH:+:${PYTHONPATH}}"
+# The committed artefacts come from the generator versions pinned in
+# constraints/generate.txt; refuse to regenerate with any other version.
+python - "${asb_schema_dir}/constraints/generate.txt" <<'PY'
+import sys
+from importlib.metadata import version
+
+wrong = []
+for line in open(sys.argv[1], encoding="utf-8"):
+    requirement = line.split("#", 1)[0].strip()
+    if requirement:
+        name, pinned = requirement.split("==")
+        if version(name) != pinned:
+            wrong.append(f"{name} {version(name)} (pinned {pinned})")
+if wrong:
+    sys.exit("generate.sh: " + ", ".join(wrong)
+             + "; run: python -m pip install -c constraints/generate.txt -e .")
+PY
 cd "${asb_schema_dir}/src/asb_schema"
 for schema in asb_card asb_capsule asb_trace asb_skill_bundle asb_skill_collection asb_skill_collection_registry; do
   python -m asb_schema.jsonschemagen ${schema}.yaml \
