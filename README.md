@@ -99,7 +99,7 @@ cd asb-schema
 python -m pip install -c constraints/generate.txt -e ".[dev,docs]"
 python -m pytest            # tests
 bash generate.sh            # regenerate JSON Schema, JSON-LD and the field reference
-mkdocs serve                # documentation site
+mkdocs serve -a 127.0.0.1:8001   # documentation site at http://127.0.0.1:8001/
 ```
 
 | Path | Content |
