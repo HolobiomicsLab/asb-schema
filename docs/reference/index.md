@@ -257,7 +257,7 @@ This class declares no slots or attributes.
 
 ### ASBTaskCard { #class-ASBTaskCard }
 
-A bounded, reproducible scientific task extracted from a peer-reviewed paper. Links a task to its research question, finding, inputs, outputs, tools, required skills, workflow description, and evaluation strategy. Runtime mirror: agentic_science_builder.schemas.ASBTaskCard (schema v0.18.0).
+A bounded, reproducible scientific task extracted from a peer-reviewed paper. Links a task to its research question, finding, inputs, outputs, tools, required skills, workflow description, and evaluation strategy. Runtime mirror: the ASBTaskCard dataclass of the reference pipeline (schema v0.18.0).
 
 *Class of `asb_card.yaml`; tree root*
 
@@ -566,7 +566,7 @@ A reference to a source paper that contributed to this skill bundle.
 
 ### MergeAuditRecord { #class-MergeAuditRecord }
 
-Per-merge audit record documenting alias deduplication decisions. Surfaces the data ``corpus_artifacts._semantic_dedup`` already records so dedup decisions are queryable and citable.
+Per-merge audit record documenting alias deduplication decisions. Surfaces the deduplication data recorded at release time, so dedup decisions are queryable and citable.
 
 *Class of `asb_skill_bundle.yaml`*
 
@@ -617,7 +617,7 @@ A versioned, curated description of one reusable computational skill identified 
 
 ### ASBSkill { #class-ASBSkill }
 
-Collection-time aggregated skill record: the deduplicated, paper-grounded scientific competency surfaced by ``corpus_artifacts.collect_skills`` at release time. Distinct from ``SkillBundle`` which is the per-capsule artifact. Mirrors the Python dataclass at agentic_science_builder.schemas.ASBSkill (formerly SciSkill).
+Collection-time aggregated skill record: the deduplicated, paper-grounded scientific competency collected at release time. Distinct from ``SkillBundle`` which is the per-capsule artifact. Mirrors the ASBSkill dataclass of the reference pipeline (formerly SciSkill).
 
 *Class of `asb_skill_bundle.yaml`*
 
@@ -645,7 +645,7 @@ Collection-time aggregated skill record: the deduplicated, paper-grounded scient
 
 ### ASBTool { #class-ASBTool }
 
-Collection-time aggregated tool record: the deduplicated, paper-grounded software-tool reference surfaced by ``corpus_artifacts.collect_tools``. Mirrors the Python dataclass at agentic_science_builder.schemas.ASBTool (formerly SciTool).
+Collection-time aggregated tool record: the deduplicated, paper-grounded software-tool reference collected at release time. Mirrors the ASBTool dataclass of the reference pipeline (formerly SciTool).
 
 *Class of `asb_skill_bundle.yaml`*
 
@@ -841,13 +841,13 @@ Catalogue root for the `asb-skill-collections` repo. Lists every released SkillC
 
 <div class="asb-spec-meta"> <span class="asb-badge asb-badge--version">asb_trace.yaml 0.1.0</span> <code>https://w3id.org/holobiomicslab/asb-schema/trace/v0.1</code> <span>License: CC-BY-4.0</span> </div>
 
-LinkML schema for the ASB exploration trace v0.1.0: the research journey behind a paper's outcome: what was asked, tried, chosen and rejected. ASB's existing card and capsule schemas are outcome-only; this records the branches, including the ones that failed. Mirrors the ExplorationNode / ExplorationTree dataclasses in agentic_science_builder.trace_extract.model.
+LinkML schema for the ASB exploration trace v0.1.0: the research journey behind a paper's outcome: what was asked, tried, chosen and rejected. ASB's existing card and capsule schemas are outcome-only; this records the branches, including the ones that failed. Mirrors the ExplorationNode / ExplorationTree dataclasses of the reference pipeline.
 
 Schema name `asb_trace_v0_1`. Imports: `linkml:types`. Format page: [Exploration trace](../schema/exploration-trace.md).
 
 ### ExplorationNode { #class-ExplorationNode }
 
-One step in the research journey. The value of `type` selects which further slots are mandatory; those constraints are enforced by agentic_science_builder.trace_extract.gate, not expressible in LinkML alone.
+One step in the research journey. The value of `type` selects which further slots are mandatory; those constraints are enforced by the trace gate of the reference pipeline, not expressible in LinkML alone.
 
 *Class of `asb_trace.yaml`*
 

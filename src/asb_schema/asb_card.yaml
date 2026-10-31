@@ -644,7 +644,7 @@ classes:
       A bounded, reproducible scientific task extracted from a peer-reviewed paper.
       Links a task to its research question, finding, inputs, outputs, tools,
       required skills, workflow description, and evaluation strategy.
-      Runtime mirror: agentic_science_builder.schemas.ASBTaskCard (schema v0.18.0).
+      Runtime mirror: the ASBTaskCard dataclass of the reference pipeline (schema v0.18.0).
     tree_root: true
     slots:
       - task_id

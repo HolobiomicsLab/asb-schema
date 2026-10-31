@@ -2,7 +2,7 @@
     "$defs": {
         "ASBTaskCard": {
             "additionalProperties": false,
-            "description": "A bounded, reproducible scientific task extracted from a peer-reviewed paper. Links a task to its research question, finding, inputs, outputs, tools, required skills, workflow description, and evaluation strategy. Runtime mirror: agentic_science_builder.schemas.ASBTaskCard (schema v0.18.0).",
+            "description": "A bounded, reproducible scientific task extracted from a peer-reviewed paper. Links a task to its research question, finding, inputs, outputs, tools, required skills, workflow description, and evaluation strategy. Runtime mirror: the ASBTaskCard dataclass of the reference pipeline (schema v0.18.0).",
             "properties": {
                 "abstraction_frame": {
                     "description": "Abstraction frame of the task in the paper-level entity spine; null when no spine was built",
@@ -1192,7 +1192,7 @@
     "$id": "https://w3id.org/holobiomicslab/asb-schema/card/v0.3",
     "$schema": "https://json-schema.org/draft/2019-09/schema",
     "additionalProperties": true,
-    "description": "A bounded, reproducible scientific task extracted from a peer-reviewed paper. Links a task to its research question, finding, inputs, outputs, tools, required skills, workflow description, and evaluation strategy. Runtime mirror: agentic_science_builder.schemas.ASBTaskCard (schema v0.18.0).",
+    "description": "A bounded, reproducible scientific task extracted from a peer-reviewed paper. Links a task to its research question, finding, inputs, outputs, tools, required skills, workflow description, and evaluation strategy. Runtime mirror: the ASBTaskCard dataclass of the reference pipeline (schema v0.18.0).",
     "metamodel_version": "1.11.0",
     "properties": {
         "abstraction_frame": {

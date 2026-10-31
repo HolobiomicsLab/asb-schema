@@ -109,8 +109,8 @@ classes:
   MergeAuditRecord:
     description: >-
       Per-merge audit record documenting alias deduplication decisions.
-      Surfaces the data ``corpus_artifacts._semantic_dedup`` already records
-      so dedup decisions are queryable and citable.
+      Surfaces the deduplication data recorded at release time, so dedup
+      decisions are queryable and citable.
     attributes:
       alias:
         description: Original skill label before deduplication
@@ -213,10 +213,9 @@ classes:
   ASBSkill:
     description: >-
       Collection-time aggregated skill record — the deduplicated, paper-grounded
-      scientific competency surfaced by ``corpus_artifacts.collect_skills`` at
-      release time. Distinct from ``SkillBundle`` which is the per-capsule
-      artifact. Mirrors the Python dataclass at agentic_science_builder.schemas.ASBSkill
-      (formerly SciSkill).
+      scientific competency collected at release time. Distinct from
+      ``SkillBundle`` which is the per-capsule artifact. Mirrors the ASBSkill
+      dataclass of the reference pipeline (formerly SciSkill).
     slots:
       - slug
       - skill_name
@@ -237,9 +236,8 @@ classes:
   ASBTool:
     description: >-
       Collection-time aggregated tool record — the deduplicated, paper-grounded
-      software-tool reference surfaced by ``corpus_artifacts.collect_tools``.
-      Mirrors the Python dataclass at agentic_science_builder.schemas.ASBTool
-      (formerly SciTool).
+      software-tool reference collected at release time. Mirrors the ASBTool
+      dataclass of the reference pipeline (formerly SciTool).
     slots:
       - slug
       - tool_name

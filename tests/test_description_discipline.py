@@ -102,6 +102,8 @@ INTERNAL_REFERENCES = (
     r"\bAgent ?[0-9]",
     r"--(si-deep-dive|trace-scripts|scenario-registry|enrich)\b",
     r"removed in the next",
+    r"agentic_science_builder\.",
+    r"corpus_artifacts",
 )
 
 

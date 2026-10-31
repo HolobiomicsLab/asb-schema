@@ -2,7 +2,7 @@
     "$defs": {
         "ASBSkill": {
             "additionalProperties": false,
-            "description": "Collection-time aggregated skill record \u2014 the deduplicated, paper-grounded scientific competency surfaced by ``corpus_artifacts.collect_skills`` at release time. Distinct from ``SkillBundle`` which is the per-capsule artifact. Mirrors the Python dataclass at agentic_science_builder.schemas.ASBSkill (formerly SciSkill).",
+            "description": "Collection-time aggregated skill record \u2014 the deduplicated, paper-grounded scientific competency collected at release time. Distinct from ``SkillBundle`` which is the per-capsule artifact. Mirrors the ASBSkill dataclass of the reference pipeline (formerly SciSkill).",
             "properties": {
                 "bundle_dir": {
                     "description": "Absolute path to the offline skill knowledge base bundle directory",
@@ -131,7 +131,7 @@
         },
         "ASBTool": {
             "additionalProperties": false,
-            "description": "Collection-time aggregated tool record \u2014 the deduplicated, paper-grounded software-tool reference surfaced by ``corpus_artifacts.collect_tools``. Mirrors the Python dataclass at agentic_science_builder.schemas.ASBTool (formerly SciTool).",
+            "description": "Collection-time aggregated tool record \u2014 the deduplicated, paper-grounded software-tool reference collected at release time. Mirrors the ASBTool dataclass of the reference pipeline (formerly SciTool).",
             "properties": {
                 "bio_tools_id": {
                     "description": "bio.tools identifier for this tool. Reserved slot for the future bio.tools federation work; not populated in v1.",
@@ -344,7 +344,7 @@
         },
         "MergeAuditRecord": {
             "additionalProperties": false,
-            "description": "Per-merge audit record documenting alias deduplication decisions. Surfaces the data ``corpus_artifacts._semantic_dedup`` already records so dedup decisions are queryable and citable.",
+            "description": "Per-merge audit record documenting alias deduplication decisions. Surfaces the deduplication data recorded at release time, so dedup decisions are queryable and citable.",
             "properties": {
                 "alias": {
                     "description": "Original skill label before deduplication",
