@@ -8,7 +8,7 @@ All identifiers start with `https://w3id.org/holobiomicslab/asb-schema/`.
 
 | Artifact | Root class | File and version | `id` segment | Required slots |
 |---|---|---|---|---|
-| [Task card](task-card.md) | `ASBTaskCard` | `asb_card.yaml` 0.2.0 | `card/v0.2` | 15 of 50 |
+| [Task card](task-card.md) | `ASBTaskCard` | `asb_card.yaml` 0.2.0 | `card/v0.2` | 15 of 64 |
 | [Capsule](capsule.md) | `SciTaskCapsule` | `asb_capsule.yaml` 0.1.0 | `capsule/v0.2` | 3 of 8 |
 | [Skill bundle](skill-bundle.md) | `SkillBundle` (with `ASBSkill`, `ASBTool`) | `asb_skill_bundle.yaml` 0.2.0 | `skill-bundle/v0.2` | 3 of 15 |
 | [Skill collection](skill-collection.md) | `SkillCollection` | `asb_skill_collection.yaml` 0.3.0 | `skill-collection/v0.3` | 6 of 25 |

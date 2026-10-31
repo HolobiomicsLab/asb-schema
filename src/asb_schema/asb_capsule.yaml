@@ -1,9 +1,9 @@
 id: https://w3id.org/holobiomicslab/asb-schema/capsule/v0.2
 name: asb_capsule_v0_2
 description: >-
-  LinkML schema for SciTask Capsule v0.1 — an RO-Crate 1.1 + Workflow Run Profile 0.5
-  directory wrapping a SciTask Card with evidence, provenance, evaluation material,
-  and embedded script chunks.
+  LinkML schema for SciTask Capsule v0.1 — an RO-Crate 1.1 package wrapping a SciTask
+  Card with evidence, provenance, evaluation material, and embedded script chunks.
+  Workflow Run Crate alignment is tracked in the reference pipeline.
 
 license: CC-BY-4.0
 version: "0.1.0"
@@ -95,9 +95,10 @@ classes:
 
   SciTaskCapsule:
     description: >-
-      An RO-Crate 1.1 + Workflow Run Profile 0.5 package that wraps a SciTask Card
-      with supporting evidence, provenance, evaluation manifests, and embedded scripts.
-      Conforms to schema:Dataset, rocrate:Dataset, and pplan:Plan.
+      An RO-Crate 1.1 package that wraps a SciTask Card with supporting evidence,
+      provenance, evaluation manifests, and embedded scripts. Conforms to
+      schema:Dataset, rocrate:Dataset, and pplan:Plan. Workflow Run Crate alignment
+      is tracked in the reference pipeline.
     tree_root: true
     slots:
       - capsule_task_id
@@ -131,7 +132,7 @@ slots:
       - schema:version
 
   profile_version:
-    description: Workflow Run Profile version used (e.g. 0.5)
+    description: Version of the RO-Crate profile the crate declares, if any (e.g. 0.5)
     range: string
     annotations:
       importance: should_have

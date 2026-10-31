@@ -49,7 +49,7 @@ A release copy of a capsule follows a slim profile: `artifact_provenance.json` g
 
 ## RO-Crate metadata
 
-RO-Crate packages research data with their metadata in one JSON-LD file based on schema.org[^rocrate-root]. In a capsule, the metadata descriptor points to the root data entity `./`, typed `Dataset` and `repme:ScientificWorkflow`. The root lists the files in `hasPart` and refers through `mentions` to the task, to one `CreateAction` and, with the claim ledger, to claim and result nodes. The `CreateAction` records the creation of the task: its `instrument` is the tool, its `object` the inputs, its `result` the outputs. This structure is the one of the Process Run Crate profile[^prc].
+RO-Crate packages research data with their metadata in one JSON-LD file based on schema.org[^rocrate-root]. In a capsule, the metadata descriptor points to the root data entity `./`, typed `Dataset` and `repme:ScientificWorkflow`. The root lists the files in `hasPart` and refers through `mentions` to the task, to one `CreateAction` and, with the claim ledger, to claim and result nodes. The `CreateAction` records the creation of the task: its `instrument` is the tool, its `object` the inputs, its `result` the outputs. This structure follows the Process Run Crate profile[^prc]; the crates do not yet meet the Workflow Run Crate requirements, and that alignment is tracked in the reference pipeline.
 
 <div class="asb-ref" markdown>
 

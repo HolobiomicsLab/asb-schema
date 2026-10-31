@@ -1,0 +1,386 @@
+{
+  "abstraction_frame": null,
+  "article_type": null,
+  "artifact_refs": [],
+  "available_artifacts": [
+    {
+      "indexable": true,
+      "path": "13321_2024_Article_878.pdf",
+      "role": "main_article",
+      "sha256": "0dea8dc70be9009f1fa58deb60eea662cd930973f51688aa8bf974e71fc43d96"
+    },
+    {
+      "indexable": true,
+      "path": "README.md",
+      "role": "artifact",
+      "sha256": "37fae03a270d77ed9f7f52929fa31c62dda6037ab93fa82fcaba32fb18acfd49"
+    },
+    {
+      "indexable": true,
+      "path": "article.md",
+      "role": "main_article",
+      "sha256": "762149fbfc41a3ec8633695c51d46b03f71ac76d00c278586116bd2474c5cdaa"
+    },
+    {
+      "indexable": true,
+      "path": "artifacts/links.json",
+      "role": "reference",
+      "sha256": "8e032df650d08d0c1818ac1e600399fde05a026104653bafda123feabf82b743"
+    },
+    {
+      "indexable": true,
+      "path": "supplementary_notes.md",
+      "role": "supplementary",
+      "sha256": "4201474af08c7771339b0049ffdabbd11527f93069a03522f477178950b81ca4"
+    },
+    {
+      "indexable": true,
+      "path": "table_1.csv",
+      "role": "table",
+      "sha256": "c865d2e07aa713cc6107ee175c6fb6ff1886b3f1a091038cca658e5f798155d1"
+    }
+  ],
+  "created_at": "2026-10-30T13:04:17.242003+00:00",
+  "crossref_doi": null,
+  "data_accessions": [
+    {
+      "accession": "zenodo.10160791",
+      "evidence_span": "settings matchms library cleaning pipeline Zenodo. 10.5281/ zenodo.10160791. Accessed 20 Nov 2023 6. de Jonge NF, Hecht H, van der Hoof",
+      "kind": "zenodo",
+      "url": "https://doi.org/10.5281/zenodo.10160791"
+    }
+  ],
+  "data_in": [
+    {
+      "acquisition_mode": null,
+      "confidence": "none",
+      "content_signature": null,
+      "description": "main_article: 13321_2024_Article_878.pdf",
+      "detection_method": "none",
+      "file_extension": null,
+      "format_id": null,
+      "format_iri": null,
+      "instrument_class": null,
+      "ionization_polarity": null,
+      "ontology_class": null
+    },
+    {
+      "acquisition_mode": null,
+      "confidence": "high",
+      "content_signature": null,
+      "description": "artifact: README.md",
+      "detection_method": "package_filename",
+      "file_extension": ".md",
+      "format_id": "Markdown",
+      "format_iri": "https://spec.commonmark.org/",
+      "instrument_class": null,
+      "ionization_polarity": null,
+      "ontology_class": null
+    },
+    {
+      "acquisition_mode": null,
+      "confidence": "high",
+      "content_signature": null,
+      "description": "main_article: article.md",
+      "detection_method": "package_filename",
+      "file_extension": ".md",
+      "format_id": "Markdown",
+      "format_iri": "https://spec.commonmark.org/",
+      "instrument_class": null,
+      "ionization_polarity": null,
+      "ontology_class": null
+    },
+    {
+      "acquisition_mode": null,
+      "confidence": "high",
+      "content_signature": null,
+      "description": "reference: artifacts/links.json",
+      "detection_method": "magic_bytes",
+      "file_extension": ".json",
+      "format_id": "JSON",
+      "format_iri": "https://www.rfc-editor.org/rfc/rfc8259",
+      "instrument_class": null,
+      "ionization_polarity": null,
+      "ontology_class": null
+    },
+    {
+      "acquisition_mode": null,
+      "confidence": "high",
+      "content_signature": null,
+      "description": "supplementary: supplementary_notes.md",
+      "detection_method": "package_filename",
+      "file_extension": ".md",
+      "format_id": "Markdown",
+      "format_iri": "https://spec.commonmark.org/",
+      "instrument_class": null,
+      "ionization_polarity": null,
+      "ontology_class": null
+    },
+    {
+      "acquisition_mode": null,
+      "confidence": "high",
+      "content_signature": null,
+      "description": "table: table_1.csv",
+      "detection_method": "package_filename",
+      "file_extension": ".csv",
+      "format_id": "CSV",
+      "format_iri": "https://www.rfc-editor.org/rfc/rfc4180",
+      "instrument_class": null,
+      "ionization_polarity": null,
+      "ontology_class": null
+    }
+  ],
+  "data_out": [
+    {
+      "acquisition_mode": null,
+      "confidence": "high",
+      "content_signature": null,
+      "description": "table: table_1.csv",
+      "detection_method": "package_filename",
+      "file_extension": ".csv",
+      "format_id": "CSV",
+      "format_iri": "https://www.rfc-editor.org/rfc/rfc4180",
+      "instrument_class": null,
+      "ionization_polarity": null,
+      "ontology_class": null
+    },
+    {
+      "acquisition_mode": null,
+      "confidence": "none",
+      "content_signature": null,
+      "description": "The resulting variabi models challenging.",
+      "detection_method": "none",
+      "file_extension": null,
+      "format_id": null,
+      "format_iri": null,
+      "instrument_class": null,
+      "ionization_polarity": null,
+      "ontology_class": null
+    },
+    {
+      "acquisition_mode": null,
+      "confidence": "none",
+      "content_signature": null,
+      "description": "J. van der Hooft1,4* and spectrum annotation, both for library matching and train- g machine learning models is the availability of high-qual- that are open to user submission often suffer from limited ility in data quality makes training of machine learning eline designed for cleaning tandem mass spectrometry bility, and reproducibility as leading principles. ries that will improve library searching and the quality y.",
+      "detection_method": "none",
+      "file_extension": null,
+      "format_id": null,
+      "format_iri": null,
+      "instrument_class": null,
+      "ionization_polarity": null,
+      "ontology_class": null
+    },
+    {
+      "acquisition_mode": null,
+      "confidence": "none",
+      "content_signature": null,
+      "description": "There is a lack of standardization of metadata that results in many entries not being computer interpretable without extensive additional metadata harmonization.",
+      "detection_method": "none",
+      "file_extension": null,
+      "format_id": null,
+      "format_iri": null,
+      "instrument_class": null,
+      "ionization_polarity": null,
+      "ontology_class": null
+    }
+  ],
+  "domain": null,
+  "domain_knowledge": [],
+  "evaluation_strategy": {
+    "direct_checks": [
+      "Confirm that every cited input artifact exists or is explicitly marked missing.",
+      "Confirm that expected outputs are tied to figures, tables, files, or claims in the package."
+    ],
+    "expert_review": [
+      "Judge whether the task description matches the source evidence.",
+      "Judge whether the workflow description is sufficient for a future agent attempt.",
+      "Review uncertainty notes and missing-information claims."
+    ]
+  },
+  "evidence_snippets": [
+    {
+      "reason": "workflow",
+      "snippet_id": "ev_001",
+      "source_path": "13321_2024_Article_878.pdf",
+      "text": "Journal of Cheminformatics (2024) 16:88 https://doi.org/10.1186/s13321-024-00878-1 SOFTWARE Reproducible MS/MS libr pipeline in matchms Niek F. de Jonge1*, Helge Hecht2, Michael Strobel3, Ming Florian Huber5* Abstract Mass spectral libraries have proven to be essential for mass ing new machine learning algorithms."
+    },
+    {
+      "reason": "output",
+      "snippet_id": "ev_002",
+      "source_path": "13321_2024_Article_878.pdf",
+      "text": "The resulting variabi models challenging."
+    },
+    {
+      "reason": "question",
+      "snippet_id": "ev_003",
+      "source_path": "13321_2024_Article_878.pdf",
+      "text": "Here we present a library cleaning pipe library data."
+    },
+    {
+      "reason": "workflow",
+      "snippet_id": "ev_004",
+      "source_path": "13321_2024_Article_878.pdf",
+      "text": "The pipeline is designed with ease of use, flexib Scientific contribution This pipeline will result in cleaner public mass spectral librar of machine-learning training datasets in mass spectrometry functionality for curating and correcting annotated libraries ity of our software, the reproducibility, and improved loggin the standard in the field for cleaning tandem mass spectrom Keywords Library cleaning, Mass spectrometry, Metabolom *Correspondence: Niek F. de Jonge [e-mail removed] Justi..."
+    },
+    {
+      "reason": "missing_information",
+      "snippet_id": "ev_005",
+      "source_path": "13321_2024_Article_878.pdf",
+      "text": "If material is not included in th regulation or exceeds the permitted use, you licence, visit http:// creat iveco mmons. org/ lice mmons. org/ publi cdoma in/ zero/1. 0/) applies"
+    },
+    {
+      "reason": "output",
+      "snippet_id": "ev_006",
+      "source_path": "13321_2024_Article_878.pdf",
+      "text": "J. van der Hooft1,4* and spectrum annotation, both for library matching and train- g machine learning models is the availability of high-qual- that are open to user submission often suffer from limited ility in data quality makes training of machine learning eline designed for cleaning tandem mass spectrometry bility, and reproducibility as leading principles. ries that will improve library searching and the quality y."
+    },
+    {
+      "reason": "workflow",
+      "snippet_id": "ev_007",
+      "source_path": "13321_2024_Article_878.pdf",
+      "text": "This pipeline builds on previous work by adding new s, by validating structure annotations."
+    },
+    {
+      "reason": "workflow",
+      "snippet_id": "ev_008",
+      "source_path": "13321_2024_Article_878.pdf",
+      "text": "Due to the high qual- ng, we think our new pipeline has the potential to become metry libraries. mics, Metadata, Python Package icle is licensed under a Creative Commons Attribution 4.0 International License, which and reproduction in any medium or format, as long as you give appropriate credit to the nk to the Creative Commons licence, and indicate if changes were made."
+    },
+    {
+      "reason": "workflow",
+      "snippet_id": "ev_009",
+      "source_path": "13321_2024_Article_878.pdf",
+      "text": "A common approach is to use library and private libraries, like the NIST library (NIST) [20]. matching to identify probable candidates in existing, Whilst private libraries can be used for library searching annotated mass spectral libraries [1, 3]."
+    },
+    {
+      "reason": "workflow",
+      "snippet_id": "ev_010",
+      "source_path": "13321_2024_Article_878.pdf",
+      "text": "In addition, if available within a research group, they typically do not several machine-learning approaches have been share the library spectra in a format that can directly be developed to improve mass spectra annotation [8, 11, used to train machine learning models."
+    },
+    {
+      "reason": "workflow",
+      "snippet_id": "ev_011",
+      "source_path": "13321_2024_Article_878.pdf",
+      "text": "Journal of Cheminformatics (2024) 16:88 where such libraries are used for model training, the lack of publicly shareable training data makes it hard for others to recreate the models or to analyse potential biases in the used training library."
+    },
+    {
+      "reason": "output",
+      "snippet_id": "ev_012",
+      "source_path": "13321_2024_Article_878.pdf",
+      "text": "There is a lack of standardization of metadata that results in many entries not being computer interpretable without extensive additional metadata harmonization."
+    }
+  ],
+  "executable": null,
+  "execution_environment": null,
+  "execution_profile": {
+    "commercial_software": [],
+    "compute_tier": "light",
+    "open_source_alternatives": []
+  },
+  "expected_artifact_name": null,
+  "expected_outputs": [
+    "table: table_1.csv",
+    "The resulting variabi models challenging.",
+    "J. van der Hooft1,4* and spectrum annotation, both for library matching and train- g machine learning models is the availability of high-qual- that are open to user submission often suffer from limited ility in data quality makes training of machine learning eline designed for cleaning tandem mass spectrometry bility, and reproducibility as leading principles. ries that will improve library searching and the quality y.",
+    "There is a lack of standardization of metadata that results in many entries not being computer interpretable without extensive additional metadata harmonization."
+  ],
+  "finding": "The finding should be confirmed by expert review; no strong finding sentence was detected heuristically.",
+  "finding_evidence_span": null,
+  "github_name": null,
+  "input_from": null,
+  "inputs": [
+    "main_article: 13321_2024_Article_878.pdf",
+    "artifact: README.md",
+    "main_article: article.md",
+    "reference: artifacts/links.json",
+    "supplementary: supplementary_notes.md",
+    "table: table_1.csv"
+  ],
+  "keywords": [],
+  "landmark_outputs": [],
+  "linked_result_ids": [],
+  "methodology_summary": [
+    "References: zenodo.10160791 (https://doi.org/10.5281/zenodo.10160791)"
+  ],
+  "missing_information": [
+    "No local code/script artifact was detected.",
+    "If material is not included in th regulation or exceeds the permitted use, you licence, visit http:// creat iveco mmons. org/ lice mmons. org/ publi cdoma in/ zero/1. 0/) applies"
+  ],
+  "parameters": [],
+  "primary_domain": null,
+  "project_id": null,
+  "prov": {
+    "used": [],
+    "was_influenced_by": []
+  },
+  "provenance_source": "published",
+  "related_repos": [],
+  "reproducibility_tier": "type-checked",
+  "research_question": "Here we present a library cleaning pipe library data.",
+  "resumption_contract": null,
+  "review_questions": [
+    "Is the research question correctly identified and scoped?",
+    "Does the connected finding have enough supporting evidence?",
+    "Which artifacts are required before this can become an executable benchmark task?",
+    "What direct, visual, textual, or expert-review checks should be used for evaluation?"
+  ],
+  "run_command": null,
+  "run_cwd": null,
+  "run_timeout_seconds": 60.0,
+  "scenario_id": null,
+  "schema_version": "0.18.0",
+  "scitask_version": "0.1.1",
+  "script_refs": [],
+  "section_provenance": [],
+  "skills": [
+    "scientific_task_formulation",
+    "evidence_linking",
+    "expert_review_preparation",
+    "output_grounding",
+    "figure_table_interpretation",
+    "workflow_reconstruction",
+    "reproducibility_gap_detection"
+  ],
+  "source_package": "examples/minimal_research_package",
+  "spine_condition_ids": [],
+  "spine_entity_ids": [],
+  "subdomains": [],
+  "subtask_categories": [],
+  "synthesized_from": null,
+  "task_description": "Create a bounded scientific task from the article package by linking a research question or finding to available inputs, expected outputs, tools, skills, workflow logic, evidence snippets, missing information, and an evaluation strategy.",
+  "task_id": "task_001",
+  "task_inputs": [],
+  "task_kind": null,
+  "task_objective": "Create a bounded scientific task from the article package by linking a research question or finding to available inputs, expected outputs, tools, skills, workflow logic, evidence snippets, missing inf",
+  "task_outputs": [],
+  "techniques": [],
+  "title": "Reconstruct and evaluate a paper-grounded scientific task",
+  "tools": [
+    "MassBank",
+    "matchms",
+    "MS-DIAL",
+    "GitHub",
+    "MZmine",
+    "OpenMS",
+    "pandas",
+    "Python",
+    "Zenodo",
+    "Conda",
+    "GNPS2",
+    "RDKit",
+    "GNPS",
+    "MoNA",
+    "PubChem",
+    "InChI",
+    "external reference or link"
+  ],
+  "uncertainty_notes": [
+    "This card was generated by deterministic heuristics and needs scientific expert review.",
+    "Workflow steps are descriptive only; no scientific workflow was executed.",
+    "PDFs, images, notebooks, archives, and unknown file types are referenced but not deeply parsed.",
+    "Outside this heuristic generation step: Running scientific code or reproducing figures.",
+    "Outside this heuristic generation step: Scoring model-generated scientific outputs."
+  ],
+  "workflow_description": "Journal of Cheminformatics (2024) 16:88 https://doi.org/10.1186/s13321-024-00878-1 SOFTWARE Reproducible MS/MS libr pipeline in matchms Niek F. de Jonge1*, Helge Hecht2, Michael Strobel3, Ming Florian Huber5* Abstract Mass spectral libraries have proven to be essential for mass ing new machine learning algorithms."
+}

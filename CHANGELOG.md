@@ -19,16 +19,36 @@ follows [Semantic Versioning](https://semver.org/).
   regenerated. (2026-09-13)
 - `linkml` and `linkml-runtime` are bounded below 1.12, which changes JSON
   Schema generation. Registry JSON Schema regenerated. (2026-10-29)
+- The capsule descriptions state an RO-Crate 1.1 package, without the Workflow
+  Run Profile 0.5 claim; Workflow Run Crate alignment is tracked in the
+  reference pipeline. (2026-10-31)
+- The documented `linkml-validate` command takes
+  `--allow-null-for-optional-enums`, which accepts `null` in an optional
+  enumeration slot as the generated JSON Schema does. (2026-10-31)
 
 ### Added
 
 - `tests/test_json_schema_generation.py`. (2026-09-13)
+- `ASBTaskCard` declares the fourteen optional slots that the reference
+  pipeline writes into its cards: `related_repos`, `execution_profile`,
+  `task_inputs`, `task_outputs`, `prov`, `data_in`, `data_out`,
+  `resumption_contract`, `execution_environment`, `executable`,
+  `spine_entity_ids`, `spine_condition_ids`, `abstraction_frame` and
+  `finding_evidence_span`. `TaskPort` gains `port_role` and `resolved_via`,
+  `TypedArtifact` gains `content_signature`, `ExecutableSpec` gains `env`,
+  `inferred` and `grounding_notes`, and `ExecutionEnvironment` gains
+  `scheduler_resources` and `tools_versions`. Cards of the reference pipeline
+  now validate closed: 405 of the 417 released benchmark cards pass, and the
+  other 12 carry two legacy `evaluation_strategy` keys. (2026-10-31)
+- `tests/test_reference_conformance.py`, with one card of a heuristic build and
+  three released cards as fixtures. (2026-10-31)
 - Standalone repository: README, `CITATION.cff`, documentation site, CI on
   Python 3.10 to 3.13, publish workflow on tags `v<version>`, project URLs in
   the package metadata.
 
 ### Fixed
 
+- The `ASBTaskCard` slot list named `task_objective` twice. (2026-10-31)
 - `tests/test_rename_migration.py` no longer requires the checkout directory to
   be named `asb-schema`, and skips its `pyproject.toml` check on Python 3.10,
   which has no `tomllib`.

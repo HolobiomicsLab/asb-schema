@@ -20,7 +20,7 @@ This page lists every class, slot and enumeration of the seven LinkML files of A
 | File | id | version | Root class | Classes | Slots | Attributes | Enums |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | [`asb.yaml`](#file-asb) | `https://w3id.org/holobiomicslab/asb-schema/v0.2` | 0.2.0 | none | 0 | 0 | 0 | 0 |
-| [`asb_card.yaml`](#file-asb_card) | `https://w3id.org/holobiomicslab/asb-schema/card/v0.2` | 0.2.0 | [`ASBTaskCard`](#class-ASBTaskCard) | 13 | 50 | 51 | 7 |
+| [`asb_card.yaml`](#file-asb_card) | `https://w3id.org/holobiomicslab/asb-schema/card/v0.2` | 0.2.0 | [`ASBTaskCard`](#class-ASBTaskCard) | 13 | 64 | 59 | 7 |
 | [`asb_capsule.yaml`](#file-asb_capsule) | `https://w3id.org/holobiomicslab/asb-schema/capsule/v0.2` | 0.1.0 | [`SciTaskCapsule`](#class-SciTaskCapsule) | 2 | 8 | 4 | 1 |
 | [`asb_skill_bundle.yaml`](#file-asb_skill_bundle) | `https://w3id.org/holobiomicslab/asb-schema/skill-bundle/v0.2` | 0.2.0 | [`SkillBundle`](#class-SkillBundle) | 7 | 33 | 19 | 1 |
 | [`asb_skill_collection.yaml`](#file-asb_skill_collection) | `https://w3id.org/holobiomicslab/asb-schema/skill-collection/v0.3` | 0.3.0 | [`SkillCollection`](#class-SkillCollection) | 5 | 25 | 11 | 0 |
@@ -109,8 +109,10 @@ A single typed data port (input or output) on a SciTask Card.
 | `evidence_id` | `string` | 0..1 | ID of the EvidenceSnippet that supports this port's existence | importance: nice_to_have; close_mappings: `prov:wasDerivedFrom` |
 | `source` | `string` | 0..1 | Source artifact name or path | importance: nice_to_have; exact_mappings: `prov:atLocation` |
 | `source_dataset` | `string` | 0..1 | Repository or dataset name for the source | importance: nice_to_have; close_mappings: `schema:dataset` |
+| `resolved_via` | [`JsonObject`](#class-JsonObject) | 0..1 | How the port was resolved to a concrete source, as a JSON object; null when the port is unresolved | inlined: true; importance: nice_to_have; close_mappings: `prov:wasDerivedFrom` |
 | `edam_operation_uri` | `uri` | 0..1 | EDAM operation IRI for the operation that produces or consumes this port | importance: nice_to_have; exact_mappings: `EDAM:operation_0004` |
 | `edam_format_uri` | `uri` | 0..1 | EDAM format IRI for the data format of this port | importance: nice_to_have; exact_mappings: `EDAM:format_1915` |
+| `port_role` | `string` | 0..1 | Role of the port; "environment" marks a port that declares the software under study rather than data. Absent or null means not flagged. | importance: nice_to_have; close_mappings: `dcterms:type` |
 
 </div>
 
@@ -191,6 +193,9 @@ A runnable command bound to a SciTask Card.
 | `cmd` | `string` | 1..* | Command as a list of arguments (no shell string) | importance: must_have; close_mappings: `schema:description` |
 | `working_dir` | `string` | 0..1 | Working directory for the command | importance: should_have; exact_mappings: `prov:atLocation` |
 | `timeout_s` | `integer` | 0..1 | Timeout in seconds (default 300) | importance: nice_to_have; close_mappings: `schema:duration` |
+| `env` | [`JsonObject`](#class-JsonObject) | 0..1 | Environment variables set for the command, as a JSON object of names to values | inlined: true; importance: nice_to_have; close_mappings: `schema:description` |
+| `inferred` | `boolean` | 0..1 | True when the command could not be confirmed against the files of the source package and is a best-effort inference | importance: nice_to_have; close_mappings: `schema:creativeWorkStatus` |
+| `grounding_notes` | `string` | 0..1 | Why the command could not be confirmed, when inferred is true | importance: nice_to_have; close_mappings: `schema:description` |
 
 </div>
 
@@ -211,7 +216,9 @@ Software/hardware/scheduler/agentic context that ran or is required to run a car
 | `asb_version` | `string` | 0..1 | Reference pipeline version used | importance: nice_to_have; close_mappings: `schema:softwareVersion` |
 | `hardware_profile` | `string` | 0..1 | Hardware profile description (e.g. CPU, GPU, RAM) | importance: nice_to_have; close_mappings: `schema:description` |
 | `scheduler` | [`SchedulerEnum`](#enum-SchedulerEnum) | 0..1 | HPC or cluster scheduler | importance: nice_to_have; close_mappings: `schema:description` |
+| `scheduler_resources` | [`JsonObject`](#class-JsonObject) | 0..1 | Resources requested from the scheduler (for example nodes, memory and wall time), as a JSON object | inlined: true; importance: nice_to_have; close_mappings: `schema:description` |
 | `llm_models` | `string` | 0..* | LLM model IDs used during card synthesis | importance: nice_to_have; close_mappings: `schema:softwareVersion` |
+| `tools_versions` | [`JsonObject`](#class-JsonObject) | 0..1 | Versions of the tools used, as a JSON object of tool names to versions | inlined: true; importance: nice_to_have; close_mappings: `schema:softwareVersion` |
 | `cloud_region` | `string` | 0..1 | Cloud region or availability zone | importance: nice_to_have; close_mappings: `schema:description` |
 
 </div>
@@ -231,6 +238,7 @@ A typed, format-identified artifact (input or output) of a SciTask Card. Pairs 1
 | `format_iri` | `uri` | 0..1 | EDAM format IRI (e.g. http://edamontology.org/format_3244) | importance: should_have; exact_mappings: `EDAM:format_1915` |
 | `ontology_class` | `string` | 0..1 | PSI-MS or fallback OBO class string (e.g. MS:1000584) | importance: nice_to_have; close_mappings: `EDAM:format_1915` |
 | `file_extension` | `string` | 0..1 | Representative file extension (e.g. .mzml) | importance: nice_to_have; close_mappings: `schema:fileFormat` |
+| `content_signature` | `string` | 0..1 | Short content hint from magic-byte matching (e.g. &lt;?xml) | importance: nice_to_have; close_mappings: `schema:encodingFormat` |
 | `confidence` | [`ArtifactConfidenceEnum`](#enum-ArtifactConfidenceEnum) | 0..1 | Detection confidence level | importance: must_have; close_mappings: `schema:credentialCategory` |
 | `detection_method` | [`ArtifactDetectionMethodEnum`](#enum-ArtifactDetectionMethodEnum) | 0..1 | How the format was detected | importance: should_have; close_mappings: `prov:wasGeneratedBy` |
 | `instrument_class` | `string` | 0..1 | Advisory instrument class hint extracted from article text | importance: nice_to_have; close_mappings: `EDAM:operation_0004` |
@@ -304,10 +312,23 @@ A bounded, reproducible scientific task extracted from a peer-reviewed paper. Li
 | `project_id` | `string` | 0..1 | Project assignment ID (populated only with --scenario-registry) | importance: nice_to_have; close_mappings: `dcterms:isPartOf` |
 | `provenance_source` | [`ProvenanceSourceEnum`](#enum-ProvenanceSourceEnum) | 0..1 | Source category of the paper this card was extracted from | importance: should_have; close_mappings: `prov:wasGeneratedBy` |
 | `reproducibility_tier` | [`ReproducibilityTierEnum`](#enum-ReproducibilityTierEnum) | 0..1 | Tier describing how reproducible this card's workflow step is | importance: should_have; close_mappings: `pplan:Plan` |
-| `task_objective` | `string` | 0..1 | One-sentence task objective (LLM mode; empty string when not populated) | importance: should_have; close_mappings: `pplan:Plan` |
 | `run_command` | `string` | 0..1 | Shell command for asb verify (None means skip) | importance: nice_to_have; close_mappings: `schema:description` |
 | `run_cwd` | `string` | 0..1 | Working directory for run_command (relative to capsule dir) | importance: nice_to_have; exact_mappings: `prov:atLocation` |
 | `run_timeout_seconds` | `float` | 0..1 | Timeout in seconds for run_command (default 60.0) | importance: nice_to_have; close_mappings: `schema:duration` |
+| `related_repos` | `string` | 0..* | Repositories linked to the source that are not the task's own repository (dependencies, upstream engines, mirrors), as owner/repo strings | importance: nice_to_have; close_mappings: `schema:codeRepository` |
+| `execution_profile` | [`ExecutionProfile`](#class-ExecutionProfile) | 0..1 | Declared execution requirements: compute tier, commercial software and open-source alternatives | importance: should_have; close_mappings: `schema:softwareRequirements` |
+| `task_inputs` | [`TaskPort`](#class-TaskPort) | 0..* | Typed input ports of the task, for dataflow between cards | importance: nice_to_have; close_mappings: `prov:used` |
+| `task_outputs` | [`TaskPort`](#class-TaskPort) | 0..* | Typed output ports of the task, for dataflow between cards | importance: nice_to_have; close_mappings: `prov:generated` |
+| `prov` | [`ProvenanceLinks`](#class-ProvenanceLinks) | 0..1 | Provenance links of the card (entities used and entities that influenced it) | importance: nice_to_have; close_mappings: `prov:wasInfluencedBy` |
+| `data_in` | [`TypedArtifact`](#class-TypedArtifact) | 0..* | Format-typed descriptions of the inputs, one per entry of inputs and in the same order | importance: should_have; close_mappings: `prov:used` |
+| `data_out` | [`TypedArtifact`](#class-TypedArtifact) | 0..* | Format-typed descriptions of the expected outputs, one per entry of expected_outputs and in the same order | importance: should_have; close_mappings: `prov:generated` |
+| `resumption_contract` | [`ResumptionContract`](#class-ResumptionContract) | 0..1 | How a workflow resumes at this step when the step cannot be re-executed; null when not needed | importance: nice_to_have; close_mappings: `pplan:Plan` |
+| `execution_environment` | [`ExecutionEnvironment`](#class-ExecutionEnvironment) | 0..1 | Software, hardware and scheduler context that ran or is required to run the card; null when not recorded | importance: nice_to_have; close_mappings: `schema:runtimePlatform` |
+| `executable` | [`ExecutableSpec`](#class-ExecutableSpec) | 0..1 | A runnable command for the task; null when no command is available | importance: nice_to_have; close_mappings: `schema:potentialAction` |
+| `spine_entity_ids` | `string` | 0..* | Identifiers of the paper-level entities the card refers to; empty when no entity spine was built | importance: nice_to_have; close_mappings: `prov:wasDerivedFrom` |
+| `spine_condition_ids` | `string` | 0..* | Identifiers of the paper-level conditions the card refers to; empty when no entity spine was built | importance: nice_to_have; close_mappings: `prov:wasDerivedFrom` |
+| `abstraction_frame` | `string` | 0..1 | Abstraction frame of the task in the paper-level entity spine; null when no spine was built | importance: nice_to_have; close_mappings: `schema:about` |
+| `finding_evidence_span` | `string` | 0..1 | Verbatim passage of the source that supports finding; null when none was selected | importance: nice_to_have; close_mappings: `schema:text` |
 
 </div>
 
@@ -438,7 +459,7 @@ Method used to detect artifact format
 
 <div class="asb-spec-meta"> <span class="asb-badge asb-badge--version">asb_capsule.yaml 0.1.0</span> <code>https://w3id.org/holobiomicslab/asb-schema/capsule/v0.2</code> <span>License: CC-BY-4.0</span> </div>
 
-LinkML schema for SciTask Capsule v0.1: an RO-Crate 1.1 + Workflow Run Profile 0.5 directory wrapping a SciTask Card with evidence, provenance, evaluation material, and embedded script chunks.
+LinkML schema for SciTask Capsule v0.1: an RO-Crate 1.1 package wrapping a SciTask Card with evidence, provenance, evaluation material, and embedded script chunks. Workflow Run Crate alignment is tracked in the reference pipeline.
 
 Schema name `asb_capsule_v0_2`. Imports: `linkml:types`, [`asb_card.yaml`](#file-asb_card). Format page: [Capsule](../schema/capsule.md).
 
@@ -461,7 +482,7 @@ Provenance record for a single file in the capsule, recording how it was produce
 
 ### SciTaskCapsule { #class-SciTaskCapsule }
 
-An RO-Crate 1.1 + Workflow Run Profile 0.5 package that wraps a SciTask Card with supporting evidence, provenance, evaluation manifests, and embedded scripts. Conforms to schema:Dataset, rocrate:Dataset, and pplan:Plan.
+An RO-Crate 1.1 package that wraps a SciTask Card with supporting evidence, provenance, evaluation manifests, and embedded scripts. Conforms to schema:Dataset, rocrate:Dataset, and pplan:Plan. Workflow Run Crate alignment is tracked in the reference pipeline.
 
 *Class of `asb_capsule.yaml`; tree root*
 
@@ -471,7 +492,7 @@ An RO-Crate 1.1 + Workflow Run Profile 0.5 package that wraps a SciTask Card wit
 | --- | --- | --- | --- | --- |
 | `capsule_task_id` | `string` | 1 | Unique identifier for this capsule; typically doi-slug__task_NNN. Matches the task_id in the embedded ASBTaskCard. | importance: must_have; exact_mappings: `dcterms:identifier` |
 | `ro_crate_version` | `string` | 0..1 | RO-Crate specification version used (e.g. 1.1) | importance: must_have; close_mappings: `schema:version` |
-| `profile_version` | `string` | 0..1 | Workflow Run Profile version used (e.g. 0.5) | importance: should_have; close_mappings: `schema:version` |
+| `profile_version` | `string` | 0..1 | Version of the RO-Crate profile the crate declares, if any (e.g. 0.5) | importance: should_have; close_mappings: `schema:version` |
 | `capsule_card` | [`ASBTaskCard`](#class-ASBTaskCard) | 1 | The SciTask Card embedded in this capsule | importance: must_have; exact_mappings: `pplan:Plan` |
 | `capsule_artifacts` | [`AvailableArtifact`](#class-AvailableArtifact) | 0..* | Artifacts accessible within this capsule | importance: should_have; close_mappings: `rocrate:Dataset` |
 | `capsule_created_at` | `string` | 1 | ISO 8601 timestamp when this capsule was created | importance: must_have; exact_mappings: `dcterms:created` |
