@@ -19,7 +19,7 @@
                     ]
                 },
                 "artifact_refs": {
-                    "description": "Heuristic artifact binding (--enrich): prose input/output mapped to typed locators from external enrichment + package index",
+                    "description": "Bindings of prose inputs and outputs to typed locators (files, URLs) found by enrichment or in the package index, one JSON object per binding",
                     "items": {
                         "$ref": "#/$defs/JsonObject"
                     },
@@ -190,7 +190,7 @@
                     "type": "array"
                 },
                 "keywords": {
-                    "description": "Free-form keywords extracted by Agent 1 (methods, domains, instruments)",
+                    "description": "Free-form keywords extracted from the source (methods, domains, instruments)",
                     "items": {
                         "type": "string"
                     },
@@ -240,7 +240,7 @@
                     ]
                 },
                 "parameters": {
-                    "description": "Agent 7 parameter resolver output \u2014 list of parameter dicts (populated only with --si-deep-dive)",
+                    "description": "Resolved task parameters, one JSON object per parameter; empty when parameter resolution did not run",
                     "items": {
                         "$ref": "#/$defs/JsonObject"
                     },
@@ -257,7 +257,7 @@
                     ]
                 },
                 "project_id": {
-                    "description": "Project assignment ID (populated only with --scenario-registry)",
+                    "description": "Project assignment ID; null when the card has no project assignment",
                     "type": [
                         "string",
                         "null"
@@ -332,7 +332,7 @@
                     ]
                 },
                 "run_command": {
-                    "description": "Shell command for asb verify (None means skip)",
+                    "description": "Shell command that re-runs the task for verification; null means skip",
                     "type": [
                         "string",
                         "null"
@@ -353,7 +353,7 @@
                     ]
                 },
                 "scenario_id": {
-                    "description": "Scenario assignment ID (populated only with --scenario-registry)",
+                    "description": "Scenario assignment ID; null when the card has no scenario assignment",
                     "type": [
                         "string",
                         "null"
@@ -364,11 +364,11 @@
                     "type": "string"
                 },
                 "scitask_version": {
-                    "description": "SciTask Standard spec version (e.g. 0.1.0)",
+                    "description": "Version of the task specification (the reference pipeline writes 0.1.1); the slot keeps its name from before the rename to ASB",
                     "type": "string"
                 },
                 "script_refs": {
-                    "description": "Step \u2192 source-file linkage produced by Agent 8 (--trace-scripts). Each entry: {step, file_path, chunk_name, chunk_type, start_line, end_line, score}",
+                    "description": "Links from workflow steps to source-file line ranges, one JSON object per link: {step, file_path, chunk_name, chunk_type, start_line, end_line, score}",
                     "items": {
                         "$ref": "#/$defs/JsonObject"
                     },
@@ -618,7 +618,7 @@
         },
         "EvaluationStrategy": {
             "additionalProperties": false,
-            "description": "Structured evaluation plan for a SciTask Card, aligned with the p-plan:Plan concept. Specifies direct automated checks and expert-review criteria.",
+            "description": "Structured evaluation plan for an ASB task card, aligned with the p-plan:Plan concept. Specifies direct automated checks and expert-review criteria.",
             "properties": {
                 "direct_checks": {
                     "description": "List of automated, deterministic checks that can be run without human review (e.g., file existence, column count, value ranges).",
@@ -646,7 +646,7 @@
         },
         "EvidenceSnippet": {
             "additionalProperties": false,
-            "description": "A verbatim text snippet extracted from the source paper that supports a claim or field in the SciTask Card.",
+            "description": "A verbatim text snippet extracted from the source paper that supports a claim or field in the ASB task card.",
             "properties": {
                 "reason": {
                     "description": "Why this snippet was selected as evidence",
@@ -676,7 +676,7 @@
         },
         "ExecutableSpec": {
             "additionalProperties": false,
-            "description": "A runnable command bound to a SciTask Card.",
+            "description": "A runnable command bound to an ASB task card.",
             "properties": {
                 "cmd": {
                     "description": "Command as a list of arguments (no shell string)",
@@ -878,7 +878,7 @@
         },
         "ProvenanceLinks": {
             "additionalProperties": false,
-            "description": "PROV-O-inspired links for a SciTask Card.",
+            "description": "PROV-O-inspired links for an ASB task card.",
             "properties": {
                 "used": {
                     "description": "IRIs or IDs of entities used (inputs, prior task outputs)",
@@ -905,7 +905,7 @@
             "type": "object"
         },
         "ProvenanceSourceEnum": {
-            "description": "Source from which a SciTask Card was synthesized",
+            "description": "Source from which an ASB task card was synthesized",
             "enum": [
                 "published",
                 "preprint",
@@ -982,7 +982,7 @@
             "type": "string"
         },
         "TaskKindEnum": {
-            "description": "What a SciTask Card represents relative to the source paper: a result the paper empirically reported, a derived re-analysis, a described-but-not- separately-validated mechanism, or a task beyond the paper's reported scope.",
+            "description": "What an ASB task card represents relative to the source paper: a result the paper empirically reported, a derived re-analysis, a described-but-not- separately-validated mechanism, or a task beyond the paper's reported scope.",
             "enum": [
                 "reproduction",
                 "analysis",
@@ -994,7 +994,7 @@
         },
         "TaskPort": {
             "additionalProperties": false,
-            "description": "A single typed data port (input or output) on a SciTask Card.",
+            "description": "A single typed data port (input or output) on an ASB task card.",
             "properties": {
                 "edam_format_uri": {
                     "description": "EDAM format IRI for the data format of this port",
@@ -1096,7 +1096,7 @@
         },
         "TypedArtifact": {
             "additionalProperties": false,
-            "description": "A typed, format-identified artifact (input or output) of a SciTask Card. Pairs 1-to-1 with an entry in inputs[] or expected_outputs[].",
+            "description": "A typed, format-identified artifact (input or output) of an ASB task card. Pairs 1-to-1 with an entry in inputs[] or expected_outputs[].",
             "properties": {
                 "acquisition_mode": {
                     "description": "MS acquisition mode (DDA/DIA/targeted/full_scan/unknown)",
@@ -1210,7 +1210,7 @@
             ]
         },
         "artifact_refs": {
-            "description": "Heuristic artifact binding (--enrich): prose input/output mapped to typed locators from external enrichment + package index",
+            "description": "Bindings of prose inputs and outputs to typed locators (files, URLs) found by enrichment or in the package index, one JSON object per binding",
             "items": {
                 "$ref": "#/$defs/JsonObject"
             },
@@ -1381,7 +1381,7 @@
             "type": "array"
         },
         "keywords": {
-            "description": "Free-form keywords extracted by Agent 1 (methods, domains, instruments)",
+            "description": "Free-form keywords extracted from the source (methods, domains, instruments)",
             "items": {
                 "type": "string"
             },
@@ -1431,7 +1431,7 @@
             ]
         },
         "parameters": {
-            "description": "Agent 7 parameter resolver output \u2014 list of parameter dicts (populated only with --si-deep-dive)",
+            "description": "Resolved task parameters, one JSON object per parameter; empty when parameter resolution did not run",
             "items": {
                 "$ref": "#/$defs/JsonObject"
             },
@@ -1448,7 +1448,7 @@
             ]
         },
         "project_id": {
-            "description": "Project assignment ID (populated only with --scenario-registry)",
+            "description": "Project assignment ID; null when the card has no project assignment",
             "type": [
                 "string",
                 "null"
@@ -1523,7 +1523,7 @@
             ]
         },
         "run_command": {
-            "description": "Shell command for asb verify (None means skip)",
+            "description": "Shell command that re-runs the task for verification; null means skip",
             "type": [
                 "string",
                 "null"
@@ -1544,7 +1544,7 @@
             ]
         },
         "scenario_id": {
-            "description": "Scenario assignment ID (populated only with --scenario-registry)",
+            "description": "Scenario assignment ID; null when the card has no scenario assignment",
             "type": [
                 "string",
                 "null"
@@ -1555,11 +1555,11 @@
             "type": "string"
         },
         "scitask_version": {
-            "description": "SciTask Standard spec version (e.g. 0.1.0)",
+            "description": "Version of the task specification (the reference pipeline writes 0.1.1); the slot keeps its name from before the rename to ASB",
             "type": "string"
         },
         "script_refs": {
-            "description": "Step \u2192 source-file linkage produced by Agent 8 (--trace-scripts). Each entry: {step, file_path, chunk_name, chunk_type, start_line, end_line, score}",
+            "description": "Links from workflow steps to source-file line ranges, one JSON object per link: {step, file_path, chunk_name, chunk_type, start_line, end_line, score}",
             "items": {
                 "$ref": "#/$defs/JsonObject"
             },

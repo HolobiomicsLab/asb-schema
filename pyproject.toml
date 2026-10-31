@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "asb-schema"
 version = "0.4.0"
-description = "LinkML schemas for the ASB standard: task cards, capsules, skill bundles and skill collections"
+description = "ASB Schema: LinkML schemas for task cards, capsules, skill bundles and skill collections"
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]

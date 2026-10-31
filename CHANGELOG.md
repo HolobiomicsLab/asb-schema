@@ -25,6 +25,10 @@ follows [Semantic Versioning](https://semver.org/).
 - The documented `linkml-validate` command takes
   `--allow-null-for-optional-enums`, which accepts `null` in an optional
   enumeration slot as the generated JSON Schema does. (2026-10-31)
+- Schema descriptions name the ASB task card instead of the SciTask Card, carry
+  the real file versions in their headers and cite no internal plan,
+  specification section or private repository; `asb_schema.compat` states no
+  removal date. Validation is unchanged. (2026-10-31)
 
 ### Added
 

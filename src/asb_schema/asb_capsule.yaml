@@ -1,8 +1,9 @@
 id: https://w3id.org/holobiomicslab/asb-schema/capsule/v0.2
 name: asb_capsule_v0_2
 description: >-
-  LinkML schema for SciTask Capsule v0.1 — an RO-Crate 1.1 package wrapping a SciTask
-  Card with evidence, provenance, evaluation material, and embedded script chunks.
+  LinkML schema for the ASB capsule, file version 0.1.0: an RO-Crate 1.1 package
+  wrapping an ASB task card with evidence, provenance, evaluation material, and
+  embedded script chunks.
   Workflow Run Crate alignment is tracked in the reference pipeline.
 
 license: CC-BY-4.0
@@ -37,7 +38,7 @@ enums:
       Source agent or process that produced a file in the capsule
     permissible_values:
       agent2b:
-        description: Card synthesizer (LLM-based Agent 2b)
+        description: Card synthesizer (LLM-based)
       agent5:
         description: Skill bundle synthesizer
       github_search:
@@ -45,7 +46,7 @@ enums:
       perspicacite_mcp:
         description: Perspicacite MCP enrichment
       script_linker:
-        description: Script linker agent (Agent 8)
+        description: Script linker
       capsule_writer:
         description: Capsule writer
       heuristic_enricher:
@@ -95,7 +96,7 @@ classes:
 
   SciTaskCapsule:
     description: >-
-      An RO-Crate 1.1 package that wraps a SciTask Card with supporting evidence,
+      An RO-Crate 1.1 package that wraps an ASB task card with supporting evidence,
       provenance, evaluation manifests, and embedded scripts. Conforms to
       schema:Dataset, rocrate:Dataset, and pplan:Plan. Workflow Run Crate alignment
       is tracked in the reference pipeline.
@@ -140,7 +141,7 @@ slots:
       - schema:version
 
   capsule_card:
-    description: The SciTask Card embedded in this capsule
+    description: The ASB task card embedded in this capsule
     range: ASBTaskCard
     required: true
     annotations:

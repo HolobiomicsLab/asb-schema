@@ -6,6 +6,7 @@ Rules (spec §5):
   - no banned marketing tokens
 """
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -84,3 +85,34 @@ def test_too_short_description_is_rejected_by_linkml(tmp_path):
     assert result.returncode != 0, (
         f"LinkML should have rejected the short description; output:\n{result.stdout}\n{result.stderr}"
     )
+
+
+SHIPPED_TEXT = sorted(
+    [*SCHEMA_DIR.glob("*.yaml"), *SCHEMA_DIR.glob("*.schema.json"), *SCHEMA_DIR.glob("*.py")]
+)
+INTERNAL_REFERENCES = (
+    r"SciTask (Card|Capsule|Skill Bundle|Standard)",
+    r"IDEAS-[A-Z]",
+    r"spec §",
+    r"\bPlan [0-9]",
+    r"superpowers",
+    r"asb-domain-core",
+    r"\bAgent ?[0-9]",
+    r"--(si-deep-dive|trace-scripts|scenario-registry|enrich)\b",
+    r"removed in the next",
+)
+
+
+@pytest.mark.parametrize("path", SHIPPED_TEXT, ids=lambda path: path.name)
+def test_shipped_text_has_no_internal_reference(path):
+    """Shipped descriptions name no internal plan, private path or former product name."""
+    text = path.read_text(encoding="utf-8")
+    found = [pattern for pattern in INTERNAL_REFERENCES if re.search(pattern, text)]
+    assert found == [], f"{path.name}: {found}"
+
+
+def test_package_description_names_asb_schema():
+    tomllib = pytest.importorskip("tomllib")  # standard library from Python 3.11
+    project = tomllib.loads((SCHEMA_DIR.parent.parent / "pyproject.toml").read_text())["project"]
+    assert project["description"].startswith("ASB Schema")
+    assert "standard" not in project["description"].lower()

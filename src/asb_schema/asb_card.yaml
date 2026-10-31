@@ -1,8 +1,8 @@
 id: https://w3id.org/holobiomicslab/asb-schema/card/v0.2
 name: asb_card_v0_2
 description: >-
-  LinkML schema for SciTask Card v0.17.0 — a bounded, reproducible scientific task
-  extracted from a peer-reviewed paper. Covers all fields of the ASBTaskCard dataclass
+  LinkML schema for the ASB task card, file version 0.2.0: a bounded, reproducible
+  scientific task extracted from a peer-reviewed paper. Covers all fields of the ASBTaskCard dataclass
   and related nested types.
 
 license: CC-BY-4.0
@@ -32,7 +32,7 @@ default_range: string
 enums:
 
   ProvenanceSourceEnum:
-    description: Source from which a SciTask Card was synthesized
+    description: Source from which an ASB task card was synthesized
     permissible_values:
       published:
         description: Peer-reviewed journal article
@@ -45,7 +45,7 @@ enums:
 
   TaskKindEnum:
     description: >-
-      What a SciTask Card represents relative to the source paper: a result the
+      What an ASB task card represents relative to the source paper: a result the
       paper empirically reported, a derived re-analysis, a described-but-not-
       separately-validated mechanism, or a task beyond the paper's reported scope.
     permissible_values:
@@ -161,7 +161,7 @@ classes:
   EvidenceSnippet:
     description: >-
       A verbatim text snippet extracted from the source paper that supports
-      a claim or field in the SciTask Card.
+      a claim or field in the ASB task card.
     attributes:
       snippet_id:
         description: Unique identifier for this snippet (e.g. snip_001)
@@ -198,7 +198,7 @@ classes:
 
   EvaluationStrategy:
     description: >-
-      Structured evaluation plan for a SciTask Card, aligned with the
+      Structured evaluation plan for an ASB task card, aligned with the
       p-plan:Plan concept. Specifies direct automated checks and expert-review
       criteria.
     attributes:
@@ -224,7 +224,7 @@ classes:
           - pplan:Plan
 
   TaskPort:
-    description: A single typed data port (input or output) on a SciTask Card.
+    description: A single typed data port (input or output) on an ASB task card.
     attributes:
       port_id:
         description: Unique identifier for this port
@@ -298,7 +298,7 @@ classes:
           - dcterms:type
 
   ProvenanceLinks:
-    description: PROV-O-inspired links for a SciTask Card.
+    description: PROV-O-inspired links for an ASB task card.
     attributes:
       used:
         description: IRIs or IDs of entities used (inputs, prior task outputs)
@@ -411,7 +411,7 @@ classes:
 
   ExecutableSpec:
     description: >-
-      A runnable command bound to a SciTask Card.
+      A runnable command bound to an ASB task card.
     attributes:
       cmd:
         description: Command as a list of arguments (no shell string)
@@ -551,7 +551,7 @@ classes:
 
   TypedArtifact:
     description: >-
-      A typed, format-identified artifact (input or output) of a SciTask Card.
+      A typed, format-identified artifact (input or output) of an ASB task card.
       Pairs 1-to-1 with an entry in inputs[] or expected_outputs[].
     attributes:
       description:
@@ -916,7 +916,9 @@ slots:
       - schema:version
 
   scitask_version:
-    description: SciTask Standard spec version (e.g. 0.1.0)
+    description: >-
+      Version of the task specification (the reference pipeline writes 0.1.1);
+      the slot keeps its name from before the rename to ASB
     range: string
     required: true
     annotations:
@@ -968,8 +970,8 @@ slots:
 
   parameters:
     description: >-
-      Agent 7 parameter resolver output — list of parameter dicts
-      (populated only with --si-deep-dive)
+      Resolved task parameters, one JSON object per parameter; empty when
+      parameter resolution did not run
     range: JsonObject
     multivalued: true
     inlined: true
@@ -1001,7 +1003,7 @@ slots:
       - prov:wasDerivedFrom
 
   keywords:
-    description: Free-form keywords extracted by Agent 1 (methods, domains, instruments)
+    description: Free-form keywords extracted from the source (methods, domains, instruments)
     range: string
     multivalued: true
     annotations:
@@ -1064,8 +1066,8 @@ slots:
 
   artifact_refs:
     description: >-
-      Heuristic artifact binding (--enrich): prose input/output mapped to typed locators
-      from external enrichment + package index
+      Bindings of prose inputs and outputs to typed locators (files, URLs) found
+      by enrichment or in the package index, one JSON object per binding
     range: JsonObject
     multivalued: true
     inlined: true
@@ -1114,8 +1116,8 @@ slots:
 
   script_refs:
     description: >-
-      Step → source-file linkage produced by Agent 8 (--trace-scripts).
-      Each entry: {step, file_path, chunk_name, chunk_type, start_line, end_line, score}
+      Links from workflow steps to source-file line ranges, one JSON object per
+      link: {step, file_path, chunk_name, chunk_type, start_line, end_line, score}
     range: JsonObject
     multivalued: true
     inlined: true
@@ -1126,7 +1128,7 @@ slots:
       - prov:atLocation
 
   scenario_id:
-    description: Scenario assignment ID (populated only with --scenario-registry)
+    description: Scenario assignment ID; null when the card has no scenario assignment
     range: string
     annotations:
       importance: nice_to_have
@@ -1134,7 +1136,7 @@ slots:
       - dcterms:isPartOf
 
   project_id:
-    description: Project assignment ID (populated only with --scenario-registry)
+    description: Project assignment ID; null when the card has no project assignment
     range: string
     annotations:
       importance: nice_to_have
@@ -1158,7 +1160,7 @@ slots:
       - pplan:Plan
 
   run_command:
-    description: Shell command for asb verify (None means skip)
+    description: Shell command that re-runs the task for verification; null means skip
     range: string
     annotations:
       importance: nice_to_have

@@ -33,7 +33,7 @@ This page lists every class, slot and enumeration of the seven LinkML files of A
 
 <div class="asb-spec-meta"> <span class="asb-badge asb-badge--version">asb.yaml 0.2.0</span> <code>https://w3id.org/holobiomicslab/asb-schema/v0.2</code> <span>License: CC-BY-4.0</span> </div>
 
-ASB Standard v0.2: schema for scientific benchmark substrates and curated skill / tool release collections. Imports sub-schemas for ASB Cards, Capsules, Skill Bundles, Skill Collections, and the SkillCollectionRegistry.
+ASB Schema umbrella file, version 0.2.0: schema for scientific benchmark substrates and curated skill / tool release collections. Imports sub-schemas for ASB Cards, Capsules, Skill Bundles, Skill Collections, and the SkillCollectionRegistry.
 
 Schema name `asb_standard`. Imports: `linkml:types`, [`asb_card.yaml`](#file-asb_card), [`asb_capsule.yaml`](#file-asb_capsule), [`asb_skill_bundle.yaml`](#file-asb_skill_bundle), [`asb_skill_collection.yaml`](#file-asb_skill_collection), [`asb_skill_collection_registry.yaml`](#file-asb_skill_collection_registry). Format page: [The format](../schema/index.md).
 
@@ -41,7 +41,7 @@ Schema name `asb_standard`. Imports: `linkml:types`, [`asb_card.yaml`](#file-asb
 
 <div class="asb-spec-meta"> <span class="asb-badge asb-badge--version">asb_card.yaml 0.2.0</span> <code>https://w3id.org/holobiomicslab/asb-schema/card/v0.2</code> <span>License: CC-BY-4.0</span> </div>
 
-LinkML schema for SciTask Card v0.17.0: a bounded, reproducible scientific task extracted from a peer-reviewed paper. Covers all fields of the ASBTaskCard dataclass and related nested types.
+LinkML schema for the ASB task card, file version 0.2.0: a bounded, reproducible scientific task extracted from a peer-reviewed paper. Covers all fields of the ASBTaskCard dataclass and related nested types.
 
 Schema name `asb_card_v0_2`. Imports: `linkml:types`. Format page: [Task card](../schema/task-card.md).
 
@@ -64,7 +64,7 @@ A file or data artifact accessible from the research paper package. Records its 
 
 ### EvidenceSnippet { #class-EvidenceSnippet }
 
-A verbatim text snippet extracted from the source paper that supports a claim or field in the SciTask Card.
+A verbatim text snippet extracted from the source paper that supports a claim or field in the ASB task card.
 
 *Class of `asb_card.yaml`*
 
@@ -81,7 +81,7 @@ A verbatim text snippet extracted from the source paper that supports a claim or
 
 ### EvaluationStrategy { #class-EvaluationStrategy }
 
-Structured evaluation plan for a SciTask Card, aligned with the p-plan:Plan concept. Specifies direct automated checks and expert-review criteria.
+Structured evaluation plan for an ASB task card, aligned with the p-plan:Plan concept. Specifies direct automated checks and expert-review criteria.
 
 *Class of `asb_card.yaml`*
 
@@ -96,7 +96,7 @@ Structured evaluation plan for a SciTask Card, aligned with the p-plan:Plan conc
 
 ### TaskPort { #class-TaskPort }
 
-A single typed data port (input or output) on a SciTask Card.
+A single typed data port (input or output) on an ASB task card.
 
 *Class of `asb_card.yaml`*
 
@@ -118,7 +118,7 @@ A single typed data port (input or output) on a SciTask Card.
 
 ### ProvenanceLinks { #class-ProvenanceLinks }
 
-PROV-O-inspired links for a SciTask Card.
+PROV-O-inspired links for an ASB task card.
 
 *Class of `asb_card.yaml`*
 
@@ -182,7 +182,7 @@ Recipe for resuming a workflow at a step whose runner cannot re-execute (bypasse
 
 ### ExecutableSpec { #class-ExecutableSpec }
 
-A runnable command bound to a SciTask Card.
+A runnable command bound to an ASB task card.
 
 *Class of `asb_card.yaml`*
 
@@ -225,7 +225,7 @@ Software/hardware/scheduler/agentic context that ran or is required to run a car
 
 ### TypedArtifact { #class-TypedArtifact }
 
-A typed, format-identified artifact (input or output) of a SciTask Card. Pairs 1-to-1 with an entry in inputs[] or expected_outputs[].
+A typed, format-identified artifact (input or output) of an ASB task card. Pairs 1-to-1 with an entry in inputs[] or expected_outputs[].
 
 *Class of `asb_card.yaml`*
 
@@ -286,33 +286,33 @@ A bounded, reproducible scientific task extracted from a peer-reviewed paper. Li
 | `review_questions` | `string` | 0..* | Open questions for a human reviewer of this card | importance: nice_to_have; close_mappings: `schema:description` |
 | `created_at` | `string` | 1 | ISO 8601 timestamp when this card was created | importance: must_have; exact_mappings: `dcterms:created` |
 | `schema_version` | `string` | 1 | ASBTaskCard dataclass schema version (e.g. 0.17.0) | importance: must_have; close_mappings: `schema:version` |
-| `scitask_version` | `string` | 1 | SciTask Standard spec version (e.g. 0.1.0) | importance: must_have; close_mappings: `schema:version` |
+| `scitask_version` | `string` | 1 | Version of the task specification (the reference pipeline writes 0.1.1); the slot keeps its name from before the rename to ASB | importance: must_have; close_mappings: `schema:version` |
 | `domain` | `string` | 0..1 | Scientific domain (e.g. metabolomics, genomics) | importance: should_have; close_mappings: `schema:about` |
 | `subtask_categories` | `string` | 0..* | ScienceAgentBench-aligned subtask categories | importance: should_have; close_mappings: `schema:about` |
 | `domain_knowledge` | `string` | 0..* | Domain-specific knowledge items required for the task | importance: nice_to_have; close_mappings: `schema:about` |
 | `crossref_doi` | `string` | 0..1 | DOI of the source article (Crossref format) | importance: should_have; exact_mappings: `schema:identifier` |
 | `github_name` | `string` | 0..1 | GitHub repository name (owner/repo) associated with the source article | importance: nice_to_have; close_mappings: `schema:codeRepository` |
-| `parameters` | [`JsonObject`](#class-JsonObject) | 0..* | Agent 7 parameter resolver output: list of parameter dicts (populated only with --si-deep-dive) | inlined: true; inlined_as_list: true; importance: nice_to_have; close_mappings: `schema:variableMeasured` |
+| `parameters` | [`JsonObject`](#class-JsonObject) | 0..* | Resolved task parameters, one JSON object per parameter; empty when parameter resolution did not run | inlined: true; inlined_as_list: true; importance: nice_to_have; close_mappings: `schema:variableMeasured` |
 | `data_accessions` | [`JsonObject`](#class-JsonObject) | 0..* | Public repository accessions (MassIVE, PRIDE, MetaboLights, GEO, etc.) mined from article text | inlined: true; inlined_as_list: true; importance: should_have; exact_mappings: `EDAM:data_2091` |
 | `input_from` | `string` | 0..1 | task_id of a prior sub-task whose output is this card's first input (chaining) | importance: nice_to_have; exact_mappings: `prov:wasDerivedFrom` |
-| `keywords` | `string` | 0..* | Free-form keywords extracted by Agent 1 (methods, domains, instruments) | importance: should_have; close_mappings: `schema:keywords` |
+| `keywords` | `string` | 0..* | Free-form keywords extracted from the source (methods, domains, instruments) | importance: should_have; close_mappings: `schema:keywords` |
 | `article_type` | `string` | 0..1 | Article type classification (e.g. research-article, review, software-tool) | importance: should_have; close_mappings: `dcterms:type` |
 | `primary_domain` | `string` | 0..1 | Primary scientific domain identified by the classifier | importance: should_have; close_mappings: `schema:about` |
 | `subdomains` | `string` | 0..* | Secondary scientific sub-domains identified by the classifier | importance: nice_to_have; close_mappings: `schema:about` |
 | `techniques` | `string` | 0..* | Key experimental or computational techniques used | importance: nice_to_have; close_mappings: `EDAM:operation_0004` |
 | `expected_artifact_name` | `string` | 0..1 | SAB-aligned canonical output filename (equivalent to SAB output_fname) | importance: should_have; exact_mappings: `prov:atLocation` |
 | `landmark_outputs` | `string` | 0..* | SUPER-style partial-credit grading: 2 to 6 intermediate output file patterns ordered by pipeline stage | importance: nice_to_have; close_mappings: `prov:atLocation` |
-| `artifact_refs` | [`JsonObject`](#class-JsonObject) | 0..* | Heuristic artifact binding (--enrich): prose input/output mapped to typed locators from external enrichment + package index | inlined: true; inlined_as_list: true; importance: nice_to_have; close_mappings: `prov:wasDerivedFrom` |
+| `artifact_refs` | [`JsonObject`](#class-JsonObject) | 0..* | Bindings of prose inputs and outputs to typed locators (files, URLs) found by enrichment or in the package index, one JSON object per binding | inlined: true; inlined_as_list: true; importance: nice_to_have; close_mappings: `prov:wasDerivedFrom` |
 | `methodology_summary` | `string` | 0..* | Ordered list of plain-text procedure steps | importance: should_have; close_mappings: `pplan:Plan` |
 | `synthesized_from` | `string` | 0..1 | Source from which this card was synthesized (e.g. article, github:owner/repo, web:https://..., mixed) | importance: should_have; close_mappings: `prov:wasDerivedFrom` |
 | `linked_result_ids` | `string` | 0..* | Result IDs from the claim/result ledger that this card primarily grades | importance: nice_to_have; close_mappings: `prov:wasDerivedFrom` |
 | `section_provenance` | `string` | 0..* | Unique source_section values back-filled from linked claims' source_anchor | importance: nice_to_have; close_mappings: `prov:wasDerivedFrom` |
-| `script_refs` | [`JsonObject`](#class-JsonObject) | 0..* | Step → source-file linkage produced by Agent 8 (--trace-scripts). Each entry: {step, file_path, chunk_name, chunk_type, start_line, end_line, score} | inlined: true; inlined_as_list: true; importance: nice_to_have; close_mappings: `prov:atLocation` |
-| `scenario_id` | `string` | 0..1 | Scenario assignment ID (populated only with --scenario-registry) | importance: nice_to_have; close_mappings: `dcterms:isPartOf` |
-| `project_id` | `string` | 0..1 | Project assignment ID (populated only with --scenario-registry) | importance: nice_to_have; close_mappings: `dcterms:isPartOf` |
+| `script_refs` | [`JsonObject`](#class-JsonObject) | 0..* | Links from workflow steps to source-file line ranges, one JSON object per link: {step, file_path, chunk_name, chunk_type, start_line, end_line, score} | inlined: true; inlined_as_list: true; importance: nice_to_have; close_mappings: `prov:atLocation` |
+| `scenario_id` | `string` | 0..1 | Scenario assignment ID; null when the card has no scenario assignment | importance: nice_to_have; close_mappings: `dcterms:isPartOf` |
+| `project_id` | `string` | 0..1 | Project assignment ID; null when the card has no project assignment | importance: nice_to_have; close_mappings: `dcterms:isPartOf` |
 | `provenance_source` | [`ProvenanceSourceEnum`](#enum-ProvenanceSourceEnum) | 0..1 | Source category of the paper this card was extracted from | importance: should_have; close_mappings: `prov:wasGeneratedBy` |
 | `reproducibility_tier` | [`ReproducibilityTierEnum`](#enum-ReproducibilityTierEnum) | 0..1 | Tier describing how reproducible this card's workflow step is | importance: should_have; close_mappings: `pplan:Plan` |
-| `run_command` | `string` | 0..1 | Shell command for asb verify (None means skip) | importance: nice_to_have; close_mappings: `schema:description` |
+| `run_command` | `string` | 0..1 | Shell command that re-runs the task for verification; null means skip | importance: nice_to_have; close_mappings: `schema:description` |
 | `run_cwd` | `string` | 0..1 | Working directory for run_command (relative to capsule dir) | importance: nice_to_have; exact_mappings: `prov:atLocation` |
 | `run_timeout_seconds` | `float` | 0..1 | Timeout in seconds for run_command (default 60.0) | importance: nice_to_have; close_mappings: `schema:duration` |
 | `related_repos` | `string` | 0..* | Repositories linked to the source that are not the task's own repository (dependencies, upstream engines, mirrors), as owner/repo strings | importance: nice_to_have; close_mappings: `schema:codeRepository` |
@@ -334,7 +334,7 @@ A bounded, reproducible scientific task extracted from a peer-reviewed paper. Li
 
 ### ProvenanceSourceEnum { #enum-ProvenanceSourceEnum }
 
-Source from which a SciTask Card was synthesized
+Source from which an ASB task card was synthesized
 
 *Enumeration of `asb_card.yaml`*
 
@@ -351,7 +351,7 @@ Source from which a SciTask Card was synthesized
 
 ### TaskKindEnum { #enum-TaskKindEnum }
 
-What a SciTask Card represents relative to the source paper: a result the paper empirically reported, a derived re-analysis, a described-but-not- separately-validated mechanism, or a task beyond the paper's reported scope.
+What an ASB task card represents relative to the source paper: a result the paper empirically reported, a derived re-analysis, a described-but-not- separately-validated mechanism, or a task beyond the paper's reported scope.
 
 *Enumeration of `asb_card.yaml`*
 
@@ -459,7 +459,7 @@ Method used to detect artifact format
 
 <div class="asb-spec-meta"> <span class="asb-badge asb-badge--version">asb_capsule.yaml 0.1.0</span> <code>https://w3id.org/holobiomicslab/asb-schema/capsule/v0.2</code> <span>License: CC-BY-4.0</span> </div>
 
-LinkML schema for SciTask Capsule v0.1: an RO-Crate 1.1 package wrapping a SciTask Card with evidence, provenance, evaluation material, and embedded script chunks. Workflow Run Crate alignment is tracked in the reference pipeline.
+LinkML schema for the ASB capsule, file version 0.1.0: an RO-Crate 1.1 package wrapping an ASB task card with evidence, provenance, evaluation material, and embedded script chunks. Workflow Run Crate alignment is tracked in the reference pipeline.
 
 Schema name `asb_capsule_v0_2`. Imports: `linkml:types`, [`asb_card.yaml`](#file-asb_card). Format page: [Capsule](../schema/capsule.md).
 
@@ -482,7 +482,7 @@ Provenance record for a single file in the capsule, recording how it was produce
 
 ### SciTaskCapsule { #class-SciTaskCapsule }
 
-An RO-Crate 1.1 package that wraps a SciTask Card with supporting evidence, provenance, evaluation manifests, and embedded scripts. Conforms to schema:Dataset, rocrate:Dataset, and pplan:Plan. Workflow Run Crate alignment is tracked in the reference pipeline.
+An RO-Crate 1.1 package that wraps an ASB task card with supporting evidence, provenance, evaluation manifests, and embedded scripts. Conforms to schema:Dataset, rocrate:Dataset, and pplan:Plan. Workflow Run Crate alignment is tracked in the reference pipeline.
 
 *Class of `asb_capsule.yaml`; tree root*
 
@@ -493,7 +493,7 @@ An RO-Crate 1.1 package that wraps a SciTask Card with supporting evidence, prov
 | `capsule_task_id` | `string` | 1 | Unique identifier for this capsule; typically doi-slug__task_NNN. Matches the task_id in the embedded ASBTaskCard. | importance: must_have; exact_mappings: `dcterms:identifier` |
 | `ro_crate_version` | `string` | 0..1 | RO-Crate specification version used (e.g. 1.1) | importance: must_have; close_mappings: `schema:version` |
 | `profile_version` | `string` | 0..1 | Version of the RO-Crate profile the crate declares, if any (e.g. 0.5) | importance: should_have; close_mappings: `schema:version` |
-| `capsule_card` | [`ASBTaskCard`](#class-ASBTaskCard) | 1 | The SciTask Card embedded in this capsule | importance: must_have; exact_mappings: `pplan:Plan` |
+| `capsule_card` | [`ASBTaskCard`](#class-ASBTaskCard) | 1 | The ASB task card embedded in this capsule | importance: must_have; exact_mappings: `pplan:Plan` |
 | `capsule_artifacts` | [`AvailableArtifact`](#class-AvailableArtifact) | 0..* | Artifacts accessible within this capsule | importance: should_have; close_mappings: `rocrate:Dataset` |
 | `capsule_created_at` | `string` | 1 | ISO 8601 timestamp when this capsule was created | importance: must_have; exact_mappings: `dcterms:created` |
 | `artifact_provenance` | [`ArtifactProvenanceEntry`](#class-ArtifactProvenanceEntry) | 0..* | Provenance manifest for all files in the capsule | importance: should_have; exact_mappings: `prov:wasGeneratedBy` |
@@ -511,11 +511,11 @@ Source agent or process that produced a file in the capsule
 
 | Value | Description |
 | --- | --- |
-| `agent2b` | Card synthesizer (LLM-based Agent 2b) |
+| `agent2b` | Card synthesizer (LLM-based) |
 | `agent5` | Skill bundle synthesizer |
 | `github_search` | GitHub search enricher |
 | `perspicacite_mcp` | Perspicacite MCP enrichment |
-| `script_linker` | Script linker agent (Agent 8) |
+| `script_linker` | Script linker |
 | `capsule_writer` | Capsule writer |
 | `heuristic_enricher` | Heuristic enricher (non-LLM) |
 
@@ -525,7 +525,7 @@ Source agent or process that produced a file in the capsule
 
 <div class="asb-spec-meta"> <span class="asb-badge asb-badge--version">asb_skill_bundle.yaml 0.2.0</span> <code>https://w3id.org/holobiomicslab/asb-schema/skill-bundle/v0.2</code> <span>License: CC-BY-4.0</span> </div>
 
-LinkML schema for SciTask Skill Bundle v0.1: a versioned, curated description of one reusable computational skill identified across multiple papers. Each bundle contains a human-readable skill description and 12 structured sidecars.
+LinkML schema for the ASB skill bundle, file version 0.2.0: a versioned, curated description of one reusable computational skill identified across multiple papers. Each bundle contains a human-readable skill description and 12 structured sidecars.
 
 Schema name `asb_skill_bundle_v0_2`. Imports: `linkml:types`. Format page: [Skill bundle](../schema/skill-bundle.md).
 
@@ -566,7 +566,7 @@ A reference to a source paper that contributed to this skill bundle.
 
 ### MergeAuditRecord { #class-MergeAuditRecord }
 
-Per-merge audit record documenting alias deduplication decisions. Surfaces the data ``corpus_artifacts._semantic_dedup`` already records so dedup decisions are queryable and citable (IDEAS-E / spec §11).
+Per-merge audit record documenting alias deduplication decisions. Surfaces the data ``corpus_artifacts._semantic_dedup`` already records so dedup decisions are queryable and citable.
 
 *Class of `asb_skill_bundle.yaml`*
 
@@ -608,7 +608,7 @@ A versioned, curated description of one reusable computational skill identified 
 | `skill_kb_path` | `string` | 0..1 | Relative path to the skill's knowledge base entry file (e.g. docs/skill_name.md) | importance: nice_to_have; exact_mappings: `prov:atLocation` |
 | `bundle_dir` | `string` | 0..1 | Absolute path to the offline skill knowledge base bundle directory | importance: nice_to_have; exact_mappings: `prov:atLocation` |
 | `bundle_version` | `string` | 1 | Version of this skill bundle (e.g. 0.1.0) | importance: must_have; close_mappings: `schema:version` |
-| `source_task_ids` | `string` | 0..* | task_id values of the SciTask Cards from which this skill was extracted | importance: should_have; close_mappings: `dcterms:isPartOf` |
+| `source_task_ids` | `string` | 0..* | task_id values of the ASB task cards from which this skill was extracted | importance: should_have; close_mappings: `dcterms:isPartOf` |
 | `source_papers` | [`PaperReference`](#class-PaperReference) | 0..* | Structured references to papers that contributed to this bundle | importance: should_have; close_mappings: `dcterms:source` |
 | `merged_aliases` | `string` | 0..* | Original labels of skills merged into this canonical entry | importance: nice_to_have; close_mappings: `schema:alternateName` |
 | `merged_alias_records` | [`MergeAuditRecord`](#class-MergeAuditRecord) | 0..* | Per-merge audit records documenting alias deduplication decisions | importance: nice_to_have; close_mappings: `prov:wasGeneratedBy` |
@@ -617,7 +617,7 @@ A versioned, curated description of one reusable computational skill identified 
 
 ### ASBSkill { #class-ASBSkill }
 
-Collection-time aggregated skill record: the deduplicated, paper-grounded scientific competency surfaced by ``corpus_artifacts.collect_skills`` at release time. Distinct from ``SkillBundle`` which is the per-capsule artifact. Mirrors the Python dataclass at agentic_science_builder.schemas.ASBSkill (renamed from SciSkill in Plan 2a / ASB-runtime).
+Collection-time aggregated skill record: the deduplicated, paper-grounded scientific competency surfaced by ``corpus_artifacts.collect_skills`` at release time. Distinct from ``SkillBundle`` which is the per-capsule artifact. Mirrors the Python dataclass at agentic_science_builder.schemas.ASBSkill (formerly SciSkill).
 
 *Class of `asb_skill_bundle.yaml`*
 
@@ -627,10 +627,10 @@ Collection-time aggregated skill record: the deduplicated, paper-grounded scient
 | --- | --- | --- | --- | --- |
 | `slug` | `string` | 1 | Lowercase, hyphen-separated unique identifier for this skill bundle (e.g. spectral-similarity-scoring) | importance: must_have; exact_mappings: `schema:identifier` |
 | `skill_name` | `string` | 1 | Human-readable canonical name of the skill | importance: must_have; exact_mappings: `schema:name` |
-| `description` | `string` | 1 | Retrieval-key description for an ASBSkill. Discipline-constrained (IDEAS-D / spec §5): 50 to 300 chars, leads with "Use when …", no marketing tokens. The CI gate in asb-skill-collections additionally enforces the banned-token list at release time. | pattern: `^[Uu]se when .+`; minimum_value: 50; maximum_value: 300; importance: must_have; banned_tokens: revolutionary, cutting-edge, best-in-class, powerful, amazing, state-of-the-art, groundbreaking; exact_mappings: `schema:description` |
+| `description` | `string` | 1 | Retrieval-key description for an ASBSkill. Discipline-constrained: 50 to 300 chars, leads with "Use when …", no marketing tokens. The CI gate in asb-skill-collections additionally enforces the banned-token list at release time. | pattern: `^[Uu]se when .+`; minimum_value: 50; maximum_value: 300; importance: must_have; banned_tokens: revolutionary, cutting-edge, best-in-class, powerful, amazing, state-of-the-art, groundbreaking; exact_mappings: `schema:description` |
 | `when_to_use` | `string` | 0..1 | Guidance on when and how to apply this skill | importance: should_have; close_mappings: `pplan:Plan` |
 | `related_tools` | `string` | 0..* | Canonical URLs / slugs of tools used by this skill | importance: should_have; close_mappings: `EDAM:operation_0004` |
-| `source_task_ids` | `string` | 0..* | task_id values of the SciTask Cards from which this skill was extracted | importance: should_have; close_mappings: `dcterms:isPartOf` |
+| `source_task_ids` | `string` | 0..* | task_id values of the ASB task cards from which this skill was extracted | importance: should_have; close_mappings: `dcterms:isPartOf` |
 | `source_paper_doi` | `string` | 0..1 | Primary source paper DOI (flat field, complements source_papers[]) | importance: should_have; exact_mappings: `schema:identifier` |
 | `source_paper_title` | `string` | 0..1 | Primary source paper title (flat field, complements source_papers[]) | importance: nice_to_have; exact_mappings: `schema:name` |
 | `source_papers` | [`PaperReference`](#class-PaperReference) | 0..* | Structured references to papers that contributed to this bundle | importance: should_have; close_mappings: `dcterms:source` |
@@ -645,7 +645,7 @@ Collection-time aggregated skill record: the deduplicated, paper-grounded scient
 
 ### ASBTool { #class-ASBTool }
 
-Collection-time aggregated tool record: the deduplicated, paper-grounded software-tool reference surfaced by ``corpus_artifacts.collect_tools``. Mirrors the Python dataclass at agentic_science_builder.schemas.ASBTool (renamed from SciTool in Plan 2a / ASB-runtime).
+Collection-time aggregated tool record: the deduplicated, paper-grounded software-tool reference surfaced by ``corpus_artifacts.collect_tools``. Mirrors the Python dataclass at agentic_science_builder.schemas.ASBTool (formerly SciTool).
 
 *Class of `asb_skill_bundle.yaml`*
 
@@ -657,7 +657,7 @@ Collection-time aggregated tool record: the deduplicated, paper-grounded softwar
 | `tool_name` | `string` | 1 | Tool name (mirrors ToolRecord.tool_name; used by ASBTool) | importance: must_have; close_mappings: `schema:name` |
 | `canonical_url` | `uri` | 0..1 | Canonical URL for the tool (GitHub, bio.tools, PyPI, etc.) | importance: should_have; close_mappings: `schema:codeRepository` |
 | `related_skills` | `string` | 0..* | Slugs of ASBSkill records that reference this tool | importance: should_have; close_mappings: `dcterms:isPartOf` |
-| `source_task_ids` | `string` | 0..* | task_id values of the SciTask Cards from which this skill was extracted | importance: should_have; close_mappings: `dcterms:isPartOf` |
+| `source_task_ids` | `string` | 0..* | task_id values of the ASB task cards from which this skill was extracted | importance: should_have; close_mappings: `dcterms:isPartOf` |
 | `source_paper_doi` | `string` | 0..1 | Primary source paper DOI (flat field, complements source_papers[]) | importance: should_have; exact_mappings: `schema:identifier` |
 | `source_paper_title` | `string` | 0..1 | Primary source paper title (flat field, complements source_papers[]) | importance: nice_to_have; exact_mappings: `schema:name` |
 | `evidence_spans` | `string` | 0..* | Verbatim quotes from source papers anchoring this tool reference | importance: should_have; close_mappings: `prov:wasDerivedFrom` |
@@ -666,13 +666,13 @@ Collection-time aggregated tool record: the deduplicated, paper-grounded softwar
 | `resolution_attempts` | `string` | 0..* | Audit list of resolver attempts (each entry a dict; serialized as JSON) | importance: nice_to_have; close_mappings: `prov:wasGeneratedBy` |
 | `edam_operation` | `uri` | 0..1 | Primary EDAM operation IRI for this skill (e.g. http://edamontology.org/operation_3799) | importance: should_have; exact_mappings: `EDAM:operation_0004` |
 | `edam_topics` | `uri` | 0..* | EDAM topic IRIs for this skill (e.g. http://edamontology.org/topic_3172) | importance: should_have; exact_mappings: `EDAM:topic_0003` |
-| `bio_tools_id` | `string` | 0..1 | bio.tools identifier for this tool (IDEAS-G). Reserved slot for the future bio.tools federation work; not populated in v1. | importance: nice_to_have; close_mappings: `schema:identifier` |
+| `bio_tools_id` | `string` | 0..1 | bio.tools identifier for this tool. Reserved slot for the future bio.tools federation work; not populated in v1. | importance: nice_to_have; close_mappings: `schema:identifier` |
 
 </div>
 
 ### ToolAffordance { #class-ToolAffordance }
 
-W3C WoT ActionAffordance-aligned mixin (IDEAS-F / spec §15). RESERVED for v1: slot definitions exist but no ASB class consumes them yet. When the ecosystem standardises on WoT for executable tools, ASBTool (or an ExecutableTool subclass) will inherit from this mixin without breaking existing instances.
+W3C WoT ActionAffordance-aligned mixin. RESERVED for v1: slot definitions exist but no ASB class consumes them yet. When the ecosystem standardises on WoT for executable tools, ASBTool (or an ExecutableTool subclass) will inherit from this mixin without breaking existing instances.
 
 *Class of `asb_skill_bundle.yaml`; mixin*
 
@@ -723,7 +723,7 @@ This class declares no slots or attributes.
 
 ### Person { #class-Person }
 
-A person: contributor at the collection level (IDEAS-B / spec §16.3).
+A person, contributor at the collection level.
 
 *Class of `asb_skill_collection.yaml`*
 
@@ -739,7 +739,7 @@ A person: contributor at the collection level (IDEAS-B / spec §16.3).
 
 ### SkillCollection { #class-SkillCollection }
 
-A curated thematic release of N ASBSkills and M ASBTools, pinned by content-hash. Distinct from per-capsule SkillBundle; this is the release unit (IDEAS-B / spec §3).
+A curated thematic release of N ASBSkills and M ASBTools, pinned by content-hash. Distinct from per-capsule SkillBundle; this is the release unit.
 
 *Class of `asb_skill_collection.yaml`; tree root*
 
@@ -753,7 +753,7 @@ A curated thematic release of N ASBSkills and M ASBTools, pinned by content-hash
 | `title` | `string` | 1 | Human-readable collection title | importance: must_have; exact_mappings: `schema:name` |
 | `description` | `string` | 1 | Human-readable description of the collection's scope and thematic coherence | importance: must_have; exact_mappings: `schema:description` |
 | `license` | `string` | 1 | SPDX license identifier (e.g. "CC-BY-4.0") | importance: must_have; exact_mappings: `schema:license` |
-| `contributors` | [`Person`](#class-Person) | 0..* | People who curated this collection (per-collection ORCIDs; spec §16.3) | importance: should_have; close_mappings: `schema:contributor` |
+| `contributors` | [`Person`](#class-Person) | 0..* | People who curated this collection (per-collection ORCIDs) | importance: should_have; close_mappings: `schema:contributor` |
 | `doi` | `uriorcurie` | 0..1 | Zenodo DOI of this collection release (uriorcurie) | importance: should_have; exact_mappings: `schema:identifier` |
 | `released_at` | `datetime` | 0..1 | Release timestamp (ISO 8601) | importance: should_have; exact_mappings: `schema:datePublished` |
 | `skills` | `uriorcurie` | 0..* | Content-hash-pinned references to ASBSkill entries included in this release. Each entry is an IRI of the form w3id.org/holobiomicslab/asb-skill/&lt;slug&gt;@sha256:&lt;hash&gt; | importance: must_have; close_mappings: `dcterms:hasPart` |
@@ -813,7 +813,7 @@ Attribution roles for the collection as a whole, mirroring the per-skill `attrib
 
 <div class="asb-spec-meta"> <span class="asb-badge asb-badge--version">asb_skill_collection_registry.yaml 0.2.0</span> <code>https://w3id.org/holobiomicslab/asb-schema/skill-collection-registry/v0.2</code> <span>License: CC-BY-4.0</span> </div>
 
-LinkML schema for the asb-skill-collections catalogue root. Lists all published SkillCollection releases and reserves an `external_repos` slot for future federation (IDEAS-I / spec §9.2). The serialized form is `catalogue.jsonld` at the root of the `asb-skill-collections` repo.
+LinkML schema for the asb-skill-collections catalogue root. Lists all published SkillCollection releases and reserves an `external_repos` slot for future federation. The serialized form is `catalogue.jsonld` at the root of the `asb-skill-collections` repo.
 
 Schema name `asb_skill_collection_registry_v0_2`. Imports: `linkml:types`, [`asb_skill_collection.yaml`](#file-asb_skill_collection). Format page: [Skill collection](../schema/skill-collection.md#collection-registry).
 
@@ -832,7 +832,7 @@ Catalogue root for the `asb-skill-collections` repo. Lists every released SkillC
 | `registry_description` | `string` | 0..1 | Human-readable description of the registry | importance: should_have; exact_mappings: `schema:description` |
 | `registry_maintainers` | [`Person`](#class-Person) | 0..* | People listed in MAINTAINERS.md who curate this registry | importance: should_have; close_mappings: `schema:contributor` |
 | `collections` | `uriorcurie` | 1..* | IRIs of all SkillCollection releases catalogued by this registry. Each entry pins a specific version (e.g. w3id.org/holobiomicslab/asb-skill/collection/metabolomics/v1). | importance: must_have; close_mappings: `dcterms:hasPart` |
-| `external_repos` | `uriorcurie` | 0..* | RESERVED (off in v1). Future federation slot: IRIs of third-party `*-skill-collections` repos whose collections get aggregated into this catalogue. Per spec §9.2 and §15, this is a design slot only. | importance: nice_to_have; close_mappings: `dcterms:isPartOf` |
+| `external_repos` | `uriorcurie` | 0..* | RESERVED (off in v1). Future federation slot: IRIs of third-party `*-skill-collections` repos whose collections get aggregated into this catalogue. This is a design slot only. | importance: nice_to_have; close_mappings: `dcterms:isPartOf` |
 | `generated_at` | `datetime` | 0..1 | When this catalogue snapshot was generated (ISO 8601) | importance: should_have; exact_mappings: `prov:generatedAtTime` |
 
 </div>
