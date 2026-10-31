@@ -128,7 +128,7 @@ Capsule crates name their nodes `urn:asb:<kind>:<key>` with the kinds `task`, `t
 - The package follows [Semantic Versioning](https://semver.org/). Before 1.0, a minor release may change a schema so that previously valid data fails; a patch release does not.
 - A change to a LinkML file bumps that file's `version`. A change that can reject previously valid data also moves the `vX.Y` segment of its `id`.
 - The generated JSON Schema files, `context.jsonld` and the [field reference](index.md) are regenerated in the same commit as the LinkML change; continuous integration fails when they differ from the generator output.
-- A release is a tag `v<version>` equal to the version in `pyproject.toml` and `asb_schema.__version__`; the publish workflow refuses any other tag.
+- A release is a tag `v<version>` on `main`, equal to the version in `pyproject.toml`, `asb_schema.__version__` and `CITATION.cff`, with a heading in `CHANGELOG.md`; the publish workflow refuses any other tag.
 - Each release has an entry in the [changelog](../changelog.md).
 
 ## Legacy identifiers

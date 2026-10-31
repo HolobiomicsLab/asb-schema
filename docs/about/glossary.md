@@ -101,7 +101,7 @@ Terms used on this site. Schema terms take their meaning from the LinkML sources
 :   A release copy of a capsule whose `artifact_provenance.json` records `"profile": "slim"`; its card sits in the collection's `benchmark/cards/`.
 
 [slot](../reference/index.md)
-:   A property a class can carry[^linkml-models]. `ASBTaskCard` has 50 slots, 15 required.
+:   A property a class can carry[^linkml-models]. `ASBTaskCard` has 64 slots, 15 required.
 
 [support level](../schema/exploration-trace.md)
 :   Whether a trace step is stated by the paper (`explicit`) or reconstructed (`inferred`).

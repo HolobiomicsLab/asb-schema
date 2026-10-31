@@ -62,7 +62,7 @@ ARA (Agent-Native Research Artifact) defines one artifact per paper or project, 
 
 ## Workflow languages
 
-`asb export-workflow` converts the run's `workflow.yaml` into CWL, Nextflow and Snakemake files under `exports/`[^cwl][^nextflow]. Command bodies come from each card's runtime executable command; a card without one yields a structural stub. The classes `ExecutableSpec`, `ExecutionEnvironment` and `TypedArtifact` in `asb_card.yaml` are ready to carry that command on the card itself.
+`asb export-workflow` converts the run's `workflow.yaml` into CWL, Nextflow and Snakemake files under `exports/`[^cwl][^nextflow]. Command bodies come from each card's runtime executable command; a card without one yields a structural stub. The optional card slots `executable` (`ExecutableSpec`), `execution_environment` (`ExecutionEnvironment`) and `data_in`, `data_out` (`TypedArtifact`) carry that command, its software stack and its typed files on the card itself.
 
 <span class="asb-badge asb-badge--existing">existing</span>
 

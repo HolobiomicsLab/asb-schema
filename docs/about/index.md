@@ -37,7 +37,7 @@ License
 | 2026-08-18 | Exploration trace schema `asb_trace.yaml` added. |
 | 2026-09-14 | Release 0.3.0, the first release on the Python Package Index. |
 
-Release 0.4.0 gives four card slots lists of JSON objects and moves the package to a standalone repository with its own documentation site and continuous integration. The full list of changes is in the [changelog](../changelog.md).
+Release 0.4.0 gives four card slots lists of JSON objects, declares the fourteen optional card slots that the reference pipeline writes, among them `execution_environment`, and moves the package to a standalone repository with its own documentation site and continuous integration. The full list of changes is in the [changelog](../changelog.md).
 
 ## Governance
 
@@ -54,12 +54,13 @@ Changes are proposed as issues and pull requests on the [asb-schema repository](
 
 | CI job | Python | Checks |
 |---|---|---|
-| `test` | 3.10 to 3.13 | `python -m pytest -q` |
-| `generated` | 3.12 | Regenerates and fails when `src/asb_schema` or `docs/reference/index.md` differs from the committed files (`generation_date` lines ignored) |
+| `test` | 3.10 to 3.14 | `python -m pytest -q` |
+| `lint` | 3.12 | `ruff check .`, `ruff format --check .` |
+| `generated` | 3.12 | Installs the generator versions of `constraints/generate.txt`, regenerates and fails when `src/asb_schema` or `docs/reference/index.md` differs from the committed files (`generation_date` lines ignored) |
 | `package` | 3.12 | Builds the distribution, `twine check --strict` |
 | `docs` | 3.12 | `mkdocs build --strict` |
 
-A release is a tag `v<version>`; the publish workflow checks the tag against `pyproject.toml` and `asb_schema.__version__`, runs the tests and uploads through PyPI Trusted Publishing. The [versioning policy](../reference/conformance.md#versioning-policy) and the [legacy identifiers](../reference/conformance.md#legacy-identifiers) are on the conformance page.
+A release is a tag `v<version>`; the publish workflow checks that the tagged commit is on `main`, that the tag equals the version in `pyproject.toml`, `asb_schema.__version__` and `CITATION.cff`, and that `CHANGELOG.md` has a heading for it, runs the tests and uploads through PyPI Trusted Publishing. The [versioning policy](../reference/conformance.md#versioning-policy) and the [legacy identifiers](../reference/conformance.md#legacy-identifiers) are on the conformance page.
 
 ## Licenses
 
@@ -92,11 +93,10 @@ This site documents release 0.4.0, a pre-1.0 release in which a minor release ma
 ### Open decisions
 
 1. Is conformance read as closed validation (`linkml-validate`) or open validation (the JSON Schema root)?
-2. Are the runtime-only fields that the reference pipeline writes into cards declared in `ASBTaskCard`, or moved to a sidecar file?
-3. Does the card gain benchmark slots (canary, license, environment, a pointer to a hidden answer)?
-4. Is the versioning policy applied retroactively to `asb_card.yaml` and `asb_capsule.yaml`, or amended?
-5. Which license covers which layer, and where is that stated?
-6. When is `asb_schema.compat` removed?
+2. Does the card gain benchmark slots (canary, license, the environment a benchmark gives a solver, a pointer to a hidden answer)?
+3. Is the versioning policy applied retroactively to `asb_capsule.yaml`, as release 0.4.0 applies it to `asb_card.yaml`, or amended?
+4. Which license covers which layer, and where is that stated?
+5. When is `asb_schema.compat` removed?
 
 [^kac]: Keep a Changelog, "Keep a Changelog". <https://keepachangelog.com/en/1.1.0/>
 [^pypi]: Python Package Index, "asb-schema". <https://pypi.org/project/asb-schema/>

@@ -8,7 +8,7 @@ Install the package, locate the schema files, validate a task card, a collection
 pip install asb-schema
 ```
 
-The package requires Python 3.10 or later and depends on `linkml`, `linkml-runtime` (both below 1.12) and `pyyaml`; installing it puts `linkml-validate` on the path. The Python Package Index lists release 0.3.0[^pypi]; to use release 0.4.0, documented here, run `pip install .` in a checkout of the repository. Release 0.4.0 changes four card slots to lists of JSON objects (see the [changelog](changelog.md)).
+The package requires Python 3.10 or later and depends on `linkml` and `linkml-runtime` 1.7 or later, and on `pyyaml`; installing it puts `linkml-validate` on the path. The Python Package Index lists release 0.3.0[^pypi]; to use release 0.4.0, documented here, run `pip install .` in a checkout of the repository. Release 0.4.0 changes four card slots to lists of JSON objects and declares fourteen further optional card slots (see the [changelog](changelog.md)).
 
 ## Find the schema files
 
@@ -111,12 +111,12 @@ The root of each file and its intended class are listed under [JSON Schema roots
 After editing a LinkML file, in a checkout of the repository:
 
 ```bash
-pip install -e ".[dev]"
+pip install -c constraints/generate.txt -e ".[dev]"
 bash generate.sh
 python -m pytest
 ```
 
-`generate.sh` writes the six JSON Schema files with `asb_schema.jsonschemagen`, `context.jsonld` from `asb_skill_bundle.yaml`, and the [field reference](reference/index.md) with `scripts/gen_reference.py` (also `make reference`). Continuous integration regenerates them and fails when the committed files differ, apart from the `generation_date` line of `context.jsonld`.
+`generate.sh` runs only with the `linkml` and `linkml-runtime` versions pinned in `constraints/generate.txt` (1.11.1). It writes the six JSON Schema files with `asb_schema.jsonschemagen`, `context.jsonld` from `asb_skill_bundle.yaml`, and the [field reference](reference/index.md) with `scripts/gen_reference.py` (also `make reference`). Continuous integration regenerates them and fails when the committed files differ, apart from the `generation_date` line of `context.jsonld`.
 
 ## Next steps
 

@@ -32,7 +32,7 @@ scientific tasks extracted from research papers and for the skills and
 releases built from them. The package ships the LinkML sources, one generated
 JSON Schema per schema and a JSON-LD context. Formerly named SciTask.
 
-**ASB is the provenance and specification layer that feeds benchmark formats, not a competitor to them.**
+**ASB is the provenance and specification layer that feeds benchmark formats.**
 
 ```bash
 pip install asb-schema
@@ -85,7 +85,8 @@ change a schema so that previously valid data fails. Each LinkML file carries
 its own `version` and a versioned `id` under
 `https://w3id.org/holobiomicslab/asb-schema/`. Generated files are
 regenerated with every LinkML change, and CI fails when they differ. A release
-is a tag `v<version>` equal to the version in `pyproject.toml`.
+is a tag `v<version>` on `main`, equal to the version in `pyproject.toml`,
+`asb_schema.__version__` and `CITATION.cff`.
 
 ## Development
 

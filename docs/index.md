@@ -22,7 +22,7 @@ hide:
 
 !!! abstract "Positioning"
 
-    **ASB is the provenance and specification layer that feeds benchmark formats, not a competitor to them.**
+    **ASB is the provenance and specification layer that feeds benchmark formats.**
 
     - An ASB task card records one bounded task extracted from a published paper: the research question, the paper's finding, verbatim evidence, inputs, outputs, tools, skills and an evaluation plan.
     - ASB Schema produces ASTRA documents and, for published research, is upstream of them: the paper's tasks, decisions and evidence become an ASTRA analysis.
@@ -45,6 +45,6 @@ A reference pipeline maintained by the same laboratory writes cards, capsules, s
 
 ## Release
 
-This site documents release **0.4.0**. The latest release on the Python Package Index is 0.3.0[^pypi]. Release 0.4.0 gives four card slots (`parameters`, `data_accessions`, `artifact_refs`, `script_refs`) lists of JSON objects instead of lists of strings; see the [changelog](changelog.md) and the [status](about/index.md#status).
+This site documents release **0.4.0**. The latest release on the Python Package Index is 0.3.0[^pypi]. Release 0.4.0 gives four card slots (`parameters`, `data_accessions`, `artifact_refs`, `script_refs`) lists of JSON objects instead of lists of strings and declares fourteen further optional card slots, among them `execution_environment`; see the [changelog](changelog.md) and the [status](about/index.md#status).
 
 [^pypi]: Python Package Index, `asb-schema` release history. <https://pypi.org/project/asb-schema/>
