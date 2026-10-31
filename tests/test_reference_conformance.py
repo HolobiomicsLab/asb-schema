@@ -7,16 +7,19 @@ v1). Their source_package is made relative and one e-mail address quoted from
 the source article is removed; every key and every other value is as written.
 
 Closed validation is the documented conformance check: an undeclared key, at
-the top level or in a nested object, is an error.
+the top level or in a nested object, is an error. The linkml-validate command
+loads a JSON file with linkml's JsonLoader, which drops null values (such as
+the task_kind: null of an unclassified card); the tests load the cards the
+same way, and the JSON Schema test also checks the cards with their nulls.
 """
 
-import inspect
 import json
 from pathlib import Path
 
 import jsonschema
 import pytest
 from linkml.validator import Validator
+from linkml.validator.loaders import JsonLoader
 from linkml.validator.plugins import JsonschemaValidationPlugin
 
 from asb_schema import get_json_schema_path, get_schema_path
@@ -28,13 +31,16 @@ def _load(path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _load_as_cli(path):
+    # The loader of the linkml-validate command.
+    (instance,) = list(JsonLoader(str(path)).iter_instances())
+    return instance
+
+
 @pytest.fixture(scope="module")
 def linkml_validator():
-    # Same plugin and options as the documented command:
-    # linkml-validate --target-class ASBTaskCard --allow-null-for-optional-enums
-    if "allow_null_for_optional_enums" not in inspect.signature(JsonschemaValidationPlugin).parameters:
-        pytest.skip("--allow-null-for-optional-enums needs linkml 1.11 or later")
-    plugin = JsonschemaValidationPlugin(closed=True, allow_null_for_optional_enums=True)
+    # Same plugin as the documented command: linkml-validate --target-class ASBTaskCard
+    plugin = JsonschemaValidationPlugin(closed=True)
     return Validator(get_schema_path("asb_card"), validation_plugins=[plugin])
 
 
@@ -53,7 +59,7 @@ def test_fixture_set_covers_heuristic_and_released_cards():
 
 @pytest.mark.parametrize("path", FIXTURES, ids=lambda path: path.stem)
 def test_reference_card_validates_closed_with_linkml(path, linkml_validator):
-    report = linkml_validator.validate(_load(path), "ASBTaskCard")
+    report = linkml_validator.validate(_load_as_cli(path), "ASBTaskCard")
     errors = [result.message for result in report.results if result.severity.name == "ERROR"]
     assert errors == []
 
@@ -65,9 +71,9 @@ def test_reference_card_validates_against_closed_json_schema(path, closed_json_s
 
 
 @pytest.mark.parametrize("path", [p for p in FIXTURES if p.name.startswith("released_")], ids=lambda path: path.stem)
-def test_released_card_validates_closed_without_null_enum_option(path):
-    plugin = JsonschemaValidationPlugin(closed=True)
-    report = Validator(get_schema_path("asb_card"), validation_plugins=[plugin]).validate(_load(path), "ASBTaskCard")
+def test_released_card_validates_closed_with_its_null_values(path, linkml_validator):
+    # Released cards classify every task, so they pass even when the null values are kept.
+    report = linkml_validator.validate(_load(path), "ASBTaskCard")
     assert [result.message for result in report.results if result.severity.name == "ERROR"] == []
 
 

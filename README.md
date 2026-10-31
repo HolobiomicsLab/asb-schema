@@ -65,12 +65,8 @@ closed: an undeclared key is an error.
 
 ```bash
 SCHEMA=$(python -c "from asb_schema import get_schema_path; print(get_schema_path('asb_card'))")
-linkml-validate --schema "$SCHEMA" --target-class ASBTaskCard --allow-null-for-optional-enums task_card.json
+linkml-validate --schema "$SCHEMA" --target-class ASBTaskCard task_card.json
 ```
-
-`--allow-null-for-optional-enums` (linkml 1.11 or later) accepts `null` in an
-optional enumeration slot, as the generated JSON Schema does; the reference
-pipeline writes `task_kind: null` for an unclassified card.
 
 ```python
 from asb_schema import get_schema_path, get_json_schema_path, get_jsonld_context_path

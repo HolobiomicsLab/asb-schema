@@ -27,9 +27,6 @@ follows [Semantic Versioning](https://semver.org/).
 - The capsule descriptions state an RO-Crate 1.1 package, without the Workflow
   Run Profile 0.5 claim; Workflow Run Crate alignment is tracked in the
   reference pipeline. (2026-10-31)
-- The documented `linkml-validate` command takes
-  `--allow-null-for-optional-enums`, which accepts `null` in an optional
-  enumeration slot as the generated JSON Schema does. (2026-10-31)
 - Schema descriptions name the ASB task card instead of the SciTask Card, carry
   the real file versions in their headers and cite no internal plan,
   specification section or private repository; `asb_schema.compat` states no

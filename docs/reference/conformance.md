@@ -26,11 +26,11 @@ Each artifact is validated against its own LinkML file. Slot names are global in
 
 ```bash
 SCHEMA=$(python -c "from asb_schema import get_schema_path; print(get_schema_path('asb_card'))")
-linkml-validate --schema "$SCHEMA" --target-class ASBTaskCard --allow-null-for-optional-enums task_card.json
+linkml-validate --schema "$SCHEMA" --target-class ASBTaskCard task_card.json
 # No issues found
 ```
 
-`--allow-null-for-optional-enums` (linkml 1.11 or later) accepts `null` in an optional enumeration slot, as the generated JSON Schema does; the reference pipeline writes `task_kind: null` for an unclassified card. With release 0.4.0, 405 of the 417 cards of the staged v1 collections of asb-skill-collections pass this command; the other 12 carry two legacy `evaluation_strategy` keys.
+With release 0.4.0, 405 of the 417 cards of the staged v1 collections of asb-skill-collections pass this command; the other 12 carry two legacy `evaluation_strategy` keys.
 
 | Stage | Tool | Checks | Undeclared keys |
 |---|---|---|---|
