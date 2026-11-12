@@ -2,7 +2,8 @@
 
 Maps the former schema basenames and class names to the current ones and
 emits a ``DeprecationWarning`` on every lookup, so code written against the
-former names keeps working while it is updated.
+former names keeps working while it is updated. The aliases are kept until
+release 1.0 of the package and removed there.
 """
 
 from __future__ import annotations
@@ -30,7 +31,7 @@ _CLASS_ALIASES: Final[dict[str, str]] = {
 
 def _warn(legacy: str, new: str) -> None:
     warnings.warn(
-        f"{legacy!r} is deprecated; use {new!r} instead.",
+        f"{legacy!r} is deprecated and will be removed in asb-schema 1.0; use {new!r} instead.",
         DeprecationWarning,
         stacklevel=3,
     )
