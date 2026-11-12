@@ -5,6 +5,13 @@ All notable changes to the `asb-schema` package. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the package
 follows [Semantic Versioning](https://semver.org/).
 
+## Unreleased
+
+### Changed
+
+- The legacy aliases of `asb_schema.compat` are kept until release 1.0 and
+  removed there; the deprecation warning names that release. (2026-11-12)
+
 ## 0.4.0 - 2026-10-30
 
 ### Changed

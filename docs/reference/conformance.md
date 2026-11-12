@@ -137,8 +137,8 @@ The standard was named SciTask until 2026-05-24.
 
 | Identifier | Status |
 |---|---|
-| `SciTaskCard`, `SciSkill`, `SciTool` | Deprecated aliases of `ASBTaskCard`, `ASBSkill`, `ASBTool`, mapped by `asb_schema.compat.legacy_class_name()` |
-| `scitask_card`, `scitask_capsule` and the other `scitask_*` schema names | Mapped to `asb_*` by `asb_schema.compat.legacy_schema_name()` |
+| `SciTaskCard`, `SciSkill`, `SciTool` | Deprecated aliases of `ASBTaskCard`, `ASBSkill`, `ASBTool`, mapped by `asb_schema.compat.legacy_class_name()`; removed in release 1.0 |
+| `scitask_card`, `scitask_capsule` and the other `scitask_*` schema names | Mapped to `asb_*` by `asb_schema.compat.legacy_schema_name()`; removed in release 1.0 |
 | `scitask-schema`, `scitask_schema` | Former package and module names |
 | `SciTaskCapsule`, `scitask_version` | Current names of the capsule class and a card slot |
 | `urn:scitask:` | Former URN prefix |

@@ -96,7 +96,6 @@ This site documents release 0.4.0, a pre-1.0 release in which a minor release ma
 2. Does the card gain benchmark slots (canary, license, the environment a benchmark gives a solver, a pointer to a hidden answer)?
 3. Is the versioning policy applied retroactively to `asb_capsule.yaml`, as release 0.4.0 applies it to `asb_card.yaml`, or amended?
 4. Which license covers which layer, and where is that stated?
-5. When is `asb_schema.compat` removed?
 
 [^kac]: Keep a Changelog, "Keep a Changelog". <https://keepachangelog.com/en/1.1.0/>
 [^pypi]: Python Package Index, "asb-schema". <https://pypi.org/project/asb-schema/>
