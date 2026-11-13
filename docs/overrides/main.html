@@ -9,3 +9,11 @@
     <a href="{{ 'about/' | url }}#status">Status of this document</a>
   </div>
 {% endblock %}
+
+{#- Browser tab and home screen: ecosystem icon family generated in holobiomicslab_brand.
+    The SVG comes from theme.favicon in mkdocs.yml. -#}
+{% block extrahead %}
+  {{ super() }}
+  <link rel="icon" href="{{ 'assets/brand/favicon.ico' | url }}" sizes="48x48">
+  <link rel="apple-touch-icon" href="{{ 'assets/brand/apple-touch-icon.png' | url }}">
+{% endblock %}
