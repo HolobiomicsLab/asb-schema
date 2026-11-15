@@ -72,7 +72,7 @@ The `urn:asb:` names are local identifiers minted by the crate writer; `task_id`
 
 ## Capsule publication
 
-No capsule record is published yet. The build capsules are prepared as ten Zenodo records, one per collection, which remain unpublished. The release gate checks each crate against the structural requirements of RO-Crate 1.1 and against the files present. The remaining conformance points of these crates are listed under [Status](../about/index.md#status).
+The build capsules are published as ten Zenodo records, one per collection, since 15 November 2026; their DOIs are under `capsules` in `collections.yaml` of asb-skill-collections. The release gate checks each crate against the structural requirements of RO-Crate 1.1 and against the files present. The remaining conformance points of these crates are listed under [Status](../about/index.md#status).
 
 ## See also
 
