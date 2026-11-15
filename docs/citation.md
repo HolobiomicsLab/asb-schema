@@ -37,10 +37,10 @@ Each collection in [asb-skill-collections](https://github.com/HolobiomicsLab/asb
 
 | Collection | State | `version` | `doi` |
 |------------|-------|-----------|-------|
-| metabolomics v3 | published | 3.1.0 | `10.5281/zenodo.24224655` |
-| epigenomics v2 | published | 2.1.0 | `10.5281/zenodo.24224653` |
-| transcriptomics v2 | published | 2.1.0 | `10.5281/zenodo.24224649` |
-| proteomics, genomics, metagenomics, metabarcoding, multi-omics, astronomy, agentic-ai v1 | published | 1.1.0 | see `collections.yaml` in asb-skill-collections |
+| metabolomics v3 | published | 3.1.1 | `10.5281/zenodo.24255500` |
+| epigenomics v2 | published | 2.1.1 | `10.5281/zenodo.24255488` |
+| transcriptomics v2 | published | 2.1.1 | `10.5281/zenodo.24255483` |
+| proteomics, genomics, metagenomics, metabarcoding, multi-omics, astronomy, agentic-ai v1 | published | 1.1.1 | see `collections.yaml` in asb-skill-collections |
 
 A citation of a collection gives its title, version, IRI and, when deposited, its DOI. Zenodo assigns one DOI per version and a concept DOI for all versions[^zenodo].
 
