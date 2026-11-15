@@ -8,7 +8,7 @@ Install the package, locate the schema files, validate a task card, a collection
 pip install asb-schema
 ```
 
-The package requires Python 3.10 or later and depends on `linkml` and `linkml-runtime` 1.7 or later, and on `pyyaml`; installing it puts `linkml-validate` on the path. The Python Package Index lists release 0.3.0[^pypi]; to use release 0.4.0, documented here, run `pip install .` in a checkout of the repository. Release 0.4.0 changes four card slots to lists of JSON objects and declares fourteen further optional card slots (see the [changelog](changelog.md)).
+The package requires Python 3.10 or later and depends on `linkml` and `linkml-runtime` 1.7 or later, and on `pyyaml`; installing it puts `linkml-validate` on the path. The Python Package Index lists release 0.4.0[^pypi], which installs with `pip install asb-schema`. Release 0.4.0 changes four card slots to lists of JSON objects and declares fourteen further optional card slots (see the [changelog](changelog.md)).
 
 ## Find the schema files
 

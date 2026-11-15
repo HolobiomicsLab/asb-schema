@@ -74,7 +74,7 @@ A release is a tag `v<version>`; the publish workflow checks that the tagged com
 
 ### Release state
 
-This site documents release 0.4.0, a pre-1.0 release in which a minor release may change a schema so that data valid under the previous release fails; the notice in the top bar of every page says so. The Python Package Index lists release 0.3.0[^pypi]; release 0.4.0 installs from a checkout ([Getting started](../getting-started.md#install)). In asb-skill-collections, metabolomics v2 is the published collection; epigenomics v1, metabolomics v1 and transcriptomics v1 are staged and hold the 417 capsules and benchmark cards.
+This site documents release 0.4.0, a pre-1.0 release in which a minor release may change a schema so that data valid under the previous release fails; the notice in the top bar of every page says so. The Python Package Index lists release 0.4.0[^pypi], which installs with `pip install asb-schema` ([Getting started](../getting-started.md#install)). In asb-skill-collections, the registry `collections.yaml` lists ten published collections: metabolomics v3.1.0, epigenomics and transcriptomics v2.1.0, and v1.1.0 for proteomics, genomics, metagenomics, metabarcoding, multi-omics, astronomy and agentic-ai. Capsule records are not published yet.
 
 ### Unverified points
 
