@@ -70,9 +70,9 @@ RO-Crate packages research data with their metadata in one JSON-LD file based on
 
 The `urn:asb:` names are local identifiers minted by the crate writer; `task_id` is unique within one paper, and the `sameAs` link makes the task node globally unique. The identifier rules are on [Conformance](../reference/conformance.md#identifiers-and-namespaces).
 
-## Published capsules
+## Capsule publication
 
-The public repository [asb-skill-collections](https://github.com/HolobiomicsLab/asb-skill-collections) holds 417 capsules in the staged v1 collections: 44 in epigenomics, 336 in metabolomics and 37 in transcriptomics. Its release gate checks each crate against the structural requirements of RO-Crate 1.1 and against the files present. The remaining conformance points of these crates are listed under [Status](../about/index.md#status).
+No capsule record is published yet. The build capsules are prepared as ten Zenodo records, one per collection, which remain unpublished. The release gate checks each crate against the structural requirements of RO-Crate 1.1 and against the files present. The remaining conformance points of these crates are listed under [Status](../about/index.md#status).
 
 ## See also
 

@@ -30,7 +30,7 @@ linkml-validate --schema "$SCHEMA" --target-class ASBTaskCard task_card.json
 # No issues found
 ```
 
-With release 0.4.0, 405 of the 417 cards of the staged v1 collections of asb-skill-collections pass this command; the other 12 carry two legacy `evaluation_strategy` keys.
+With release 0.4.0, 405 of the 417 cards of the legacy v1 collections (epigenomics, metabolomics, transcriptomics) pass this command; the other 12 carry two legacy `evaluation_strategy` keys.
 
 | Stage | Tool | Checks | Undeclared keys |
 |---|---|---|---|

@@ -33,12 +33,14 @@ A record that conforms to one schema file cites the package version and the `id`
 
 ## Citing a collection
 
-Each collection in [asb-skill-collections](https://github.com/HolobiomicsLab/asb-skill-collections) has its own `CITATION.cff` (`type: dataset`, `license: CC-BY-4.0`) that lists the source papers under `references`. Its `url` is the collection IRI, for example `https://w3id.org/holobiomicslab/asb-skill/collection/metabolomics/v2`.
+Each collection in [asb-skill-collections](https://github.com/HolobiomicsLab/asb-skill-collections) has its own `CITATION.cff` (`type: dataset`, `license: CC-BY-4.0`) that lists the source papers under `references`. Its `url` is the collection IRI, for example `https://w3id.org/holobiomicslab/asb-skill/collection/metabolomics/v3`.
 
 | Collection | State | `version` | `doi` |
 |------------|-------|-----------|-------|
-| metabolomics v2 | published | 2 | `10.5281/zenodo.20794027` |
-| epigenomics v1, metabolomics v1, transcriptomics v1 | staged | 1 | to be deposited |
+| metabolomics v3 | published | 3.1.0 | `10.5281/zenodo.24224655` |
+| epigenomics v2 | published | 2.1.0 | `10.5281/zenodo.24224653` |
+| transcriptomics v2 | published | 2.1.0 | `10.5281/zenodo.24224649` |
+| proteomics, genomics, metagenomics, metabarcoding, multi-omics, astronomy, agentic-ai v1 | published | 1.1.0 | see `collections.yaml` in asb-skill-collections |
 
 A citation of a collection gives its title, version, IRI and, when deposited, its DOI. Zenodo assigns one DOI per version and a concept DOI for all versions[^zenodo].
 

@@ -52,8 +52,9 @@ pip install asb-schema
 Minimal conformance: a `task_card.json` that validates against `ASBTaskCard`,
 and a `ro-crate-metadata.json` that conforms to RO-Crate 1.1.
 
-Released collections are in
-[asb-skill-collections](https://github.com/HolobiomicsLab/asb-skill-collections).
+The released collections are listed in `collections.yaml` in
+[asb-skill-collections](https://github.com/HolobiomicsLab/asb-skill-collections);
+each one is published in its own `asb-skills-<domain>` repository.
 Bridges to ASTRA, RO-Crate, ARA, Harbor and Terminal-Bench, science
 benchmarks and Agent Skills are described in the
 [documentation](https://holobiomicslab.github.io/asb-schema/interop/).
