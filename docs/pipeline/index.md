@@ -91,7 +91,7 @@ Several vocabularies are called tiers; only `reproducibility_tier` is a card slo
 
 **Readiness.** The rubric `reuse-readiness/v0` reviews a skill on five independent criteria: `concrete_procedure`, `applicability`, `source_support` and `declared_output_contract` (each `pass`, `fail` or `inconclusive`), and `example` (`none`, `illustrative`, `runnable`). `asb skill readiness-report` writes a JSON report and a Markdown summary.
 
-**Collections.** Each release has an IRI `https://w3id.org/holobiomicslab/asb-skill/collection/<slug>/v<N>` and a Zenodo deposit prepared in `.zenodo.json`. Ten collections are published; their versions, DOIs and counts are in `collections.yaml` of asb-skill-collections (metabolomics v3.1.1: 11,830 skills, 1,989 tools, 20 workflows). Capsule records are not published yet.
+**Collections.** Each release has an IRI `https://w3id.org/holobiomicslab/asb-skill/collection/<slug>/v<N>` and a Zenodo deposit prepared in `.zenodo.json`. Ten collections are published; their versions, DOIs and counts are in `collections.yaml` of asb-skill-collections (metabolomics v3.1.1: 11,830 skills, 1,989 tools, 20 workflows). The build capsules are published as one Zenodo record per collection; their DOIs are in the same file.
 
 ## See also
 
